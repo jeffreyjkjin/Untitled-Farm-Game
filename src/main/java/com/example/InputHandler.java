@@ -17,19 +17,19 @@ public class InputHandler implements KeyListener {
         
         switch(keyCode) {
             case KeyEvent.VK_W:
-            case KeyEvent.VK_KP_UP:
+            case KeyEvent.VK_UP:
                 up = true;
                 break;
             case KeyEvent.VK_A:
-            case KeyEvent.VK_KP_LEFT:
+            case KeyEvent.VK_LEFT:
                 left = true;
                 break;
             case KeyEvent.VK_S:
-            case KeyEvent.VK_KP_DOWN:
+            case KeyEvent.VK_DOWN:
                 down = true;
                 break;
             case KeyEvent.VK_D:
-            case KeyEvent.VK_KP_RIGHT:
+            case KeyEvent.VK_RIGHT:
                 right = true;
                 break;
             default:
@@ -39,22 +39,22 @@ public class InputHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        
+
         switch(keyCode) {
             case KeyEvent.VK_W:
-            case KeyEvent.VK_KP_UP:
+            case KeyEvent.VK_UP:
                 up = false;
                 break;
             case KeyEvent.VK_A:
-            case KeyEvent.VK_KP_LEFT:
+            case KeyEvent.VK_LEFT:
                 left = false;
                 break;
             case KeyEvent.VK_S:
-            case KeyEvent.VK_KP_DOWN:
+            case KeyEvent.VK_DOWN:
                 down = false;
                 break;
             case KeyEvent.VK_D:
-            case KeyEvent.VK_KP_RIGHT:
+            case KeyEvent.VK_RIGHT:
                 right = false;
                 break;
             default:
