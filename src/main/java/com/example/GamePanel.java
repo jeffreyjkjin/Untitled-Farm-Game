@@ -2,6 +2,8 @@ package com.example;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
@@ -31,7 +33,23 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
-        
+        while(gameThread != null) {
+            update();
+            repaint();
+        }
+    }
+
+    public void update() {
+
+    }
+
+    public void paintComponent(Graphics graphic) {
+        super.paintComponent(graphic);
+
+        Graphics2D graphic2 = (Graphics2D)graphic;
+        graphic2.setColor(Color.green);
+        graphic2.fillRect(100, 100, tileSize, tileSize);
+
+        graphic2.dispose();
     }
 }
