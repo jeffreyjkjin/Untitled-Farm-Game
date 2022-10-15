@@ -20,6 +20,8 @@ public final class App {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
+        gamePanel.startGameThread();
+
         System.out.println("Hello World!");
     }
 }
