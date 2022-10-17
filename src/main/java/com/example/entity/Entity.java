@@ -7,5 +7,7 @@ public class Entity {
     public int speed;
 
     public Rectangle hitbox;
+    public int hitboxDefaultX, hitboxDefaultY;
+    
     public boolean collisionOn;
 }

@@ -10,10 +10,15 @@ public class Player extends Entity{
 
     GamePanel gamePanel;
     InputHandler input;
+    int hasKey = 0;
+    
     
     public Player(GamePanel gamePanel, InputHandler input) {
         this.gamePanel = gamePanel;
         this.input = input;
+        
+        hitboxDefaultX = hitbox.x;
+        hitboxDefaultY = hitbox.y;
 
         setDefaultValues();
     }
@@ -37,6 +42,18 @@ public class Player extends Entity{
         else if (input.right) {
             x += speed;
         }       
+    }
+    
+    public void pickUpObject(int index) {
+    	
+    	if(index != 999) {
+    		if(gamePanel.obj[index].name == "Key")
+    		{
+    			hasKey++;
+    			gamePanel.obj[index] = null;
+    		}
+    		
+    	}
     }
 
     public void draw(Graphics2D graphic2) {
