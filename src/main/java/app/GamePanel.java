@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM = new TileManager(this);
     InputHandler input = new InputHandler();
     public CollisionChecker checker = new CollisionChecker(this);
-    Sound sound = new Sound();
+    //Sound sound = new Sound();
     Thread gameThread;
     public Player player = new Player(this, input);
     public SuperObject obj[] = new SuperObject[10]; // 10 slots for object
@@ -116,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable {
         
         graphic2.dispose();
     }
-
+/*
     public void playMusic(int i) {
         sound.setFile(i);
         sound.play();
@@ -131,4 +131,6 @@ public class GamePanel extends JPanel implements Runnable {
         sound.setFile(i);
         sound.play();
     }
+}
+*/
 }

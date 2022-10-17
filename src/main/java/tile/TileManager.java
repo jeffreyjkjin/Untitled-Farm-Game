@@ -30,10 +30,13 @@ public class TileManager {
         try
         {
             tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/FILE NAME1.png"));
+            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tile/1.png"));
 
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/FILE NAME2.png"));
+            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tile/1.png"));
+
+            tile[2] = new Tile();
+            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tile/1.png"));
 
             // Keep copy pasting and adding new tiles for each image you want to load into it
 
