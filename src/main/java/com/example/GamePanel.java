@@ -8,7 +8,7 @@ import com.example.tile.*;
 
 import javax.swing.JPanel;
 
-import com.entity.Player;
+import com.example.entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16;
