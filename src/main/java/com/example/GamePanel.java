@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import com.example.tile.*;
 
 import javax.swing.JPanel;
 
@@ -11,14 +12,15 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16;
     final int scale = 3;
 
-    final int tileSize = originalTileSize * scale;
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol;
-    final int screenHeight = tileSize * maxScreenRow;
+    public final int tileSize = originalTileSize * scale;
+    public final int maxScreenCol = 16;
+    public final int maxScreenRow = 12;
+    public final int screenWidth = tileSize * maxScreenCol;
+    public final int screenHeight = tileSize * maxScreenRow;
 
     final int FPS = 60;
 
+    TileManager tileM = new TileManager(this);
     InputHandler input = new InputHandler();
     Thread gameThread;
 
@@ -91,6 +93,10 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D graphic2 = (Graphics2D)graphic;
         graphic2.setColor(Color.green);
         graphic2.fillRect(playerX, playerY, tileSize, tileSize);
+
+        tileM.draw(graphic2);
+
+        //player.draw(graphic2) goes here
 
         graphic2.dispose();
     }
