@@ -2,6 +2,7 @@ package com.example.entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import com.example.GamePanel;
 import com.example.InputHandler;
@@ -15,6 +16,7 @@ public class Player extends Entity{
         this.gamePanel = gamePanel;
         this.input = input;
 
+        hitbox = new Rectangle(8,16,32,32);
         setDefaultValues();
     }
 
@@ -22,21 +24,32 @@ public class Player extends Entity{
         x = 100;
         y = 100;
         speed = 4;
+        direction = "down";
     }
 
     public void update() {
         if (input.up) {
-            y -= speed;
+            direction = "up";
         }
         else if (input.left) {
-            x -= speed;
+            direction = "left";
         }
         else if (input.down) {
-            y += speed;
+            direction = "down";
         }
         else if (input.right) {
-            x += speed;
-        }       
+            direction = "right";
+        }    
+        
+        collisionOn = false;
+        if(collisionOn == false) {
+            switch(direction) {
+                case "up": y -= speed; break;
+                case "down": x -= speed; break;
+                case "left": y += speed; break;
+                case "right": x += speed; break;
+            }
+        }
     }
 
     public void draw(Graphics2D graphic2) {
