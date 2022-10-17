@@ -1,14 +1,11 @@
-package com.entity;
+package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
-// import java.io.IOException;
-// import javax.imageio.ImageIO;
-
-import com.example.GamePanel;
-import com.example.InputHandler;
+import app.GamePanel;
+import app.InputHandler;
 
 public class Player extends Entity{
 
@@ -18,6 +15,8 @@ public class Player extends Entity{
     public Player(GamePanel gamePanel, InputHandler input) {
         this.gamePanel = gamePanel;
         this.input = input;
+
+        hitbox = new Rectangle(8,16,32,32);
 
         setDefaultValues();
         // getPlayerImage();
@@ -64,6 +63,10 @@ public class Player extends Entity{
                 x += speed;
                 direction = "right";
             }
+        
+        collisionOn = false;
+        gamePanel.checker.checkCollision(this);
+
     
             spriteCounter++;
     
