@@ -14,18 +14,24 @@ public class Player extends Entity{
 
     GamePanel gamePanel;
     InputHandler input;
+
+    public final int screenX;
+    public final int screenY;
     
     public Player(GamePanel gamePanel, InputHandler input) {
         this.gamePanel = gamePanel;
         this.input = input;
+
+        screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
+        screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
 
         setDefaultValues();
         // getPlayerImage();
     }
 
     public void setDefaultValues() {
-        x = 100;
-        y = 100;
+        worldX = gamePanel.tileSize * 23; // starting position
+        worldY = gamePanel.tileSize * 21;
         speed = 4;
         direction = "down";
     }
@@ -49,19 +55,19 @@ public class Player extends Entity{
     public void update() {
         if (input.up || input.left || input.down || input.right) {
             if (input.up) {
-                y -= speed;
+                worldY -= speed;
                 direction = "up";
             }
             else if (input.left) {
-                x -= speed;
+                worldX -= speed;
                 direction = "left";
             }
             else if (input.down) {
-                y += speed;
+                worldY += speed;
                 direction = "down";
             }
             else if (input.right) {
-                x += speed;
+                worldX += speed;
                 direction = "right";
             }
     
@@ -81,7 +87,7 @@ public class Player extends Entity{
 
     public void draw(Graphics2D graphic2) {
         graphic2.setColor(Color.green);
-        graphic2.fillRect(x, y, gamePanel.tileSize, gamePanel.tileSize);
+        graphic2.fillRect(screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
 
         // TODO: remove above code when player sprites have been added
         // BufferedImage image = null;
@@ -119,6 +125,6 @@ public class Player extends Entity{
         //             image = right2;
         //         }
         // }
-        // graphic2.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+        // graphic2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 }

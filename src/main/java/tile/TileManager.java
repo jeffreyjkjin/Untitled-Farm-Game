@@ -11,8 +11,8 @@ import java.io.InputStreamReader;
 public class TileManager {
     
     GamePanel gp;
-    Tile[] tile;
-    int levelTileNum[][];
+    public Tile[] tile;
+    public int levelTileNum[][];
 
     public TileManager(GamePanel gp)
     {
@@ -88,15 +88,15 @@ public class TileManager {
         {
             int tileNum = levelTileNum[col][row];
 
-            int x = col * gp.tileSize;
-            int y = row * gp.tileSize;
-            int screenX = x - gp.player.x + gp.player.screenX;
-            int screenY = y - gp.player.y + gp.player.screenY;
+            int worldX = col * gp.tileSize;
+            int worldY = row * gp.tileSize;
+            int screenX = worldX - gp.player.worldX + gp.player.screenX;
+            int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            if (x + gp.tileSize > gp.player.x - gp.player.screenX &&
-             x - gp.tileSize < gp.player.x + gp.player.screenX &&
-             y + gp.tileSize > gp.player.y - gp.player.screenY &&
-             y - gp.tileSize < gp.player.y + gp.player.screenY)
+            if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+            worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+            worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+            worldY - gp.tileSize < gp.player.worldY + gp.player.screenY)
               {
                 graphic2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
               }
