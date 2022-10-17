@@ -1,9 +1,9 @@
-package com.example.tile;
+package tile;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
-import com.example.*;
+import app.GamePanel;
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

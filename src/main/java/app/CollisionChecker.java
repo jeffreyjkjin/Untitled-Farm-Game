@@ -1,6 +1,6 @@
-package com.example;
+package app;
 
-import com.example.entity.Entity;
+import entity.Entity;
 public class CollisionChecker {
     
     GamePanel gp;
