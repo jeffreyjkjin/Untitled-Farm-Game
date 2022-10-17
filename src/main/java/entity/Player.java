@@ -56,24 +56,41 @@ public class Player extends Entity{
     public void update() {
         if (input.up || input.left || input.down || input.right) {
             if (input.up) {
-                worldY -= speed;
+                
                 direction = "up";
             }
             else if (input.left) {
-                worldX -= speed;
+              
                 direction = "left";
             }
             else if (input.down) {
-                worldY += speed;
+                
                 direction = "down";
             }
             else if (input.right) {
-                worldX += speed;
+                
                 direction = "right";
             }
         
         collisionOn = false;
         gamePanel.checker.checkCollision(this);
+
+        if(collisionOn == false) {
+            switch(direction){
+                case"up":
+                    worldY -= speed;
+                    break;
+                case"down":
+                    worldY += speed;
+                    break;
+                case"left":
+                    worldX -= speed;
+                    break;
+                case"right":
+                    worldX += speed;
+                    break;
+            }
+        }
 
     
             spriteCounter++;
