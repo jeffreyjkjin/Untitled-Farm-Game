@@ -11,11 +11,11 @@ public class SuperObject {
 	public String name;
 	public boolean collision = false;
 	public int worldX, worldY;
-	//public Rectangle hitbox = new Rectangle(0,0,?,?) 
+	public Rectangle hitbox = new Rectangle(0,0,36,36); 
 	//set object hitbox
 	public int hitboxDefaultX = 0;
 	public int hitboxDefaultY = 0;
-	public Rectangle hitbox;
+	
 	
 	public void draw(Graphics2D g2, GamePanel gp) {
 		
