@@ -11,10 +11,10 @@ public class CollisionChecker {
  
     public void checkCollision(Entity entity) {
 
-		int entityLeftWorldX = entity.worldx + entity.hitbox.x;
-		int entityRightWorldX = entity.worldx + entity.hitbox.x + entity.hitbox.width;
-		int entityTopWorldY = entity.worldy + entity.hitbox.y;
-		int entityBottomWorldY = entity.worldy + entity.hitbox.y + entity.hitbox.height;
+		int entityLeftWorldX = entity.worldX + entity.hitbox.x;
+		int entityRightWorldX = entity.worldX + entity.hitbox.x + entity.hitbox.width;
+		int entityTopWorldY = entity.worldY + entity.hitbox.y;
+		int entityBottomWorldY = entity.worldY + entity.hitbox.y + entity.hitbox.height;
 
 		int entityLeftCol = entityLeftWorldX/gp.tileSize;
 		int entityRightCol = entityRightWorldX/gp.tileSize;
@@ -35,7 +35,7 @@ public class CollisionChecker {
 			case"down":
 				entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;
 				tilenum1 = gp.tileM.levelTileNum[entityLeftCol][entityBottomRow];
-				tilenum1 = gp.tileM.levelTileNum[entityRightCol][entityBottomRow];
+				tilenum2 = gp.tileM.levelTileNum[entityRightCol][entityBottomRow];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
@@ -43,7 +43,7 @@ public class CollisionChecker {
 			case"left":
 				entityLeftCol = (entityLeftWorldX - entity.speed)/gp.tileSize;
 				tilenum1 = gp.tileM.levelTileNum[entityLeftCol][entityTopRow];
-				tilenum1 = gp.tileM.levelTileNum[entityLeftCol][entityBottomRow];
+				tilenum2 = gp.tileM.levelTileNum[entityLeftCol][entityBottomRow];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
@@ -51,7 +51,7 @@ public class CollisionChecker {
 			case"right":
 				entityRightCol = (entityRightWorldX + entity.speed)/gp.tileSize;
 				tilenum1 = gp.tileM.levelTileNum[entityRightCol][entityTopRow];
-				tilenum1 = gp.tileM.levelTileNum[entityRightCol][entityBottomRow];
+				tilenum2 = gp.tileM.levelTileNum[entityRightCol][entityBottomRow];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
