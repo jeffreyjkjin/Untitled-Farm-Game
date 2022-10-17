@@ -1,11 +1,11 @@
 package entity;
 
-import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-// import java.io.IOException;
-// import javax.imageio.ImageIO;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import app.GamePanel;
 import app.InputHandler;
@@ -27,7 +27,7 @@ public class Player extends Entity{
         screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
 
         setDefaultValues();
-        // getPlayerImage();
+        getPlayerImage();
     }
 
     public void setDefaultValues() {
@@ -37,21 +37,20 @@ public class Player extends Entity{
         direction = "down";
     }
 
-    // TODO: find player image sprites
-    // public void getPlayerImage() {
-    //     try {
-    //         up1 = ImageIO.read(getClass().getResourceAsStream(""));
-    //         up2 = ImageIO.read(getClass().getResourceAsStream(""));
-    //         down1 = ImageIO.read(getClass().getResourceAsStream(""));
-    //         down2 = ImageIO.read(getClass().getResourceAsStream(""));
-    //         left1 = ImageIO.read(getClass().getResourceAsStream(""));
-    //         left2 = ImageIO.read(getClass().getResourceAsStream(""));
-    //         right1 = ImageIO.read(getClass().getResourceAsStream(""));
-    //         right2 = ImageIO.read(getClass().getResourceAsStream(""));
-    //     } catch(IOException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
+    public void getPlayerImage() {
+        try {
+            up1 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenup1.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenup2.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickendown1.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickendown2.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenleft1.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenleft2.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenright1.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenright2.png"));
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void update() {
         if (input.up || input.left || input.down || input.right) {
@@ -108,45 +107,41 @@ public class Player extends Entity{
     }
 
     public void draw(Graphics2D graphic2) {
-        graphic2.setColor(Color.green);
-        graphic2.fillRect(screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-
-        // TODO: remove above code when player sprites have been added
-        // BufferedImage image = null;
+        BufferedImage image = null;
         
-        // switch (direction) {
-        //     case "up":
-        //         if (spriteNum == 1) {
-        //             image = up1;
-        //         }
-        //         else {
-        //             image = up2;
-        //         }
-        //         break;
-        //     case "left":
-        //         if (spriteNum == 1) {
-        //             image = left1;
-        //         }
-        //         else {
-        //             image = left2;
-        //         }
-        //         break;
-        //     case "down":
-        //         if (spriteNum == 1) {
-        //             image = down1;
-        //         }
-        //         else {
-        //             image = down2;
-        //         }
-        //         break;
-        //     case "right":
-        //         if (spriteNum == 1) {
-        //             image = right1;
-        //         }
-        //         else {
-        //             image = right2;
-        //         }
-        // }
-        // graphic2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        switch (direction) {
+            case "up":
+                if (spriteNum == 1) {
+                    image = up1;
+                }
+                else {
+                    image = up2;
+                }
+                break;
+            case "left":
+                if (spriteNum == 1) {
+                    image = left1;
+                }
+                else {
+                    image = left2;
+                }
+                break;
+            case "down":
+                if (spriteNum == 1) {
+                    image = down1;
+                }
+                else {
+                    image = down2;
+                }
+                break;
+            case "right":
+                if (spriteNum == 1) {
+                    image = right1;
+                }
+                else {
+                    image = right2;
+                }
+        }
+        graphic2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 }
