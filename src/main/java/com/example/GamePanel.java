@@ -27,6 +27,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     TileManager tileM = new TileManager(this);
     InputHandler input = new InputHandler();
+    CollisionChecker checker = new CollisionChecker(this);
+    Sound sound = new Sound();
     Thread gameThread;
 
     int playerX = 100;
@@ -104,5 +106,20 @@ public class GamePanel extends JPanel implements Runnable {
         //player.draw(graphic2) goes here
 
         graphic2.dispose();
+    }
+
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(){
+        sound.stop();
+    }
+
+    public void playSoundE(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 }
