@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import com.example.tile.*;
 
+import object.SuperObject;
+
 import javax.swing.JPanel;
 
 import com.example.entity.Player;
@@ -33,7 +35,10 @@ public class GamePanel extends JPanel implements Runnable {
     Sound sound = new Sound();
     Thread gameThread;
     public Player player = new Player(this, input);
+    public SuperObject obj[] = new SuperObject[10]; // 10 slots for object
+    public AssetSetter aSetter = new AssetSetter(this);
 
+    
     int playerX = 100;
     int playerY = 100;
     int playerSpeed = 4;
@@ -44,6 +49,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(input);
         this.setFocusable(true);
+    }
+    
+    public void setupGame() {
+    	aSetter.setObject();
     }
 
     public void startGameThread() {
@@ -90,11 +99,19 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(graphic);
 
         Graphics2D graphic2 = (Graphics2D) graphic;
-
+        
+        //Player
         player.draw(graphic2);
-
+        
+        //Tile
         tileM.draw(graphic2);
 
+        //Object
+        for(int i = 0; i < obj.length; i++) {
+        	if(obj[i] != null)
+        		obj[i].draw(graphic2, this);
+        }
+        
         graphic2.dispose();
     }
 

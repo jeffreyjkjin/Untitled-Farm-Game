@@ -19,7 +19,8 @@ public final class App {
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-
+        
+        gamePanel.setupGame();
         gamePanel.startGameThread();
 
         System.out.println("Hello World!");
