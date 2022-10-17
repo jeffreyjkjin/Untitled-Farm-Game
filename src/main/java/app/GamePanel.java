@@ -4,12 +4,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+<<<<<<< HEAD
+=======
+import tile.*;
+
+import object.SuperObject;
+>>>>>>> fde91dc9ae14ddb10011fee292ad4af51a4b5ddd
 
 import javax.swing.JPanel;
 
 import entity.Player;
+<<<<<<< HEAD
 import object.SuperObject;
 import tile.TileManager;
+=======
+>>>>>>> fde91dc9ae14ddb10011fee292ad4af51a4b5ddd
 
 public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16;
