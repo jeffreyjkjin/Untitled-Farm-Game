@@ -1,4 +1,4 @@
-package com.entity;
+package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 // import java.io.IOException;
 // import javax.imageio.ImageIO;
 
-import com.example.GamePanel;
-import com.example.InputHandler;
+import app.GamePanel;
+import app.InputHandler;
 
 public class Player extends Entity{
 

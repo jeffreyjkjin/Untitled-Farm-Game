@@ -1,16 +1,16 @@
-package com.example;
+package app;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import com.example.tile.*;
+import tile.*;
 
 import object.SuperObject;
 
 import javax.swing.JPanel;
 
-import com.example.entity.Player;
+import entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16;
