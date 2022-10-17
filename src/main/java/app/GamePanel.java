@@ -1,16 +1,15 @@
-package com.example;
+package app;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import com.example.tile.*;
-
-import object.SuperObject;
 
 import javax.swing.JPanel;
 
-import com.example.entity.Player;
+import entity.Player;
+import object.SuperObject;
+import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16;
@@ -31,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     TileManager tileM = new TileManager(this);
     InputHandler input = new InputHandler();
-    CollisionChecker checker = new CollisionChecker(this);
+    public CollisionChecker checker = new CollisionChecker(this);
     Sound sound = new Sound();
     Thread gameThread;
     public Player player = new Player(this, input);
