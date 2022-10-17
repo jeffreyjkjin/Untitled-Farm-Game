@@ -8,7 +8,7 @@ import com.example.tile.*;
 
 import javax.swing.JPanel;
 
-import com.entity.Player;
+import com.example.entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16;
@@ -29,6 +29,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     TileManager tileM = new TileManager(this);
     InputHandler input = new InputHandler();
+    CollisionChecker checker = new CollisionChecker(this);
+    Sound sound = new Sound();
     Thread gameThread;
     Player player = new Player(this, input);
 
@@ -94,5 +96,20 @@ public class GamePanel extends JPanel implements Runnable {
         tileM.draw(graphic2);
 
         graphic2.dispose();
+    }
+
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(){
+        sound.stop();
+    }
+
+    public void playSoundE(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 }
