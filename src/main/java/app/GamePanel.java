@@ -24,14 +24,10 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public final int maxWorldCol = 16; // can change this and row
-    public final int maxWorldRow = 16;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
-
     final int FPS = 60;
 
-    TileManager tileM = new TileManager(this);
+    public TileManager tileM = new TileManager(this);
+    public Map map = new Map(this, "/levels/levelTest1.txt");
     InputHandler input = new InputHandler();
     public CollisionChecker checker = new CollisionChecker(this);
     Sound sound = new Sound();
@@ -105,7 +101,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D graphic2 = (Graphics2D) graphic;
         
         //Tile
-        tileM.draw(graphic2);
+        map.draw(graphic2);
         
         //Player
         player.draw(graphic2);

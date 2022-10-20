@@ -26,32 +26,32 @@ public class CollisionChecker {
 		switch(entity.direction){
 			case"up":
 				entityTopRow = (entityTopWorldY - entity.speed)/gp.tileSize;
-				tilenum1 = gp.tileM.levelTileNum[entityLeftCol][entityTopRow];
-				tilenum2 = gp.tileM.levelTileNum[entityRightCol][entityTopRow];
+				tilenum1 = gp.map.map[entityLeftCol][entityTopRow];
+				tilenum2 = gp.map.map[entityRightCol][entityTopRow];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
 				break;
 			case"down":
 				entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;
-				tilenum1 = gp.tileM.levelTileNum[entityLeftCol][entityBottomRow];
-				tilenum2 = gp.tileM.levelTileNum[entityRightCol][entityBottomRow];
+				tilenum1 = gp.map.map[entityLeftCol][entityBottomRow];
+				tilenum2 = gp.map.map[entityRightCol][entityBottomRow];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
 				break;
 			case"left":
 				entityLeftCol = (entityLeftWorldX - entity.speed)/gp.tileSize;
-				tilenum1 = gp.tileM.levelTileNum[entityLeftCol][entityTopRow];
-				tilenum2 = gp.tileM.levelTileNum[entityLeftCol][entityBottomRow];
+				tilenum1 = gp.map.map[entityLeftCol][entityTopRow];
+				tilenum2 = gp.map.map[entityLeftCol][entityBottomRow];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
 				break;
 			case"right":
 				entityRightCol = (entityRightWorldX + entity.speed)/gp.tileSize;
-				tilenum1 = gp.tileM.levelTileNum[entityRightCol][entityTopRow];
-				tilenum2 = gp.tileM.levelTileNum[entityRightCol][entityBottomRow];
+				tilenum1 = gp.map.map[entityRightCol][entityTopRow];
+				tilenum2 = gp.map.map[entityRightCol][entityBottomRow];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
