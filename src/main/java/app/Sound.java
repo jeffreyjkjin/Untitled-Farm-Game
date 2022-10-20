@@ -11,8 +11,9 @@ public class Sound {
     URL soundURL[] = new URL[30]; // 30 different sounds; increase as needed
     public Sound() {
         soundURL[0] = getClass().getResource("/sounds/bgmusic1.wav");
-        // soundURL[0] = getClass().getResource("/sounds/bgmusic2.wav");
-        // soundURL[1] = getClass().getResource(null);
+        soundURL[1] = getClass().getResource("/sounds/bgmusic2.wav");
+        soundURL[2] = getClass().getResource("/sounds/cluck1.wav");
+        soundURL[3] = getClass().getResource("/sounds/cluck2.wav");
     }
 
     public void setFile(int i){
