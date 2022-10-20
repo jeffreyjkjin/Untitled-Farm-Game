@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public TileManager tileM = new TileManager(this);
     public Map map = new Map(this, "/levels/levelTest1.txt");
-    InputHandler input = new InputHandler();
+    InputHandler input = new InputHandler(this);
     public CollisionChecker checker = new CollisionChecker(this);
     Sound sound = new Sound();
     Thread gameThread;

@@ -5,7 +5,29 @@ import java.awt.event.KeyListener;
 
 public class InputHandler implements KeyListener {
 
+    GamePanel gamePanel;
+
     public boolean up, down, left, right;
+    public boolean cluck;
+
+    int[] konamiCode = {
+        KeyEvent.VK_UP, 
+        KeyEvent.VK_UP, 
+        KeyEvent.VK_DOWN, 
+        KeyEvent.VK_DOWN,
+        KeyEvent.VK_LEFT,
+        KeyEvent.VK_RIGHT,
+        KeyEvent.VK_LEFT,
+        KeyEvent.VK_RIGHT,
+        KeyEvent.VK_B,
+        KeyEvent.VK_A,
+        KeyEvent.VK_ENTER
+    };
+    int konamiCount = 0;
+
+    public InputHandler(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -14,7 +36,7 @@ public class InputHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        
+
         switch(keyCode) {
             case KeyEvent.VK_W:
             case KeyEvent.VK_UP:
@@ -32,7 +54,12 @@ public class InputHandler implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 right = true;
                 break;
-            default:
+            case KeyEvent.VK_H:
+                if (!cluck) {
+                    gamePanel.playSoundE(2);
+                }
+                cluck = true;
+                break;
         }
     }
 
@@ -57,8 +84,23 @@ public class InputHandler implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 right = false;
                 break;
-            default:
+            case KeyEvent.VK_H:
+                gamePanel.playSoundE(3);
+                cluck = false;
+                break;
+        }
+
+        if (keyCode == konamiCode[konamiCount]) {
+            konamiCount++;
+        }
+        else {
+            konamiCount = 0;
+        }
+
+        if (konamiCount == 11) {
+            System.out.println("Cheats Activated!");
+            konamiCount = 0;
+            // TODO: implement function to activate developer mode cheats
         }
     }
-    
 }
