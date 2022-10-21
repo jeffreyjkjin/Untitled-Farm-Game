@@ -89,14 +89,14 @@ public class GamePanel extends JPanel implements Runnable {
         //Tile
         map.draw(graphic2);
         
-        //Player
-        player.draw(graphic2);
-
         //Object
         for(int i = 0; i < obj.length; i++) {
         	if(obj[i] != null)
         		obj[i].draw(graphic2, this);
         }
+
+        //Player
+        player.draw(graphic2);
         
         graphic2.dispose();
     }
