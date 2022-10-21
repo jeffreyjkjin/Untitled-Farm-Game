@@ -11,7 +11,7 @@ public class SuperObject {
 	public String name;
 	public boolean collision = false;
 	public int worldX, worldY;
-	public Rectangle hitbox = new Rectangle(0,0,36,36); 
+	public Rectangle hitbox = new Rectangle(0,0,48,48); 
 	//set object hitbox
 	public int hitboxDefaultX = 0;
 	public int hitboxDefaultY = 0;
