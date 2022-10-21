@@ -22,9 +22,12 @@ public class Player extends Entity{
         this.gamePanel = gamePanel;
         this.input = input;
 
-        hitbox = new Rectangle(8,16,32,32);
         screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
+        
+        hitbox = new Rectangle(14, 16, 32, 40);
+        hitboxDefaultX = hitbox.x;
+        hitboxDefaultY = hitbox.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -73,6 +76,9 @@ public class Player extends Entity{
         
         collisionOn = false;
         gamePanel.checker.checkCollision(this);
+        
+        int objIndex = gamePanel.checker.checkObjectCollision(this, true);
+        objectInteraction(objIndex);
 
         if(collisionOn == false) {
             switch(direction){
@@ -103,6 +109,13 @@ public class Player extends Entity{
                 }
                 spriteCounter = 0;
             }
+        }
+    }
+
+    public void objectInteraction(int index) {
+        if (index != 999) {
+            // TODO: add functionality to objects by using a switch case
+            gamePanel.obj[index] = null;
         }
     }
 
