@@ -23,7 +23,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 12;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
-
+    
+    // FPS
     final int FPS = 60;
 
     // System
@@ -33,10 +34,15 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker checker = new CollisionChecker(this);
     Sound sound = new Sound();
     Thread gameThread;
+    public AssetSetter aSetter = new AssetSetter(this);
+    public UI ui = new UI(this);
+    
+    // Entity & Object
     public Player player = new Player(this, input);
     public SuperObject obj[] = new SuperObject[10]; // 10 slots for object
-    public AssetSetter aSetter = new AssetSetter(this);
-
+    
+    
+    
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -98,8 +104,11 @@ public class GamePanel extends JPanel implements Runnable {
         //Player
         player.draw(graphic2);
         
+        //UI
+        ui.draw(graphic2);
+        
         graphic2.dispose();
-    }
+    } // The order inside is really important! It could hide your player or objects and etc.
 
     public void playMusic(int i) {
         sound.setFile(i);

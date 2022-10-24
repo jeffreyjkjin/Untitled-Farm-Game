@@ -14,9 +14,10 @@ public class Player extends Entity{
 
     GamePanel gamePanel;
     InputHandler input;
-
     public final int screenX;
     public final int screenY;
+    public int hasEgg = 0;
+    
     
     public Player(GamePanel gamePanel, InputHandler input) {
         this.gamePanel = gamePanel;
@@ -115,7 +116,16 @@ public class Player extends Entity{
     public void objectInteraction(int index) {
         if (index != 999) {
             // TODO: add functionality to objects by using a switch case
-            gamePanel.obj[index] = null;
+            String objectName = gamePanel.obj[index].name;
+            
+            switch(objectName) {
+            case "Egg":
+            	gamePanel.playSoundE(4); // play 'egg.wav'
+            	hasEgg++;
+            	gamePanel.obj[index] = null;
+            	gamePanel.ui.showMessage("My Egg!");
+            	break;
+            }
         }
     }
 
