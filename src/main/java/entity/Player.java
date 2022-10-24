@@ -17,6 +17,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int hasEgg = 0;
+    public int hasKey = 0;
     
     
     public Player(GamePanel gamePanel, InputHandler input) {
@@ -124,6 +125,13 @@ public class Player extends Entity{
             	hasEgg++;
             	gamePanel.obj[index] = null;
             	gamePanel.ui.showMessage("My Egg!");
+            	break;
+            	
+            case "Key":
+            	gamePanel.obj[index] = null;
+            	gamePanel.ui.gameFinished = true;
+            	gamePanel.stopMusic(); // sound.stop isn't working now
+            	gamePanel.playSoundE(4);
             	break;
             }
         }
