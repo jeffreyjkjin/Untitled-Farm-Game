@@ -124,6 +124,7 @@ public class Player extends Entity{
             switch(objectName) {
                 case "Egg":
                     gamePanel.playSoundE(4); // play 'egg.wav'
+                    score += 100;
                     gamePanel.map.objects[index] = null;
                     gamePanel.ui.showMessage("My Egg!");
                     break;

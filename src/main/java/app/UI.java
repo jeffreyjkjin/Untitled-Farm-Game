@@ -9,13 +9,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 
-import object.OBJ_Egg;
+import object.OBJ_Heart;
+import object.OBJ_Key;
 
 public class UI {
 	
 	GamePanel gp;
+	Font arial_30, arial_80B; // set font as 'Arial' with size '40'
+	BufferedImage keyImage, heartImage;
 	Font pressStart2P;
-	BufferedImage eggImage;
 	public boolean messageOn = false;
 	public String message = "";
 	int messageCounter = 0;
@@ -26,6 +28,13 @@ public class UI {
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
+		arial_30 = new Font("Arial", Font.PLAIN, 30); // (FONT_NAME, FONT_STYLE, FONT_SIZE)
+		arial_80B = new Font("Arial", Font.BOLD, 80);
+		// OBJ_Key key = new OBJ_Key();
+		// keyImage = key.image;
+		OBJ_Heart heart = new OBJ_Heart();
+		heartImage = heart.image;
+
 		try {
 			InputStream input = getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf");
 			pressStart2P = Font.createFont(Font.TRUETYPE_FONT, input);
@@ -36,9 +45,6 @@ public class UI {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
-
-		OBJ_Egg egg = new OBJ_Egg();
-		eggImage = egg.image;
 	}
 	
 	public void showMessage(String text) {
@@ -70,19 +76,25 @@ public class UI {
 		
 		// TODO: need to figure out how to center these UI elements
 		// Health
-		g2.drawString("HEALTH", 1 * gp.tileSize, 32);
+		g2.setFont(arial_30);
+		g2.setColor(Color.WHITE);
+		g2.drawImage(heartImage, 24 , 49, gp.tileSize, gp.tileSize, null); // set imageSize & coordinate
+		g2.drawImage(heartImage, 24 + gp.tileSize*5/4, 49, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(heartImage, 24 + gp.tileSize*5/2, 49, gp.tileSize, gp.tileSize, null);
+		g2.drawString("HP:" , 24, 32); 
 
 		// Level Name
 		g2.drawString("LEVEL", 5 * gp.tileSize, 32);
 		// g2.drawString(gp.map.levelName, 5 * gp.tileSize, 64);
 		
 		// Time
-		g2.drawString("TIME", 9 * gp.tileSize, 32);
+		g2.drawString("TIME", 13 * gp.tileSize, 32);
 		playTime += (double)1/60;
-		g2.drawString(dFormat.format(playTime), 9 * gp.tileSize, 64);
+		g2.drawString(dFormat.format(playTime), 13 * gp.tileSize, 64);
 		
 		// Score
-		g2.drawString("SCORE", 13 * gp.tileSize, 32);
+		g2.drawString("SCORE", 9 * gp.tileSize, 32);
+		g2.drawString(""+gp.player.points, 9 * gp.tileSize, 64);
 
 		// Message
 		if (messageOn == true) {
