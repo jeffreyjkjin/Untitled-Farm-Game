@@ -17,8 +17,10 @@ public class Player extends Entity{
     InputHandler input;
     public final int screenX;
     public final int screenY;
-    public int hasEgg = 0;
-    public int hasKey = 0;
+    
+    public int health = 3;
+    public int score = 0;
+    public int keyCount = 0;
     
     
     public Player(GamePanel gamePanel, InputHandler input) {
@@ -117,21 +119,21 @@ public class Player extends Entity{
 
     public void objectInteraction(int index) {
         if (index != 999) {
-            // TODO: add functionality to objects by using a switch case
             String objectName = gamePanel.map.objects[index].name;
             
             switch(objectName) {
                 case "Egg":
                     gamePanel.playSoundE(4); // play 'egg.wav'
-                    hasEgg++;
                     gamePanel.map.objects[index] = null;
                     gamePanel.ui.showMessage("My Egg!");
                     break;
-                    
                 case "Key":
                     gamePanel.map.objects[index] = null;
-                    gamePanel.currState = gameState.WIN;
-                    gamePanel.stopMusic(); // sound.stop isn't working now
+                    keyCount++;
+                    if (keyCount == gamePanel.map.keyNum) {
+                        // TODO: update gate object to be opened when all keys collected
+                        System.out.println("GOT ALL KEYS");
+                    }
                     gamePanel.playSoundE(4);
                     break;
             }
