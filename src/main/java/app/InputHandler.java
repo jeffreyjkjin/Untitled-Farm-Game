@@ -3,6 +3,8 @@ package app;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import app.GamePanel.gameState;
+
 public class InputHandler implements KeyListener {
 
     GamePanel gamePanel;
@@ -60,6 +62,13 @@ public class InputHandler implements KeyListener {
                 }
                 cluck = true;
                 break;
+            case KeyEvent.VK_ESCAPE:
+                if (gamePanel.currState == gameState.PLAY) {
+                    gamePanel.currState = gameState.PAUSE;
+                }
+                else {
+                    gamePanel.currState = gameState.PLAY;
+                }
         }
     }
 

@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import app.GamePanel;
+import app.GamePanel.gameState;
 import app.InputHandler;
 
 public class Player extends Entity{
@@ -118,23 +119,23 @@ public class Player extends Entity{
     public void objectInteraction(int index) {
         if (index != 999) {
             // TODO: add functionality to objects by using a switch case
-            String objectName = gamePanel.obj[index].name;
+            String objectName = gamePanel.map.objects[index].name;
             
             switch(objectName) {
-            case "Egg":
-            	gamePanel.playSoundE(4); // play 'egg.wav'
-            	hasEgg++;
-                points += 100;
-            	gamePanel.obj[index] = null;
-            	gamePanel.ui.showMessage("My Egg!");
-            	break;
-            	
-            case "Key":
-            	gamePanel.obj[index] = null;
-            	gamePanel.ui.gameFinished = true;
-            	gamePanel.stopMusic(); // sound.stop isn't working now
-            	gamePanel.playSoundE(4);
-            	break;
+                case "Egg":
+                    gamePanel.playSoundE(4); // play 'egg.wav'
+                    hasEgg++;
+                    points += 100;
+                    gamePanel.map.objects[index] = null;
+                    gamePanel.ui.showMessage("My Egg!");
+                    break;
+                    
+                case "Key":
+                    gamePanel.map.objects[index] = null;
+                    gamePanel.currState = gameState.WIN;
+                    gamePanel.stopMusic(); // sound.stop isn't working now
+                    gamePanel.playSoundE(4);
+                    break;
             }
         }
     }
