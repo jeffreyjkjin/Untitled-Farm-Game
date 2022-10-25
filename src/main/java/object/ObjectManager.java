@@ -13,6 +13,9 @@ public class ObjectManager {
             case 2:
                 newObj = new OBJ_Key();
                 break;
+            case 3:
+                newObj = new OBJ_Gate();
+                break;
             default:
                 return null;
         }
