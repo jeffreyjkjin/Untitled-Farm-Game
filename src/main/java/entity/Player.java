@@ -17,6 +17,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int hasEgg = 0;
+    public int points = 0;
     public int hasKey = 0;
     
     
@@ -123,6 +124,7 @@ public class Player extends Entity{
             case "Egg":
             	gamePanel.playSoundE(4); // play 'egg.wav'
             	hasEgg++;
+                points += 100;
             	gamePanel.obj[index] = null;
             	gamePanel.ui.showMessage("My Egg!");
             	break;
