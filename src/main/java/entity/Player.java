@@ -117,22 +117,22 @@ public class Player extends Entity{
     public void objectInteraction(int index) {
         if (index != 999) {
             // TODO: add functionality to objects by using a switch case
-            String objectName = gamePanel.obj[index].name;
+            String objectName = gamePanel.map.objects[index].name;
             
             switch(objectName) {
-            case "Egg":
-            	gamePanel.playSoundE(4); // play 'egg.wav'
-            	hasEgg++;
-            	gamePanel.obj[index] = null;
-            	gamePanel.ui.showMessage("My Egg!");
-            	break;
-            	
-            case "Key":
-            	gamePanel.obj[index] = null;
-            	gamePanel.ui.gameFinished = true;
-            	gamePanel.stopMusic(); // sound.stop isn't working now
-            	gamePanel.playSoundE(4);
-            	break;
+                case "Egg":
+                    gamePanel.playSoundE(4); // play 'egg.wav'
+                    hasEgg++;
+                    gamePanel.map.objects[index] = null;
+                    gamePanel.ui.showMessage("My Egg!");
+                    break;
+                    
+                case "Key":
+                    gamePanel.map.objects[index] = null;
+                    gamePanel.ui.gameFinished = true;
+                    gamePanel.stopMusic(); // sound.stop isn't working now
+                    gamePanel.playSoundE(4);
+                    break;
             }
         }
     }

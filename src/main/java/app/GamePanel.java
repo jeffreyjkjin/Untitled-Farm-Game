@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 import entity.Player;
 import object.SuperObject;
-import tile.Map;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -34,14 +33,11 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker checker = new CollisionChecker(this);
     Sound sound = new Sound();
     Thread gameThread;
-    public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
     
     // Entity & Object
     public Player player = new Player(this, input);
     public SuperObject obj[] = new SuperObject[10]; // 10 slots for object
-    
-    
     
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -52,8 +48,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     public void setupGame() {
-    	aSetter.setObject();
-
+        map.setObject();
+        
         playMusic(0);
     }
 
@@ -93,13 +89,10 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D graphic2 = (Graphics2D) graphic;
         
         //Tile
-        map.draw(graphic2);
+        map.drawTiles(graphic2);
         
         //Object
-        for(int i = 0; i < obj.length; i++) {
-        	if(obj[i] != null)
-        		obj[i].draw(graphic2, this);
-        }
+        map.drawObjects(graphic2);
 
         //Player
         player.draw(graphic2);
