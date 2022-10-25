@@ -11,7 +11,14 @@ import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
 
+
 public class GamePanel extends JPanel implements Runnable {
+    // Game States
+    public enum gameState {
+        PLAY,
+        PAUSE
+    }
+
     // Tiles
     final int originalTileSize = 16;
     final int scale = 3;
@@ -39,6 +46,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, input);
     public SuperObject obj[] = new SuperObject[10]; // 10 slots for object
     
+    // Game State
+    public gameState currState;
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -50,6 +60,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         map.setObject();
         
+        currState = gameState.PLAY;
+
         playMusic(0);
     }
 
@@ -80,7 +92,13 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
+        switch(currState) {
+            case PLAY:
+                player.update();
+                break;
+            case PAUSE:
+                break;
+        }
     }
 
     public void paintComponent(Graphics graphic) {
