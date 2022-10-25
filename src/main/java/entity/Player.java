@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import app.GamePanel;
+import app.GamePanel.gameState;
 import app.InputHandler;
 
 public class Player extends Entity{
@@ -129,7 +130,7 @@ public class Player extends Entity{
                     
                 case "Key":
                     gamePanel.map.objects[index] = null;
-                    gamePanel.ui.gameFinished = true;
+                    gamePanel.currState = gameState.WIN;
                     gamePanel.stopMusic(); // sound.stop isn't working now
                     gamePanel.playSoundE(4);
                     break;

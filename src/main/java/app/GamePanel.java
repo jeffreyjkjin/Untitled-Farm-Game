@@ -16,7 +16,9 @@ public class GamePanel extends JPanel implements Runnable {
     // Game States
     public enum gameState {
         PLAY,
-        PAUSE
+        PAUSE,
+        WIN,
+        LOSE
     }
 
     // Tiles
@@ -97,6 +99,10 @@ public class GamePanel extends JPanel implements Runnable {
                 player.update();
                 break;
             case PAUSE:
+                break;
+            case WIN:
+                break;
+            case LOSE:
                 break;
         }
     }
