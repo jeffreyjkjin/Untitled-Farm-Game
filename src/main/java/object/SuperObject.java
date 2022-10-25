@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import app.GamePanel;
 
-public class SuperObject {
+public abstract class SuperObject {
 	
 	public BufferedImage image;
 	public String name;
@@ -29,6 +29,9 @@ public class SuperObject {
              {
                g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
              }
+	}
+
+	public void update(GamePanel gp) {
 	}
 
 }
