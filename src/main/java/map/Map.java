@@ -1,12 +1,11 @@
-package app;
+package map;
 
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.spi.CollatorProvider;
-import java.awt.Color;
 
+import app.GamePanel;
 import entity.Farmer;
 import object.SuperObject;
 import object.ObjectManager;
@@ -21,6 +20,7 @@ public class Map {
 
     String levelName;
     public int maxWorldCol, maxWorldRow, playerStartX, playerStartY, objectNum, keyNum;
+    public int gateIndex;
 
     boolean drawPath = true; // FOR TESTING PATHFINDING
 
@@ -145,6 +145,11 @@ public class Map {
                     objects[i] = ObjectManager.createObject(objMap[col][row]);
                     objects[i].worldX = col * gp.tileSize;
                     objects[i].worldY = row * gp.tileSize;
+                    
+                    // find exit gate
+                    if (objects[i].name == "Gate") {
+                        gateIndex = i;
+                    }
 
                     i++;
                 }

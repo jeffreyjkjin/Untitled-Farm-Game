@@ -16,7 +16,7 @@ public class OBJ_Gate extends SuperObject {
 		name = "Gate";
 		try {
 			closedGate = ImageIO.read(getClass().getResourceAsStream("/objects/closedgate.png"));
-			openedGate = ImageIO.read(getClass().getResourceAsStream("/objects/closedgate.png"));
+			openedGate = ImageIO.read(getClass().getResourceAsStream("/objects/openedgate.png"));
 		}
         catch(IOException e) {
 			e.printStackTrace();
@@ -27,10 +27,11 @@ public class OBJ_Gate extends SuperObject {
 
 	public void update(GamePanel gp) {
 		if (open == false) {
+			open = true;
 			image = openedGate;
 		}
 		else {
-			// TODO: load next level
+			gp.mapM.nextMap();
 		}
 	}
 

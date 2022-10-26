@@ -8,7 +8,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import app.GamePanel;
-import app.GamePanel.gameState;
 import app.InputHandler;
 import app.Map;
 
@@ -40,8 +39,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        worldX = gamePanel.map.playerStartX; // starting position
-        worldY = gamePanel.map.playerStartY;
+        worldX = gamePanel.mapM.getCurrentMap().playerStartX; // starting position
+        worldY = gamePanel.mapM.getCurrentMap().playerStartY;
         speed = 4;
         direction = "down";
 
@@ -127,23 +126,27 @@ public class Player extends Entity{
 
     public void objectInteraction(int index) {
         if (index != 999) {
-            String objectName = gamePanel.map.objects[index].name;
+            String objectName = gamePanel.mapM.getCurrentMap().objects[index].name;
             
             switch(objectName) {
                 case "Egg":
                     gamePanel.playSoundE(4); // play 'egg.wav'
                     score += 100;
-                    gamePanel.map.objects[index] = null;
+                    gamePanel.mapM.getCurrentMap().objects[index] = null;
                     gamePanel.ui.showMessage("My Egg!");
                     break;
                 case "Key":
-                    gamePanel.map.objects[index] = null;
+                    gamePanel.mapM.getCurrentMap().objects[index] = null;
                     keyCount++;
-                    if (keyCount == gamePanel.map.keyNum) {
-                        // TODO: update gate object to be opened when all keys collected
-                        System.out.println("GOT ALL KEYS");
+                    if (keyCount == gamePanel.mapM.getCurrentMap().keyNum) {
+                        gamePanel.mapM.getCurrentMap().objects[gamePanel.mapM.getCurrentMap().gateIndex].update(gamePanel);
                     }
                     gamePanel.playSoundE(4);
+                    break;
+                case "Gate":
+                    if (keyCount == gamePanel.mapM.getCurrentMap().keyNum) {
+                        gamePanel.mapM.getCurrentMap().objects[index].update(gamePanel);
+                    }
                     break;
             }
         }
