@@ -96,7 +96,7 @@ public class UI {
 		
 		// Score
 		g2.drawString("SCORE", 9 * gp.tileSize, 32);
-		g2.drawString(""+gp.player.points, 9 * gp.tileSize, 64);
+		g2.drawString(""+gp.player.score, 9 * gp.tileSize, 64);
 
 		// Message
 		if (messageOn == true) {
