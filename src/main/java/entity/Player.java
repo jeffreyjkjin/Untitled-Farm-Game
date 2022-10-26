@@ -42,6 +42,9 @@ public class Player extends Entity{
         worldY = gamePanel.map.playerStartY;
         speed = 4;
         direction = "down";
+
+        curLife = 3;
+        maxLife = 3;
     }
 
     public void getPlayerImage() {

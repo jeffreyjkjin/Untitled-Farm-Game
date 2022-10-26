@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 
+import entity.Player;
 import object.OBJ_Heart;
 import object.OBJ_Key;
 
@@ -46,6 +47,12 @@ public class UI {
 			e.printStackTrace();
 		}
 	}
+
+	public void drawPlayerLife(Graphics2D g2) {
+		for(int i =0; i < gp.player.curLife; i++) {
+			g2.drawImage(heartImage, 24 + i*gp.tileSize , 32, gp.tileSize, gp.tileSize, null);
+		}
+	}
 	
 	public void showMessage(String text) {
 		
@@ -76,12 +83,7 @@ public class UI {
 		
 		// TODO: need to figure out how to center these UI elements
 		// Health
-		g2.setFont(arial_30);
-		g2.setColor(Color.WHITE);
-		g2.drawImage(heartImage, 24 , 49, gp.tileSize, gp.tileSize, null); // set imageSize & coordinate
-		g2.drawImage(heartImage, 24 + gp.tileSize*5/4, 49, gp.tileSize, gp.tileSize, null);
-		g2.drawImage(heartImage, 24 + gp.tileSize*5/2, 49, gp.tileSize, gp.tileSize, null);
-		g2.drawString("HP:" , 24, 32); 
+		drawPlayerLife(g2);
 
 		// Level Name
 		g2.drawString("LEVEL", 5 * gp.tileSize, 32);
