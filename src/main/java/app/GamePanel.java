@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Farmer;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -47,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     // Entity & Object
     public Player player = new Player(this, input);
     public SuperObject obj[] = new SuperObject[10]; // 10 slots for object
+    public Farmer farmers[] = new Farmer[10];
     
     // Game State
     public gameState currState;
@@ -61,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
     
     public void setupGame() {
         map.setObject();
+        map.setFarmer();
         
         currState = gameState.PLAY;
 
@@ -97,6 +100,14 @@ public class GamePanel extends JPanel implements Runnable {
         switch(currState) {
             case PLAY:
                 player.update();
+
+                for (int i = 0; i < farmers.length; i++)
+                {
+                    if (farmers[i] != null)
+                    {
+                        farmers[i].update();
+                    }
+                }
                 break;
             case PAUSE:
                 break;
@@ -118,8 +129,11 @@ public class GamePanel extends JPanel implements Runnable {
         //Object
         map.drawObjects(graphic2);
 
+        //Farmers
+        map.drawFarmers(graphic2);
+
         //Player
-        player.draw(graphic2);
+        player.draw(graphic2);        
         
         //UI
         ui.draw(graphic2);

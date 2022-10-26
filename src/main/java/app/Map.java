@@ -4,7 +4,9 @@ import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.spi.CollatorProvider;
 
+import entity.Farmer;
 import object.SuperObject;
 import object.ObjectManager;
 
@@ -13,6 +15,7 @@ public class Map {
 
     public int[][] tileMap, objMap;
     public SuperObject objects[];
+    public Farmer farmers[];
 
     String levelName;
     public int maxWorldCol, maxWorldRow, playerStartX, playerStartY, objectNum, keyNum;
@@ -56,6 +59,7 @@ public class Map {
             reader.readLine(); // skip blank space line
             objMap = new int[maxWorldCol][maxWorldRow];
             objects = new SuperObject[objectNum];
+            farmers = new Farmer[10];
             readArray(reader, objMap);
 
             reader.close();
@@ -115,7 +119,7 @@ public class Map {
 
         while (col < maxWorldCol && row < maxWorldRow) {
             if (objMap[col][row] != 0) {
-                if (objects[i] == null) {
+                if (objects[i] == null && objMap[col][row] != 19) {
                     objects[i] = ObjectManager.createObject(objMap[col][row]);
                     objects[i].worldX = col * gp.tileSize;
                     objects[i].worldY = row * gp.tileSize;
@@ -133,10 +137,47 @@ public class Map {
         }
     }
 
+    public void setFarmer() // Same idea as setObject but places a farmer instead with code 99 in map txt file
+    {
+        int col = 0;
+        int row = 0;
+        int i = 0;
+
+        while (col < maxWorldCol && row < maxWorldRow) {
+            if (objMap[col][row] == 19) {
+                
+                farmers[i] = new Farmer(gp);
+                farmers[i].worldX = col * gp.tileSize;
+                farmers[i].worldY = row * gp.tileSize;
+
+                i++;
+                
+            }
+
+            col++;
+
+            if (col == maxWorldCol) {
+                col = 0;
+                row++;
+            }
+        }
+    }
+
     public void drawObjects(Graphics2D graphic2) {
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] != null) {
                 objects[i].draw(graphic2, gp);
+            }
+        }
+    }
+
+    public void drawFarmers(Graphics2D graphic2)
+    {
+        for (int i = 0; i < farmers.length; i++)
+        {
+            if (farmers[i] != null)
+            {
+                farmers[i].draw(graphic2);
             }
         }
     }
