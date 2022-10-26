@@ -8,10 +8,9 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
-import object.SuperObject;
+import map.MapManager; 
 import tile.TileManager;
 import pathfinding.Pathfinding;
-import map.MapManager; 
 
 public class GamePanel extends JPanel implements Runnable {
     // Game States
@@ -21,6 +20,8 @@ public class GamePanel extends JPanel implements Runnable {
         WIN,
         LOSE
     }
+    
+    public gameState currState = gameState.PLAY;
 
     // Tiles
     final int originalTileSize = 16;
@@ -37,21 +38,19 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     // System
-    public TileManager tileM = new TileManager(this);
-    public MapManager mapM = new MapManager(this);
     InputHandler input = new InputHandler(this);
-    public CollisionChecker checker = new CollisionChecker(this);
     Sound sound = new Sound();
     Thread gameThread;
     public UI ui = new UI(this);
-    public Pathfinding pathFinder = new Pathfinding(this);
+    
+    // Maps
+    public TileManager tileM = new TileManager(this);
+    public MapManager mapM = new MapManager(this);
     
     // Entity & Object
+    public CollisionChecker checker = new CollisionChecker(this);
     public Player player = new Player(this, input);
-    public SuperObject obj[] = new SuperObject[10]; // 10 slots for object
-    
-    // Game State
-    public gameState currState = gameState.PLAY;
+    public Pathfinding pathFinder = new Pathfinding(this);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -64,8 +63,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         mapM.setupMap();
         
-        // currState = gameState.PLAY;
-
         playMusic(0);
     }
 
