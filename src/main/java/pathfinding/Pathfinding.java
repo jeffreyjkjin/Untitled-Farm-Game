@@ -35,17 +35,17 @@ public class Pathfinding {
 
     public void createNodes()
     {
-        node = new Node[gp.map.maxWorldCol][gp.map.maxWorldRow];
+        node = new Node[gp.mapM.mapList[gp.mapM.currMap].maxWorldCol][gp.mapM.mapList[gp.mapM.currMap].maxWorldRow];
 
         int col = 0;
         int row = 0;
 
-        while (col < gp.map.maxWorldCol && row < gp.map.maxWorldRow)
+        while (col < gp.mapM.mapList[gp.mapM.currMap].maxWorldCol && row < gp.mapM.mapList[gp.mapM.currMap].maxWorldRow)
         {
             node[col][row] = new Node(col, row);
             col++;
 
-            if (col == gp.map.maxWorldCol)
+            if (col == gp.mapM.mapList[gp.mapM.currMap].maxWorldCol)
             {
                 col = 0;
                 row++;
@@ -58,7 +58,7 @@ public class Pathfinding {
         int col = 0;
         int row = 0;
 
-        while (col < gp.map.maxWorldCol && row < gp.map.maxWorldRow)
+        while (col < gp.mapM.mapList[gp.mapM.currMap].maxWorldCol && row < gp.mapM.mapList[gp.mapM.currMap].maxWorldRow)
         {
             node[col][row].open = false;
             node[col][row].blocked = false;
@@ -66,7 +66,7 @@ public class Pathfinding {
 
             col++;
 
-            if (col == gp.map.maxWorldCol)
+            if (col == gp.mapM.mapList[gp.mapM.currMap].maxWorldCol)
             {
                 col = 0;
                 row++;
@@ -92,9 +92,9 @@ public class Pathfinding {
         int col = 0;
         int row = 0;
 
-        while (col < gp.map.maxWorldCol && row < gp.map.maxWorldRow)
+        while (col < gp.mapM.mapList[gp.mapM.currMap].maxWorldCol && row < gp.mapM.mapList[gp.mapM.currMap].maxWorldRow)
         {
-            int tileNum = gp.map.tileMap[row][col];
+            int tileNum = gp.mapM.mapList[gp.mapM.currMap].tileMap[row][col];
             // Check tiles for collision. If yes, change blocked bool to true
             if (gp.tileM.tile[tileNum].collision)
             {
@@ -105,7 +105,7 @@ public class Pathfinding {
             getCost(node[col][row]);
             col++;
 
-            if (col == gp.map.maxWorldCol)
+            if (col == gp.mapM.mapList[gp.mapM.currMap].maxWorldCol)
             {
                 col = 0;
                 row++;
@@ -149,12 +149,12 @@ public class Pathfinding {
                 openNode(node[col - 1][row]);
             }
             // Open down
-            if (row + 1 < gp.map.maxWorldRow)
+            if (row + 1 < gp.mapM.mapList[gp.mapM.currMap].maxWorldRow)
             {
                 openNode(node[col][row + 1]);
             }
             // Open right
-            if (col + 1 < gp.map.maxWorldCol)
+            if (col + 1 < gp.mapM.mapList[gp.mapM.currMap].maxWorldCol)
             {
                 openNode(node[col + 1][row]);
             }

@@ -6,8 +6,8 @@ import app.GamePanel;
 
 public class MapManager {
     GamePanel gamePanel;
-    Map mapList[];
-    int currMap;
+    public Map mapList[];
+    public int currMap;
 
     public MapManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;

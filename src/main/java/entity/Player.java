@@ -9,7 +9,8 @@ import javax.imageio.ImageIO;
 
 import app.GamePanel;
 import app.InputHandler;
-import app.Map;
+import map.Map;
+import map.MapManager;
 
 public class Player extends Entity{
 
@@ -89,7 +90,7 @@ public class Player extends Entity{
         objectInteraction(objIndex);
 
         // Check for collision with enemy
-        int farmerIndex = gamePanel.checker.checkFarmerCollision(this, gamePanel.map.farmers);
+        int farmerIndex = gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.mapList[gamePanel.mapM.currMap].farmers);
         farmerInteraction(farmerIndex);
 
         if(collisionOn == false) {
