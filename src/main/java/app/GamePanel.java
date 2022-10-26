@@ -7,14 +7,11 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-import entity.Farmer;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
 import pathfinding.Pathfinding;
 import map.MapManager; 
-import map.Map;
-
 
 public class GamePanel extends JPanel implements Runnable {
     // Game States
@@ -54,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
     public SuperObject obj[] = new SuperObject[10]; // 10 slots for object
     
     // Game State
-    public gameState currState;
+    public gameState currState = gameState.PLAY;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -67,7 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         mapM.setupMap();
         
-        currState = gameState.PLAY;
+        // currState = gameState.PLAY;
 
         playMusic(0);
     }
@@ -103,11 +100,11 @@ public class GamePanel extends JPanel implements Runnable {
             case PLAY:
                 player.update();
 
-                for (int i = 0; i < mapM.mapList[mapM.currMap].farmers.length; i++)
+                for (int i = 0; i < mapM.getMap().farmers.length; i++)
                 {
-                    if (mapM.mapList[mapM.currMap].farmers[i] != null)
+                    if (mapM.getMap().farmers[i] != null)
                     {
-                        mapM.mapList[mapM.currMap].farmers[i].update();
+                        mapM.getMap().farmers[i].update();
                     }
                 }
                 break;

@@ -9,8 +9,6 @@ import javax.imageio.ImageIO;
 
 import app.GamePanel;
 import app.InputHandler;
-import map.Map;
-import map.MapManager;
 
 public class Player extends Entity{
 
@@ -40,8 +38,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        worldX = gamePanel.mapM.getCurrentMap().playerStartX; // starting position
-        worldY = gamePanel.mapM.getCurrentMap().playerStartY;
+        worldX = gamePanel.mapM.getMap().playerStartX; // starting position
+        worldY = gamePanel.mapM.getMap().playerStartY;
         speed = 4;
         direction = "down";
 
@@ -90,7 +88,7 @@ public class Player extends Entity{
         objectInteraction(objIndex);
 
         // Check for collision with enemy
-        int farmerIndex = gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.mapList[gamePanel.mapM.currMap].farmers);
+        int farmerIndex = gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers);
         farmerInteraction(farmerIndex);
 
         if(collisionOn == false) {
@@ -127,26 +125,26 @@ public class Player extends Entity{
 
     public void objectInteraction(int index) {
         if (index != 999) {
-            String objectName = gamePanel.mapM.getCurrentMap().objects[index].name;
+            String objectName = gamePanel.mapM.getMap().objects[index].name;
             
             switch(objectName) {
                 case "Egg":
                     gamePanel.playSoundE(4); // play 'egg.wav'
                     score += 100;
-                    gamePanel.mapM.getCurrentMap().objects[index] = null;
+                    gamePanel.mapM.getMap().objects[index] = null;
                     gamePanel.ui.showMessage("My Egg!");
                     break;
                 case "Key":
-                    gamePanel.mapM.getCurrentMap().objects[index] = null;
+                    gamePanel.mapM.getMap().objects[index] = null;
                     keyCount++;
-                    if (keyCount == gamePanel.mapM.getCurrentMap().keyNum) {
-                        gamePanel.mapM.getCurrentMap().objects[gamePanel.mapM.getCurrentMap().gateIndex].update(gamePanel);
+                    if (keyCount == gamePanel.mapM.getMap().keyNum) {
+                        gamePanel.mapM.getObject(gamePanel.mapM.getMap().gateIndex).update(gamePanel);
                     }
                     gamePanel.playSoundE(4);
                     break;
                 case "Gate":
-                    if (keyCount == gamePanel.mapM.getCurrentMap().keyNum) {
-                        gamePanel.mapM.getCurrentMap().objects[index].update(gamePanel);
+                    if (keyCount == gamePanel.mapM.getMap().keyNum) {
+                        gamePanel.mapM.getObject(index).update(gamePanel);
                     }
                     break;
             }

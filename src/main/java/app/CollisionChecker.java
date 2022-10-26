@@ -27,32 +27,32 @@ public class CollisionChecker {
 		switch(entity.direction){
 			case"up":
 				entityTopRow = (entityTopWorldY - entity.speed)/gp.tileSize;
-				tilenum1 = gp.mapM.getCurrentMap().tileMap[entityTopRow][entityLeftCol];
-				tilenum2 = gp.mapM.getCurrentMap().tileMap[entityTopRow][entityRightCol];
+				tilenum1 = gp.mapM.getTileMap()[entityTopRow][entityLeftCol];
+				tilenum2 = gp.mapM.getTileMap()[entityTopRow][entityRightCol];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
 				break;
 			case"down":
 				entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;
-				tilenum1 = gp.mapM.getCurrentMap().tileMap[entityBottomRow][entityLeftCol];
-				tilenum2 = gp.mapM.getCurrentMap().tileMap[entityBottomRow][entityRightCol];
+				tilenum1 = gp.mapM.getTileMap()[entityBottomRow][entityLeftCol];
+				tilenum2 = gp.mapM.getTileMap()[entityBottomRow][entityRightCol];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
 				break;
 			case"left":
 				entityLeftCol = (entityLeftWorldX - entity.speed)/gp.tileSize;
-				tilenum1 = gp.mapM.getCurrentMap().tileMap[entityTopRow][entityLeftCol];
-				tilenum2 = gp.mapM.getCurrentMap().tileMap[entityBottomRow][entityLeftCol];
+				tilenum1 = gp.mapM.getTileMap()[entityTopRow][entityLeftCol];
+				tilenum2 = gp.mapM.getTileMap()[entityBottomRow][entityLeftCol];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
 				break;
 			case"right":
 				entityRightCol = (entityRightWorldX + entity.speed)/gp.tileSize;
-				tilenum1 = gp.mapM.getCurrentMap().tileMap[entityTopRow][entityRightCol];
-				tilenum2 = gp.mapM.getCurrentMap().tileMap[entityBottomRow][entityRightCol];
+				tilenum1 = gp.mapM.getTileMap()[entityTopRow][entityRightCol];
+				tilenum2 = gp.mapM.getTileMap()[entityBottomRow][entityRightCol];
 				if(gp.tileM.tile[tilenum1].collision == true || gp.tileM.tile[tilenum2].collision == true){
 					entity.collisionOn = true;
 				}
@@ -65,22 +65,22 @@ public class CollisionChecker {
     	
     	int index = 999;
     	
-    	for (int i = 0; i < gp.mapM.getCurrentMap().objects.length; i++) {
+    	for (int i = 0; i < gp.mapM.getMap().objects.length; i++) {
     		
-    		if(gp.mapM.getCurrentMap().objects[i] != null) {
+    		if(gp.mapM.getMap().objects[i] != null) {
     			
     			// get entity hitbox
     			entity.hitbox.x = entity.worldX + entity.hitbox.x; 
     			entity.hitbox.y = entity.worldY + entity.hitbox.y; 
     			// get object hitbox
-    			gp.mapM.getCurrentMap().objects[i].hitbox.x = gp.mapM.getCurrentMap().objects[i].worldX + gp.mapM.getCurrentMap().objects[i].hitbox.y;
-    			gp.mapM.getCurrentMap().objects[i].hitbox.y = gp.mapM.getCurrentMap().objects[i].worldY + gp.mapM.getCurrentMap().objects[i].hitbox.y;
+    			gp.mapM.getObject(i).hitbox.x = gp.mapM.getObject(i).worldX + gp.mapM.getObject(i).hitbox.y;
+    			gp.mapM.getObject(i).hitbox.y = gp.mapM.getObject(i).worldY + gp.mapM.getObject(i).hitbox.y;
     			
     			switch(entity.direction) {
     			case "up":
     				entity.hitbox.y -= entity.speed;
-    				if (entity.hitbox.intersects(gp.mapM.getCurrentMap().objects[i].hitbox)) {
-    					if(gp.mapM.getCurrentMap().objects[i].collision == true) {
+    				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) {
+    					if(gp.mapM.getObject(i).collision == true) {
     						entity.collisionOn = true;
     					}
     					if(player == true) {
@@ -91,8 +91,8 @@ public class CollisionChecker {
     				
     			case "down":
     				entity.hitbox.y += entity.speed;
-    				if (entity.hitbox.intersects(gp.mapM.getCurrentMap().objects[i].hitbox)) {
-    					if(gp.mapM.getCurrentMap().objects[i].collision == true) {
+    				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) {
+    					if(gp.mapM.getObject(i).collision == true) {
     						entity.collisionOn = true;
     					}
     					if(player == true) {
@@ -102,8 +102,8 @@ public class CollisionChecker {
     				
     			case "left":
     				entity.hitbox.x -= entity.speed;
-    				if (entity.hitbox.intersects(gp.mapM.getCurrentMap().objects[i].hitbox)) {
-              if(gp.mapM.getCurrentMap().objects[i].collision == true) {
+    				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) {
+              if(gp.mapM.getObject(i).collision == true) {
     						entity.collisionOn = true;
     					}
     					if(player == true) {
@@ -113,8 +113,8 @@ public class CollisionChecker {
     				
     			case "right":
     				entity.hitbox.x -= entity.speed;
-    				if (entity.hitbox.intersects(gp.mapM.getCurrentMap().objects[i].hitbox)) {
-              if(gp.mapM.getCurrentMap().objects[i].collision == true) {
+    				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) {
+              if(gp.mapM.getObject(i).collision == true) {
     						entity.collisionOn = true;
     					}
     					if(player == true) {
@@ -124,8 +124,8 @@ public class CollisionChecker {
     			}
     			entity.hitbox.x = entity.hitboxDefaultX;
     			entity.hitbox.y = entity.hitboxDefaultY;
-    			gp.mapM.getCurrentMap().objects[i].hitbox.x = gp.mapM.getCurrentMap().objects[i].hitboxDefaultX;
-    			gp.mapM.getCurrentMap().objects[i].hitbox.y = gp.mapM.getCurrentMap().objects[i].hitboxDefaultY;
+    			gp.mapM.getObject(i).hitbox.x = gp.mapM.getObject(i).hitboxDefaultX;
+    			gp.mapM.getObject(i).hitbox.y = gp.mapM.getObject(i).hitboxDefaultY;
     		}
     			
     	}
