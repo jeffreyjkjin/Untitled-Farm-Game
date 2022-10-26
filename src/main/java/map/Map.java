@@ -104,7 +104,7 @@ public class Map {
             worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
             worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
             worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
-                graphic2.drawImage(gp.tileM.tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                graphic2.drawImage(gp.tileM.getTileImage(tileNum), screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
 
             col++;

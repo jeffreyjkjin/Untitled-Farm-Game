@@ -96,7 +96,7 @@ public class Pathfinding {
         {
             int tileNum = gp.mapM.getMap().tileMap[row][col];
             // Check tiles for collision. If yes, change blocked bool to true
-            if (gp.tileM.tile[tileNum].collision)
+            if (gp.tileM.checkTileCollision(tileNum))
             {
                 node[col][row].blocked = true;
             }
