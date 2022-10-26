@@ -79,6 +79,10 @@ public class UI {
 		}
 	}
 
+	private void drawTitleScreen(Graphics2D g2){
+		
+	}
+
 	private void drawPlayScreen(Graphics2D g2) {
 		g2.setColor(Color.WHITE);
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20));

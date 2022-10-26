@@ -112,6 +112,8 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
             case LOSE:
                 break;
+            case TITLE:
+                break;
         }
     }
 
