@@ -11,6 +11,7 @@ import entity.Farmer;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
+import pathfinding.Pathfinding;
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -44,11 +45,11 @@ public class GamePanel extends JPanel implements Runnable {
     Sound sound = new Sound();
     Thread gameThread;
     public UI ui = new UI(this);
+    public Pathfinding pathFinder = new Pathfinding(this);
     
     // Entity & Object
     public Player player = new Player(this, input);
     public SuperObject obj[] = new SuperObject[10]; // 10 slots for object
-    public Farmer farmers[] = new Farmer[10];
     
     // Game State
     public gameState currState;
@@ -101,11 +102,11 @@ public class GamePanel extends JPanel implements Runnable {
             case PLAY:
                 player.update();
 
-                for (int i = 0; i < farmers.length; i++)
+                for (int i = 0; i < map.farmers.length; i++)
                 {
-                    if (farmers[i] != null)
+                    if (map.farmers[i] != null)
                     {
-                        farmers[i].update();
+                        map.farmers[i].update();
                     }
                 }
                 break;

@@ -6,22 +6,26 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import pathfinding.Pathfinding;
+import app.CollisionChecker;
 
 public class Farmer extends Entity {
 
     GamePanel gamePanel;
 
     public int screenX, screenY;
+    public boolean collision = true;
 
     public Farmer(GamePanel gp)
     {
         this.gamePanel = gp;
 
-        speed = 4;
+        speed = 1;
         hitboxDefaultX = 14;
         hitboxDefaultY = 16;
         hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 32, 40);
         direction = "down";
+        onPath = true;
 
         getFarmerImage();
     }
@@ -46,16 +50,23 @@ public class Farmer extends Entity {
 
     public void setAction()
     {
-        // Movement AI
+        // Need to change it so they are only onPath when they can see the chicken?
+        if(onPath)
+        {
+            int goalCol = (gamePanel.player.worldX + gamePanel.player.hitbox.x) / gamePanel.tileSize;
+            int goalRow = (gamePanel.player.worldY + gamePanel.player.hitbox.y) / gamePanel.tileSize;
+            
+            searchPath(goalCol, goalRow);
+        }
     }
 
     public void update()
     {
-        // TODO determine direction with pathfinding algo and change direction string var
-
         collisionOn = false;
         gamePanel.checker.checkCollision(this);
-        /*
+
+        setAction();
+
         if(collisionOn == false) {
             switch(direction){
                 case"up":
@@ -72,7 +83,6 @@ public class Farmer extends Entity {
                     break;
             }
         }
-        */
 
         spriteCounter++;
     
@@ -133,5 +143,105 @@ public class Farmer extends Entity {
             {
             graphic2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
             }
+    }
+
+    public void searchPath(int goalCol, int goalRow)
+    {
+        int currCol = (worldX + hitbox.x) / gamePanel.tileSize;
+        int currRow = (worldY + hitbox.y) / gamePanel.tileSize;
+        gamePanel.pathFinder.setNodes(currCol, currRow, goalCol, goalRow);
+        boolean goalReached = gamePanel.pathFinder.search();
+
+        if (goalReached)
+        {
+            // Next worldX and Y
+            int nextX = gamePanel.pathFinder.pathList.get(0).col * gamePanel.tileSize;
+            int nextY = gamePanel.pathFinder.pathList.get(0).row * gamePanel.tileSize;
+            // Next col and row
+            int nextCol = gamePanel.pathFinder.pathList.get(0).col;
+            int nextRow = gamePanel.pathFinder.pathList.get(0).row;
+            // Entity's hitbox
+            int farmerLeftX = worldX + hitbox.x;
+            int farmerRightX = worldX + hitbox.x + hitbox.width;
+            int farmerTopY = worldY + hitbox.y;
+            int farmerBotY = worldY + hitbox.y + hitbox.height;
+            // Find which direction to go next
+            if (farmerTopY > nextY && farmerLeftX >= nextX && farmerRightX < nextX + gamePanel.tileSize)
+            {
+                direction = "up";
+            }
+            else if (farmerTopY < nextY && farmerLeftX >= nextX && farmerRightX < nextX + gamePanel.tileSize)
+            {
+                direction = "down";
+            }
+            else if (farmerTopY >= nextY && farmerBotY < nextY + gamePanel.tileSize)
+            {
+                // Can go left or right so have to figure out which
+                if (farmerLeftX > nextX)
+                {
+                    direction = "left";
+                }
+                if (farmerLeftX < nextX)
+                {
+                    direction = "right";
+                }
+
+            }
+            else if (farmerTopY > nextY && farmerLeftX > nextX)
+            {
+                // Can go up or left, have to figoure out wich
+                direction = "up";
+
+                gamePanel.checker.checkCollision(this);
+
+                if (collisionOn)
+                {
+                    direction = "left";
+                }
+            }
+            else if(farmerTopY > nextY && farmerLeftX < nextX)
+            {
+                // Can go up or right
+                direction = "up";
+
+                gamePanel.checker.checkCollision(this);
+
+                if (collisionOn)
+                {
+                    direction = "right";
+                }
+            }
+            else if (farmerTopY < nextY && farmerLeftX > nextX)
+            {
+                // down or left
+                direction = "down";
+
+                gamePanel.checker.checkCollision(this);
+
+                if (collisionOn)
+                {
+                    direction = "left";
+                }
+
+            }
+            else if (farmerTopY < nextY && farmerLeftX < nextX)
+            {
+                // down or left
+                direction = "down";
+
+                gamePanel.checker.checkCollision(this);
+
+                if (collisionOn)
+                {
+                    direction = "right";
+                }
+            }
+
+            if (nextCol == goalCol && nextRow == goalRow)
+            {
+                onPath = false;
+            } 
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 package app;
 
 import entity.Entity;
+import entity.Farmer;
 public class CollisionChecker {
     
     GamePanel gp;
@@ -131,4 +132,55 @@ public class CollisionChecker {
     	
     	return index;
     } 
+
+	public int checkFarmerCollision(Entity entity, Farmer[] farmers)
+	{
+		int index = 999;
+
+		for (int i = 0; i < farmers.length; i++) {
+    		
+    		if(farmers[i] != null) {
+    			
+    			// get entity hitbox
+    			entity.hitbox.x = entity.worldX + entity.hitbox.x; 
+    			entity.hitbox.y = entity.worldY + entity.hitbox.y; 
+    			// get object hitbox
+    			farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.y;
+    			farmers[i].hitbox.y = farmers[i].worldY + farmers[i].hitbox.y;
+    			
+    			switch(entity.direction) 
+				{
+    			case "up":
+    				entity.hitbox.y -= entity.speed;
+    				break;
+    				
+    			case "down":
+    				entity.hitbox.y += entity.speed;
+    				break;
+    				
+    			case "left":
+    				entity.hitbox.x -= entity.speed;
+    				break;
+    				
+    			case "right":
+    				entity.hitbox.x -= entity.speed;
+    				break;
+    			}
+
+				if (entity.hitbox.intersects(farmers[i].hitbox)) {
+
+					entity.collisionOn = true;
+					index = i;
+				}
+
+    			entity.hitbox.x = entity.hitboxDefaultX;
+    			entity.hitbox.y = entity.hitboxDefaultY;
+    			farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
+    			farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
+    		}
+    			
+    	}
+
+		return index;
+	}
 }

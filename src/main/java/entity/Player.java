@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import app.GamePanel;
 import app.GamePanel.gameState;
 import app.InputHandler;
+import app.Map;
 
 public class Player extends Entity{
 
@@ -88,6 +89,10 @@ public class Player extends Entity{
         int objIndex = gamePanel.checker.checkObjectCollision(this, true);
         objectInteraction(objIndex);
 
+        // Check for collision with enemy
+        int farmerIndex = gamePanel.checker.checkFarmerCollision(this, gamePanel.map.farmers);
+        farmerInteraction(farmerIndex);
+
         if(collisionOn == false) {
             switch(direction){
                 case"up":
@@ -141,6 +146,17 @@ public class Player extends Entity{
                     gamePanel.playSoundE(4);
                     break;
             }
+        }
+    }
+
+    public void farmerInteraction(int index)
+    {
+        if (index != 999)
+        {
+            curLife--;
+            gamePanel.ui.showMessage("TEST! HP minus 1");
+
+            // TODO find out how to reset the player back to start and reload level from start state
         }
     }
 

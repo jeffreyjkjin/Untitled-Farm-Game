@@ -5,10 +5,12 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.spi.CollatorProvider;
+import java.awt.Color;
 
 import entity.Farmer;
 import object.SuperObject;
 import object.ObjectManager;
+import tile.TileManager;
 
 public class Map {
     GamePanel gp;
@@ -19,6 +21,8 @@ public class Map {
 
     String levelName;
     public int maxWorldCol, maxWorldRow, playerStartX, playerStartY, objectNum, keyNum;
+
+    boolean drawPath = true; // FOR TESTING PATHFINDING
 
     public Map(GamePanel gp, String mapFile) {
         this.gp = gp;
@@ -109,6 +113,24 @@ public class Map {
                 col = 0;
                 row++;
             }
+        }
+
+        if (drawPath) // FOR TESTING PATHFINDING
+        {
+            graphic2.setColor(new Color(255,0,0,70));
+
+            
+            for (int i = 0; i < gp.pathFinder.pathList.size(); i++)
+            {
+                int worldX = gp.pathFinder.pathList.get(i).col * gp.tileSize;
+                int worldY = gp.pathFinder.pathList.get(i).row * gp.tileSize;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                graphic2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
+            }
+            
+
         }
     }
     
