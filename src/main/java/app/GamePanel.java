@@ -11,6 +11,7 @@ import entity.Farmer;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
+import map.MapManager; 
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -38,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // System
     public TileManager tileM = new TileManager(this);
-    public Map map = new Map(this, "/levels/levelTest1.txt");
+    public MapManager mapM = new MapManager(this);
     InputHandler input = new InputHandler(this);
     public CollisionChecker checker = new CollisionChecker(this);
     Sound sound = new Sound();
@@ -62,8 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     public void setupGame() {
-        map.setObject();
-        map.setFarmer();
+        mapM.setupMap();
         
         currState = gameState.PLAY;
 
@@ -123,19 +123,13 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D graphic2 = (Graphics2D) graphic;
         
-        //Tile
-        map.drawTiles(graphic2);
-        
-        //Object
-        map.drawObjects(graphic2);
+        // Map
+        mapM.draw(graphic2);
 
-        //Farmers
-        map.drawFarmers(graphic2);
-
-        //Player
+        // Player
         player.draw(graphic2);        
         
-        //UI
+        // UI
         ui.draw(graphic2);
         
         graphic2.dispose();
