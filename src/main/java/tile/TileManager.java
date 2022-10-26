@@ -1,13 +1,17 @@
 package tile;
 
+import java.awt.image.BufferedImage;
+
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
+
 import app.GamePanel;
 
 public class TileManager {
     
     GamePanel gp;
-    public Tile[] tile;
+    Tile[] tile;
 
     public TileManager(GamePanel gp)
     {
@@ -96,5 +100,13 @@ public class TileManager {
         } catch(IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public BufferedImage getTileImage(int index) {
+        return tile[index].image;
+    }
+
+    public Boolean checkTileCollision(int index) {
+        return tile[index].collision;
     }
 }
