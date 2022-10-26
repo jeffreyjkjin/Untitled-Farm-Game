@@ -35,6 +35,8 @@ public class UI {
 		// keyImage = key.image;
 		OBJ_Heart heart = new OBJ_Heart();
 		heartImage = heart.image;
+		OBJ_Key key = new OBJ_Key();
+		keyImage = key.image;
 
 		try {
 			InputStream input = getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf");
@@ -72,14 +74,18 @@ public class UI {
 				break;
 			case LOSE:
 				break;
+			case TITLE:
+				break;
 		}
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
 		g2.setColor(Color.WHITE);
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20));
-		// g2.drawImage(eggImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null); // set imageSize & coordinate
-		// g2.drawString("X " +gp.player.hasEgg, 74, 65); // 74 because eggImage obtain 24+48=72 size 
+
+		// Keys
+		g2.drawImage(keyImage, 24, 88, gp.tileSize, gp.tileSize, null); // set imageSize & coordinate
+		g2.drawString("X " +gp.player.keyCount, 72, 124); // 72 because eggImage obtain 24+48 = 72 size and 136 = 88 + 36. Draw string draw it differently from drawimage
 		
 		// TODO: need to figure out how to center these UI elements
 		// Health
@@ -118,25 +124,29 @@ public class UI {
 		g2.setColor(Color.white);
 		
 		String text;
-		int textLength;
+		// int textLength;
 		int x;
 		int y;
 		
 		// Complete Message
 		text = "Stage Complete!";
-		textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-		x = gp.screenWidth/2 - textLength/2; // Print message on center of screen
+		x = getXforCenter(text, g2);
 		y = gp.screenHeight/2 - (gp.tileSize*3);
 		g2.drawString(text, x, y);
 		
 		// Time Message
 		text = "Your time is :" + dFormat.format(playTime) + " SEC";
-		textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-		x = gp.screenWidth/2 - textLength/2; 
+		x = getXforCenter(text, g2);
 		y = gp.screenHeight/2 + (gp.tileSize*3);
 		g2.drawString(text, x, y);
 
 		gp.gameThread = null;
 	}
 
+	//method for centering text
+	public int getXforCenter(String text, Graphics2D g2){
+		int textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+		int x = gp.screenWidth/2 - textLength/2; // Print message on center of screen
+		return x;
+	}
 }

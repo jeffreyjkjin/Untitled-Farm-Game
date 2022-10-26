@@ -18,7 +18,8 @@ public class GamePanel extends JPanel implements Runnable {
         PLAY,
         PAUSE,
         WIN,
-        LOSE
+        LOSE,
+        TITLE
     }
     
     public gameState currState = gameState.PLAY;
