@@ -118,7 +118,7 @@ public class Map {
                 if (objects[i] == null) {
                     objects[i] = ObjectManager.createObject(objMap[col][row]);
                     objects[i].worldX = col * gp.tileSize;
-                    objects[i].worldY = col * gp.tileSize;
+                    objects[i].worldY = row * gp.tileSize;
 
                     i++;
                 }
