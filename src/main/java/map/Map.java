@@ -10,7 +10,6 @@ import app.GamePanel;
 import entity.Farmer;
 import object.SuperObject;
 import object.ObjectManager;
-import tile.TileManager;
 
 public class Map {
     GamePanel gp;

@@ -4,10 +4,12 @@ import java.awt.Graphics2D;
 
 import app.GamePanel;
 
+import object.SuperObject;
+
 public class MapManager {
     GamePanel gamePanel;
-    public Map mapList[];
-    public int currMap;
+    Map mapList[];
+    int currMap;
 
     public MapManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -40,8 +42,16 @@ public class MapManager {
         setupMap();
     }
 
-    public Map getCurrentMap() {
+    public Map getMap() {
         return mapList[currMap];
+    }
+
+    public int[][] getTileMap() {
+        return mapList[currMap].tileMap;
+    }
+
+    public SuperObject getObject(int index) {
+        return mapList[currMap].objects[index];
     }
 
 }
