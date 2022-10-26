@@ -35,11 +35,11 @@ public class Map {
         try {
             // format of mapFile:
             // first line of mapFile contains level data and should be formatted as shown below:
-            // levelName,maxWorldCol,maxWorldRow,playerStartX,playerStartY,objectNum,keyNum
-            // below this header, there is a maxWorldCol x maxWorldRow array with numbers that
+            // levelName,maxWorldRow,maxWorldCol,playerStartX,playerStartY,objectNum,keyNum
+            // below this header, there is a maxWorldRow x maxWorldCol array with numbers that
             // correspond with tiles in TileManager
             // below the array is a line break
-            // below the line break is another maxWorldCol x maxWorldRow array with numbers that
+            // below the line break is another maxWorldRow x maxWorldCol array with numbers that
             // correspond with objects in ObjectManager
 
             InputStream input = getClass().getResourceAsStream(mapFile);
@@ -49,20 +49,20 @@ public class Map {
             String settings[] = firstLine.split(",");
 
             levelName = settings[0];
-            maxWorldCol = Integer.parseInt(settings[1]);
-            maxWorldRow = Integer.parseInt(settings[2]);
+            maxWorldRow = Integer.parseInt(settings[1]);
+            maxWorldCol = Integer.parseInt(settings[2]);
             playerStartX = Integer.parseInt(settings[3]) * gp.tileSize;
             playerStartY = Integer.parseInt(settings[4]) * gp.tileSize;
             objectNum = Integer.parseInt(settings[5]);
             keyNum = Integer.parseInt(settings[6]);
 
             // creating array for tile locations
-            tileMap = new int[maxWorldCol][maxWorldRow];
+            tileMap = new int[maxWorldRow][maxWorldCol];
             readArray(reader, tileMap);
 
             // creating array for object locations
             reader.readLine(); // skip blank space line
-            objMap = new int[maxWorldCol][maxWorldRow];
+            objMap = new int[maxWorldRow][maxWorldCol];
             objects = new SuperObject[objectNum];
             farmers = new Farmer[10];
             readArray(reader, objMap);
@@ -80,7 +80,7 @@ public class Map {
                 String numbers[] = line.split(" ");
                 for (int col = 0; col < maxWorldCol; col++) {
                     int num = Integer.parseInt(numbers[col]);
-                    arr[col][row] = num;
+                    arr[row][col] = num;
                 }
             }
         }
@@ -94,7 +94,7 @@ public class Map {
         int row = 0;
 
         while (col < maxWorldCol && row < maxWorldRow) {
-            int tileNum = tileMap[col][row];
+            int tileNum = tileMap[row][col];
 
             int worldX = col * gp.tileSize;
             int worldY = row * gp.tileSize;
@@ -141,9 +141,9 @@ public class Map {
         int i = 0;
 
         while (col < maxWorldCol && row < maxWorldRow) {
-            if (objMap[col][row] != 0) {
-                if (objects[i] == null && objMap[col][row] != 19) {
-                    objects[i] = ObjectManager.createObject(objMap[col][row]);
+            if (objMap[row][col] != 0) {
+                if (objects[i] == null && objMap[row][col] != 19) {
+                    objects[i] = ObjectManager.createObject(objMap[row][col]);
                     objects[i].worldX = col * gp.tileSize;
                     objects[i].worldY = row * gp.tileSize;
                     
@@ -172,7 +172,7 @@ public class Map {
         int i = 0;
 
         while (col < maxWorldCol && row < maxWorldRow) {
-            if (objMap[col][row] == 19) {
+            if (objMap[row][col] == 19) {
                 
                 farmers[i] = new Farmer(gp);
                 farmers[i].worldX = col * gp.tileSize;
