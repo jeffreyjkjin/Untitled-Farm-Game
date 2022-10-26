@@ -158,7 +158,9 @@ public class Player extends Entity{
             curLife--;
             gamePanel.ui.showMessage("TEST! HP minus 1");
 
-            // TODO find out how to reset the player back to start and reload level from start state
+            // Reset player to start coordinates
+            worldX = gamePanel.mapM.getMap().playerStartX;
+            worldY = gamePanel.mapM.getMap().playerStartY;
         }
     }
 
