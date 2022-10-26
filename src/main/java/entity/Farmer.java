@@ -6,8 +6,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import pathfinding.Pathfinding;
-import app.CollisionChecker;
 
 public class Farmer extends Entity {
 
@@ -66,6 +64,7 @@ public class Farmer extends Entity {
         gamePanel.checker.checkCollision(this);
 
         setAction();
+        gamePanel.checker.checkCollision(this);
 
         if(collisionOn == false) {
             switch(direction){

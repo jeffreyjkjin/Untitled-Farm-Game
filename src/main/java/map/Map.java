@@ -23,6 +23,7 @@ public class Map {
     public int gateIndex;
 
     boolean drawPath = true; // FOR TESTING PATHFINDING
+    boolean hitboxTest = true; // FOR VISUALIZING HITBOXES
 
     public Map(GamePanel gp, String mapFile) {
         this.gp = gp;
@@ -129,8 +130,29 @@ public class Map {
 
                 graphic2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
             }
-            
+        }
 
+        if (hitboxTest) // VISUALIZE HITBOXES
+        {
+            graphic2.setColor(new Color(0,0,255,70));
+
+            for (int i = 0; i < farmers.length; i++)
+            {
+                if (farmers[i] != null)
+                {   
+                    int worldX = farmers[i].worldX + farmers[i].hitbox.x;
+                    int worldY = farmers[i].worldY + farmers[i].hitbox.y;
+                    int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                    int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                    graphic2.fillRect(screenX, screenY, farmers[i].hitbox.width, farmers[i].hitbox.height);
+                }
+
+                if (i == 0)
+                {
+                    graphic2.fillRect(gp.player.screenX + gp.player.hitbox.x, gp.player.screenY + gp.player.hitbox.y, gp.player.hitbox.width, gp.player.hitbox.height);
+                }
+            }
         }
     }
     

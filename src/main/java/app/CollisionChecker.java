@@ -2,6 +2,7 @@ package app;
 
 import entity.Entity;
 import entity.Farmer;
+
 public class CollisionChecker {
     
     GamePanel gp;
@@ -144,7 +145,7 @@ public class CollisionChecker {
     			// get entity hitbox
     			entity.hitbox.x = entity.worldX + entity.hitbox.x; 
     			entity.hitbox.y = entity.worldY + entity.hitbox.y; 
-    			// get object hitbox
+    			// get farmers hitbox
     			farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.y;
     			farmers[i].hitbox.y = farmers[i].worldY + farmers[i].hitbox.y;
     			

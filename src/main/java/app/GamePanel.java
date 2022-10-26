@@ -11,6 +11,7 @@ import entity.Player;
 import map.MapManager; 
 import tile.TileManager;
 import pathfinding.Pathfinding;
+import app.CollisionChecker;
 
 public class GamePanel extends JPanel implements Runnable {
     // Game States
@@ -43,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     Sound sound = new Sound();
     Thread gameThread;
     public UI ui = new UI(this);
+    boolean hitboxTest = true; // FOR TESTING. Draws hitbox
     
     // Maps
     public TileManager tileM = new TileManager(this);
@@ -126,7 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
         mapM.draw(graphic2);
 
         // Player
-        player.draw(graphic2);        
+        player.draw(graphic2);            
         
         // UI
         ui.draw(graphic2);
