@@ -13,7 +13,15 @@ import object.OBJ_Heart;
 import object.OBJ_Key;
 
 public class UI {
-	
+	public enum menu {
+		PLAY,
+		SETTINGS,
+		CREDITS,
+		QUIT
+	}
+
+	menu menuSelect = menu.PLAY;
+
 	GamePanel gp;
 	Font arial_30, arial_80B; // set font as 'Arial' with size '40'
 	BufferedImage keyImage, heartImage;
@@ -28,10 +36,6 @@ public class UI {
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
-		arial_30 = new Font("Arial", Font.PLAIN, 30); // (FONT_NAME, FONT_STYLE, FONT_SIZE)
-		arial_80B = new Font("Arial", Font.BOLD, 80);
-		// OBJ_Key key = new OBJ_Key();
-		// keyImage = key.image;
 		OBJ_Heart heart = new OBJ_Heart();
 		heartImage = heart.image;
 		OBJ_Key key = new OBJ_Key();
@@ -63,23 +67,24 @@ public class UI {
 	
 	public void draw(Graphics2D g2) {
 		switch(gp.currState) {
+			case PAUSE:
+				drawPauseScreen(g2);
 			case PLAY:
 				drawPlayScreen(g2);
-				break;
-			case PAUSE:
 				break;
 			case WIN:
 				drawWinScreen(g2);
 				break;
 			case LOSE:
+				drawLoseScreen(g2);
 				break;
 			case TITLE:
+				drawTitleScreen(g2);
 				break;
 		}
 	}
 
-	private void drawTitleScreen(Graphics2D g2){
-		
+	private void drawPauseScreen(Graphics2D g2) {
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
@@ -122,6 +127,9 @@ public class UI {
 		}	
 	}
 
+	private void drawLoseScreen(Graphics2D g2) {
+	}
+
 	private void drawWinScreen(Graphics2D g2) {
 		g2.setFont(pressStart2P);
 		g2.setColor(Color.white);
@@ -144,6 +152,41 @@ public class UI {
 		g2.drawString(text, x, y);
 
 		gp.gameThread = null;
+	}
+
+	private void drawTitleScreen(Graphics2D g2){
+		
+		// Title
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setColor(Color.white);
+
+		String title1 = "UNTITLED";
+		String title2 = "FARM GAME";
+
+		g2.drawString(title1, getXforCenter(title1, g2), gp.tileSize * 2);
+		g2.drawString(title2, getXforCenter(title2, g2), gp.tileSize * 4);
+
+		// High Score
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 15));
+
+		String highScore = "HIGH SCORE";
+
+		// TODO: save high scores to a file and show on menu screen
+
+		g2.drawString(highScore, gp.tileSize, gp.tileSize * 5);
+
+		// Menu
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
+
+		String play = "PLAY";
+		String settings = "SETTINGS";
+		String credits = "CREDITS";
+		String quit = "QUIT";
+
+		g2.drawString(play, getXforCenter(play, g2), gp.tileSize * 8);
+		g2.drawString(settings, getXforCenter(settings, g2), gp.tileSize * 9);
+		g2.drawString(credits, getXforCenter(credits, g2), gp.tileSize * 10);
+		g2.drawString(quit, getXforCenter(quit, g2), gp.tileSize * 11);
 	}
 
 	//method for centering text
