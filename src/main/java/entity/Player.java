@@ -161,6 +161,8 @@ public class Player extends Entity{
             // Reset player to start coordinates
             worldX = gamePanel.mapM.getMap().playerStartX;
             worldY = gamePanel.mapM.getMap().playerStartY;
+
+            gamePanel.playSoundE(5);
         }
     }
 
