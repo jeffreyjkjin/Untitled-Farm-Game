@@ -122,15 +122,25 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D graphic2 = (Graphics2D) graphic;
         
-        // Map
-        mapM.draw(graphic2);
+        switch(currState) {
+            case PAUSE:
+            case PLAY:
+                // Map
+                mapM.draw(graphic2);
+                
+                // Player
+                player.draw(graphic2);            
+                
+                // UI
+                ui.draw(graphic2);
+                break;
+            case TITLE:
+            case LOSE:
+            case WIN:
+                ui.draw(graphic2);
+                break;
+        }
 
-        // Player
-        player.draw(graphic2);            
-        
-        // UI
-        ui.draw(graphic2);
-        
         graphic2.dispose();
     } // The order inside is really important! It could hide your player or objects and etc.
 
