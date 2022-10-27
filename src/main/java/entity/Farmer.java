@@ -21,7 +21,7 @@ public class Farmer extends Entity {
         speed = 1;
         hitboxDefaultX = 14;
         hitboxDefaultY = 16;
-        hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 32, 40);
+        hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 28, 32);
         direction = "down";
         onPath = true;
 

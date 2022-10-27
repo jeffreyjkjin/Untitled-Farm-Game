@@ -29,7 +29,7 @@ public class Player extends Entity{
         screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
         
-        hitbox = new Rectangle(14, 16, 32, 40);
+        hitbox = new Rectangle(14, 16, 28, 32);
         hitboxDefaultX = hitbox.x;
         hitboxDefaultY = hitbox.y;
 
