@@ -134,54 +134,60 @@ public class CollisionChecker {
     	return index;
     } 
 
-	public int checkFarmerCollision(Entity entity, Farmer[] farmers)
+	public int checkEntityCollision(Entity player, Farmer[] farmers)
 	{
 		int index = 999;
+		// Store players original hitbox location
+		int playerOriginalHitboxY = player.hitbox.y;
+		int playerOriginalHitboxX = player.hitbox.x;
+		// Get players hitbox coords
+		player.hitbox.x = player.worldX + player.hitbox.x; 
+		player.hitbox.y = player.worldY + player.hitbox.y;
+		// Temporarily move the players hitbox to test collision
+		switch(player.direction) 
+		{
+			case "up":
+				player.hitbox.y -= player.speed;
+				break;
+				
+			case "down":
+				player.hitbox.y += player.speed;
+				break;
+				
+			case "left":
+				player.hitbox.x -= player.speed;
+				break;
+				
+			case "right":
+				player.hitbox.x -= player.speed;
+				break;
+		}
 
-		for (int i = 0; i < farmers.length; i++) {
-    		
-    		if(farmers[i] != null) {
-    			
-    			// get entity hitbox
-    			entity.hitbox.x = entity.worldX + entity.hitbox.x; 
-    			entity.hitbox.y = entity.worldY + entity.hitbox.y; 
-    			// get farmers hitbox
-    			farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.x;
+		for (int i = 0; i < farmers.length; i++)
+		{
+			if (farmers[i] != null)
+			{	
+				// Store farmers original hitbox
+				int farmerOrigX = farmers[i].hitbox.x;
+				int farmerOrigY = farmers[i].hitbox.y;
+				// Get farmer's hitbox
+				farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.x;
     			farmers[i].hitbox.y = farmers[i].worldY + farmers[i].hitbox.y;
-    			
-    			switch(entity.direction) 
+				// Check for hitbox intersection
+				if (player.hitbox.intersects(farmers[i].hitbox))
 				{
-    			case "up":
-    				entity.hitbox.y -= entity.speed;
-    				break;
-    				
-    			case "down":
-    				entity.hitbox.y += entity.speed;
-    				break;
-    				
-    			case "left":
-    				entity.hitbox.x -= entity.speed;
-    				break;
-    				
-    			case "right":
-    				entity.hitbox.x -= entity.speed;
-    				break;
-    			}
-
-				if (entity.hitbox.intersects(farmers[i].hitbox)) {
-
-					entity.collisionOn = true;
-					farmers[i].collisionOn = true;
 					index = i;
+					player.collisionOn = true;
+					farmers[i].collisionOn = true;
 				}
 
-    			entity.hitbox.x = entity.hitboxDefaultX;
-    			entity.hitbox.y = entity.hitboxDefaultY;
-    			farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
-    			farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
-    		}
-    			
-    	}
+				farmers[i].hitbox.x = farmerOrigX;
+				farmers[i].hitbox.y = farmerOrigY;
+			}
+		}
+
+		player.hitbox.x = playerOriginalHitboxX;
+		player.hitbox.y = playerOriginalHitboxY;
 
 		return index;
 	}

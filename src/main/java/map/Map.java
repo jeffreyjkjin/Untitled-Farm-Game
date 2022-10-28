@@ -186,7 +186,7 @@ public class Map {
         }
     }
 
-    public void setFarmer() // Same idea as setObject but places a farmer instead with code 99 in map txt file
+    public void setFarmer() // Same idea as setObject but places a farmer instead with code 19 in map txt file
     {
         int col = 0;
         int row = 0;

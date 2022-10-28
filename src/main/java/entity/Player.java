@@ -83,36 +83,35 @@ public class Player extends Entity{
                 direction = "right";
             }
         
-        collisionOn = false;
-        gamePanel.checker.checkCollision(this);
-        
-        int objIndex = gamePanel.checker.checkObjectCollision(this, true);
-        objectInteraction(objIndex);
+            collisionOn = false;
+            gamePanel.checker.checkCollision(this);
+            
+            int objIndex = gamePanel.checker.checkObjectCollision(this, true);
+            objectInteraction(objIndex);
 
-        // Check for collision with enemy
-        int farmerIndex = gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers);
-        farmerInteraction(farmerIndex);
+            // Check for collision with enemy whie moving
+            int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
+            farmerInteraction(farmerIndex);
 
-        if(collisionOn == false) {
-            switch(direction){
-                case"up":
-                    worldY -= speed;
-                    break;
-                case"down":
-                    worldY += speed;
-                    break;
-                case"left":
-                    worldX -= speed;
-                    break;
-                case"right":
-                    worldX += speed;
-                    break;
+            if(collisionOn == false) {
+                switch(direction){
+                    case"up":
+                        worldY -= speed;
+                        break;
+                    case"down":
+                        worldY += speed;
+                        break;
+                    case"left":
+                        worldX -= speed;
+                        break;
+                    case"right":
+                        worldX += speed;
+                        break;
+                }
             }
-        }
 
-    
             spriteCounter++;
-    
+
             if (spriteCounter > 12) {
                 if (spriteNum == 1) {
                     spriteNum = 2;
@@ -122,6 +121,12 @@ public class Player extends Entity{
                 }
                 spriteCounter = 0;
             }
+        }
+        else
+        {
+            // Check for collision with enemy while standing still
+            int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
+            farmerInteraction(farmerIndex);
         }
     }
 
@@ -169,9 +174,10 @@ public class Player extends Entity{
         if (index != 999)
         {
             health--;
-            gamePanel.ui.showMessage("TEST! HP minus 1");
+            gamePanel.ui.showMessage("You were caught!");
 
             respawnPlayer();
+            //respawnFarmers();
 
             gamePanel.playSoundE(5);
         }
@@ -180,6 +186,15 @@ public class Player extends Entity{
     public void respawnPlayer() {
         worldX = gamePanel.mapM.getMap().playerStartX;
         worldY = gamePanel.mapM.getMap().playerStartY;
+
+        this.collisionOn = false;
+        for (int i = 0; i < gamePanel.mapM.getMap().farmers.length; i++)
+        {
+            if (gamePanel.mapM.getMap().farmers[i] != null)
+            {
+                gamePanel.mapM.getMap().farmers[i].collisionOn = false;
+            }
+        }
     }
 
     public void draw(Graphics2D graphic2) {
