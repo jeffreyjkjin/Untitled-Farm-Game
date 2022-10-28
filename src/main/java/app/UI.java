@@ -29,6 +29,7 @@ public class UI {
 	public boolean messageOn = false;
 	public String message = "";
 	int messageCounter = 0;
+	public int commandNum = 0;
 	
 	double playTime;
 	DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -85,6 +86,11 @@ public class UI {
 	}
 
 	private void drawPauseScreen(Graphics2D g2) {
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 80F));
+		g2.setColor(Color.white);
+
+		String text = "PAUSED";
+		g2.drawString(text, getXforCenter(text, g2), gp.tileSize * 6);
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
@@ -184,9 +190,21 @@ public class UI {
 		String quit = "QUIT";
 
 		g2.drawString(play, getXforCenter(play, g2), gp.tileSize * 8);
+		if(commandNum == 0){
+			g2.drawString(">",getXforCenter(play, g2) - gp.tileSize, gp.tileSize * 8); //drawing > before the button
+		}
 		g2.drawString(settings, getXforCenter(settings, g2), gp.tileSize * 9);
+		if(commandNum == 1){
+			g2.drawString(">",getXforCenter(settings, g2) - gp.tileSize, gp.tileSize * 9);
+		}
 		g2.drawString(credits, getXforCenter(credits, g2), gp.tileSize * 10);
+		if(commandNum == 2){
+			g2.drawString(">",getXforCenter(credits, g2) - gp.tileSize, gp.tileSize * 10);
+		}
 		g2.drawString(quit, getXforCenter(quit, g2), gp.tileSize * 11);
+		if(commandNum == 3){
+			g2.drawString(">",getXforCenter(quit, g2) - gp.tileSize, gp.tileSize * 11);
+		}
 	}
 
 	//method for centering text

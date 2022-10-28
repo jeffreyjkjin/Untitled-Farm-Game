@@ -19,9 +19,9 @@ public class Farmer extends Entity {
         this.gamePanel = gp;
 
         speed = 1;
-        hitboxDefaultX = 14;
+        hitboxDefaultX = 10;
         hitboxDefaultY = 16;
-        hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 28, 32);
+        hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 28, 32); //2*10 +28 = 48 (tileSize), 16 +32 = 48
         direction = "down";
         onPath = true;
 
