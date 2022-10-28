@@ -14,6 +14,8 @@ public class InputHandler implements KeyListener {
     public boolean cluck;
     public boolean paused;
 
+    public boolean bgMusic;
+
     int[] konamiCode = {
         KeyEvent.VK_UP, 
         KeyEvent.VK_UP, 
@@ -117,7 +119,11 @@ public class InputHandler implements KeyListener {
                             gamePanel.playSoundE(7);
                             if(gamePanel.ui.commandNum == 0){
                                 gamePanel.currState = gameState.PLAY;
-                                gamePanel.playMusic(0);
+                                gamePanel.player.setDefaultValues();
+                                if (!bgMusic) {
+                                    gamePanel.playMusic(0);
+                                }
+                                bgMusic = true;
                             }
                             if(gamePanel.ui.commandNum == 1){
                                 //TODO: implement for setting
@@ -168,6 +174,10 @@ public class InputHandler implements KeyListener {
                             gamePanel.playSoundE(7);
                             if(gamePanel.ui.commandNum == 0){
                                 gamePanel.currState = gameState.PLAY;
+                                gamePanel.player.setDefaultValues();
+                                if (!bgMusic) {
+                                    gamePanel.playMusic(0);
+                                }
                             }
                             if(gamePanel.ui.commandNum == 1){
                                 //TODO: implement for setting
@@ -204,31 +214,33 @@ public class InputHandler implements KeyListener {
 
             // PLAY STATE
             case PLAY:
-            switch(keyCode) {
-                case KeyEvent.VK_W:
-                case KeyEvent.VK_UP:
-                up = false;
-                break;
-                case KeyEvent.VK_A:
-                case KeyEvent.VK_LEFT:
-                left = false;
-                break;
-                case KeyEvent.VK_S:
-                case KeyEvent.VK_DOWN:
-                down = false;
-                break;
-                case KeyEvent.VK_D:
-                case KeyEvent.VK_RIGHT:
-                right = false;
-                break;
-                case KeyEvent.VK_H:
-                gamePanel.playSoundE(3);
-                cluck = false;
-                break;
-                case KeyEvent.VK_ESCAPE:
-                paused = false;
-                break;
-            }
+                switch(keyCode) {
+                    case KeyEvent.VK_W:
+                    case KeyEvent.VK_UP:
+                        up = false;
+                        break;
+                    case KeyEvent.VK_A:
+                    case KeyEvent.VK_LEFT:
+                        left = false;
+                        break;
+                    case KeyEvent.VK_S:
+                    case KeyEvent.VK_DOWN:
+                        down = false;
+                        break;
+                    case KeyEvent.VK_D:
+                    case KeyEvent.VK_RIGHT:
+                        right = false;
+                        break;
+                    case KeyEvent.VK_H:
+                        gamePanel.playSoundE(3);
+                        cluck = false;
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        paused = false;
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        enter = false;
+                }
             
             // Konami Code
             if (keyCode == konamiCode[konamiCount]) {
@@ -249,6 +261,32 @@ public class InputHandler implements KeyListener {
             case LOSE:
 
             // TITLE STATE
+                switch(keyCode) {
+                    case KeyEvent.VK_W:
+                    case KeyEvent.VK_UP:
+                        up = false;
+                        break;
+                    case KeyEvent.VK_A:
+                    case KeyEvent.VK_LEFT:
+                        left = false;
+                        break;
+                    case KeyEvent.VK_S:
+                    case KeyEvent.VK_DOWN:
+                        down = false;
+                        break;
+                    case KeyEvent.VK_D:
+                    case KeyEvent.VK_RIGHT:
+                        right = false;
+                        break;
+                    case KeyEvent.VK_H:
+                        cluck = false;
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        paused = false;
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        enter = false;
+                }
             case TITLE:
                 switch(keyCode) {
                     case KeyEvent.VK_W:
