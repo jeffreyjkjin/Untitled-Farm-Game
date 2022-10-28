@@ -10,6 +10,7 @@ public class InputHandler implements KeyListener {
     GamePanel gamePanel;
 
     public boolean up, down, left, right;
+    public boolean select, enter;
     public boolean cluck;
 
     int[] konamiCode = {
@@ -76,32 +77,44 @@ public class InputHandler implements KeyListener {
             switch(keyCode) {
                 case KeyEvent.VK_W:
                 case KeyEvent.VK_UP:
-                    gamePanel.ui.commandNum--;
-                    if(gamePanel.ui.commandNum < 0){
-                        gamePanel.ui.commandNum = 3;
+                    if (!select) {
+                        gamePanel.playSoundE(6);
+                        gamePanel.ui.commandNum--;
+                        if(gamePanel.ui.commandNum < 0){
+                            gamePanel.ui.commandNum = 3;
+                        }
                     }
+                    select = true;
                     break;
                 case KeyEvent.VK_S:
                 case KeyEvent.VK_DOWN:
-                    gamePanel.ui.commandNum++;
-                    if(gamePanel.ui.commandNum > 3){
-                        gamePanel.ui.commandNum = 0;
+                    if (!select) {
+                        gamePanel.playSoundE(6);
+                        gamePanel.ui.commandNum++;
+                        if(gamePanel.ui.commandNum > 3){
+                            gamePanel.ui.commandNum = 0;
+                        }
                     }
+                    select = true;
                     break;
                 case KeyEvent.VK_ENTER:
-                    if(gamePanel.ui.commandNum == 0){
-                        gamePanel.currState = gameState.PLAY;
-                        gamePanel.playMusic(0);
+                    if (!enter) {
+                        gamePanel.playSoundE(7);
+                        if(gamePanel.ui.commandNum == 0){
+                            gamePanel.currState = gameState.PLAY;
+                            gamePanel.playMusic(0);
+                        }
+                        if(gamePanel.ui.commandNum == 1){
+                            //implement for setting
+                        }
+                        if(gamePanel.ui.commandNum == 2){
+                            //implement for credit
+                        }
+                        if(gamePanel.ui.commandNum == 3){
+                            System.exit(0);
+                        }
                     }
-                    if(gamePanel.ui.commandNum == 1){
-                        //implement for setting
-                    }
-                    if(gamePanel.ui.commandNum == 2){
-                        //implement for credit
-                    }
-                    if(gamePanel.ui.commandNum == 3){
-                        System.exit(0);
-                    }
+                    enter = true;
                     break;
             }
                 break;
@@ -118,41 +131,64 @@ public class InputHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
-
-        switch(keyCode) {
-            case KeyEvent.VK_W:
-            case KeyEvent.VK_UP:
-                up = false;
+        
+        switch(gamePanel.currState) {
+            case LOSE:
                 break;
-            case KeyEvent.VK_A:
-            case KeyEvent.VK_LEFT:
-                left = false;
+            case PAUSE:
                 break;
-            case KeyEvent.VK_S:
-            case KeyEvent.VK_DOWN:
-                down = false;
+            case PLAY:
+                switch(keyCode) {
+                    case KeyEvent.VK_W:
+                    case KeyEvent.VK_UP:
+                        up = false;
+                        break;
+                    case KeyEvent.VK_A:
+                    case KeyEvent.VK_LEFT:
+                        left = false;
+                        break;
+                    case KeyEvent.VK_S:
+                    case KeyEvent.VK_DOWN:
+                        down = false;
+                        break;
+                    case KeyEvent.VK_D:
+                    case KeyEvent.VK_RIGHT:
+                        right = false;
+                        break;
+                    case KeyEvent.VK_H:
+                        gamePanel.playSoundE(3);
+                        cluck = false;
+                        break;
+                }
+        
+                // Konami Code
+                if (keyCode == konamiCode[konamiCount]) {
+                    konamiCount++;
+                }
+                else {
+                    konamiCount = 0;
+                }
+        
+                if (konamiCount == 11) {
+                    System.out.println("Cheats Activated!");
+                    konamiCount = 0;
+                    // TODO: implement function to activate developer mode cheats
+                }
                 break;
-            case KeyEvent.VK_D:
-            case KeyEvent.VK_RIGHT:
-                right = false;
+            case TITLE:
+                switch(keyCode) {
+                    case KeyEvent.VK_W:
+                    case KeyEvent.VK_UP:
+                    case KeyEvent.VK_S:
+                    case KeyEvent.VK_DOWN:
+                        select = false;
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        enter = false;
+                }
                 break;
-            case KeyEvent.VK_H:
-                gamePanel.playSoundE(3);
-                cluck = false;
+            case WIN:
                 break;
-        }
-
-        if (keyCode == konamiCode[konamiCount]) {
-            konamiCount++;
-        }
-        else {
-            konamiCount = 0;
-        }
-
-        if (konamiCount == 11) {
-            System.out.println("Cheats Activated!");
-            konamiCount = 0;
-            // TODO: implement function to activate developer mode cheats
         }
     }
 }
