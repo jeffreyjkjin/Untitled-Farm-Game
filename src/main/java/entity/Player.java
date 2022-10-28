@@ -154,6 +154,10 @@ public class Player extends Entity{
                         gamePanel.mapM.getObject(index).update(gamePanel);
                     }
                     break;
+                case "Trap":
+                    health--;
+                    respawnPlayer();
+                    break;
             }
         }
     }
@@ -166,11 +170,15 @@ public class Player extends Entity{
             gamePanel.ui.showMessage("TEST! HP minus 1");
 
             // Reset player to start coordinates
-            worldX = gamePanel.mapM.getMap().playerStartX;
-            worldY = gamePanel.mapM.getMap().playerStartY;
+            respawnPlayer();
 
             gamePanel.playSoundE(5);
         }
+    }
+
+    public void respawnPlayer() {
+        worldX = gamePanel.mapM.getMap().playerStartX;
+        worldY = gamePanel.mapM.getMap().playerStartY;
     }
 
     public void draw(Graphics2D graphic2) {
