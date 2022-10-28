@@ -236,7 +236,7 @@ public class Farmer extends Entity {
                 }
             }
 
-            if (nextCol == goalCol && nextRow == goalRow)
+            if (nextCol == goalCol && nextRow == goalRow && this.collisionOn)
             {
                 onPath = false;
             } 
