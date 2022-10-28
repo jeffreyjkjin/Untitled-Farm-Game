@@ -162,13 +162,12 @@ public class InputHandler implements KeyListener {
                             }
                             if(gamePanel.ui.commandNum == 1){
                                 //TODO: implement for setting
+                                gamePanel.currState = gameState.TITLE;
                             }
                             if(gamePanel.ui.commandNum == 2){
-                                gamePanel.currState = gameState.TITLE;
-                                //TODO: implement for credit
-                            }
-                            if(gamePanel.ui.commandNum == 3){
+                                
                                 System.exit(0);
+                                //TODO: implement for credit
                             }
                         }
                         enter = true;
