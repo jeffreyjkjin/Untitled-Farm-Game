@@ -156,21 +156,22 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_ENTER:
                         if (!enter) {
                             gamePanel.playSoundE(7);
-                            
-                        }
-                        if(enter == true){
                             if(gamePanel.ui.commandNum == 0){
                                 gamePanel.currState = gameState.PLAY;
                                 gamePanel.playMusic(0);
                             }
                             if(gamePanel.ui.commandNum == 1){
-                                //TODO: implement for main menu
-                                gamePanel.currState = gameState.TITLE;
+                                //TODO: implement for setting
                             }
                             if(gamePanel.ui.commandNum == 2){
+                                gamePanel.currState = gameState.TITLE;
+                                //TODO: implement for credit
+                            }
+                            if(gamePanel.ui.commandNum == 3){
                                 System.exit(0);
                             }
                         }
+                        enter = true;
                         break;
                 }
                 break;
