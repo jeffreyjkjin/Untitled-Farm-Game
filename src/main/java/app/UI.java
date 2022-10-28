@@ -85,6 +85,11 @@ public class UI {
 	}
 
 	private void drawPauseScreen(Graphics2D g2) {
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 80F));
+		g2.setColor(Color.white);
+
+		String text = "PAUSED";
+		g2.drawString(text, getXforCenter(text, g2), gp.tileSize * 6);
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
