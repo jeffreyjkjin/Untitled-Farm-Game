@@ -6,6 +6,7 @@ import app.GamePanel;
 
 import app.GamePanel.gameState;
 
+import entity.Farmer;
 import object.SuperObject;
 
 public class MapManager {
@@ -31,6 +32,13 @@ public class MapManager {
     public void setupMap() {
         mapList[currMap].setObject();
         mapList[currMap].setFarmer();
+    }
+
+    public void resetMap() {
+        currMap = 0;
+        mapList[currMap].objects = new SuperObject[mapList[currMap].objectNum];
+        mapList[currMap].farmers = new Farmer[10];
+        setupMap();
     }
 
     public void draw(Graphics2D g2) {

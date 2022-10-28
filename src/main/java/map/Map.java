@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.awt.Color;
 
+import java.util.Random;
+
 import app.GamePanel;
 import entity.Farmer;
 import object.SuperObject;
@@ -13,6 +15,7 @@ import object.ObjectManager;
 
 public class Map {
     GamePanel gp;
+    Random randGen = new Random();
 
     public int[][] tileMap, objMap;
     public SuperObject objects[];
@@ -165,12 +168,24 @@ public class Map {
             if (objMap[row][col] != 0) {
                 if (objects[i] == null && objMap[row][col] != 19) {
                     objects[i] = ObjectManager.createObject(objMap[row][col]);
-                    objects[i].worldX = col * gp.tileSize;
-                    objects[i].worldY = row * gp.tileSize;
-                    
-                    // find exit gate
-                    if (objects[i].name == "Gate") {
-                        gateIndex = i;
+                    if (objects[i].name == "Egg") {
+                        int n = randGen.nextInt(10);
+                        if (n <= 5) {
+                            objects[i] = null;
+                        }
+                        else {
+                            objects[i].index = i;
+                            objects[i].worldX = col * gp.tileSize;
+                            objects[i].worldY = row * gp.tileSize;
+                        }
+                    }
+                    else {
+                        objects[i].worldX = col * gp.tileSize;
+                        objects[i].worldY = row * gp.tileSize;
+                        // find exit gate
+                        if (objects[i].name == "Gate") {
+                            gateIndex = i;
+                    }
                     }
 
                     i++;
@@ -216,6 +231,9 @@ public class Map {
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] != null) {
                 objects[i].draw(graphic2, gp);
+                if (objects[i].name == "Egg") {
+                    objects[i].update(gp);
+                }
             }
         }
     }
