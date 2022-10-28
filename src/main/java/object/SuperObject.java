@@ -15,6 +15,7 @@ public abstract class SuperObject {
 	//set object hitbox
 	public int hitboxDefaultX = 0;
 	public int hitboxDefaultY = 0;
+	public int index;
 	
 	
 	public void draw(Graphics2D g2, GamePanel gp) {
