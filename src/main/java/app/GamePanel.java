@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
         TITLE
     }
     
-    public gameState currState = gameState.PLAY;
+    public gameState currState = gameState.TITLE;
 
     // Tiles
     final int originalTileSize = 16;
