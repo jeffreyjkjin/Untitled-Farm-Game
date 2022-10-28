@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 
+import app.GamePanel.gameState;
 import object.OBJ_Heart;
 // import object.OBJ_Key;
 
@@ -126,7 +127,9 @@ public class UI {
 
 		// Time
 		g2.drawString(time, getHorizontalCenter(time, g2, gp.screenWidth/4) + (gp.screenWidth * 3/4), 32);
-		playTime += (double)1/60;
+		if (gp.currState == gameState.PLAY) {
+			playTime += (double)1/60;
+		}
 		g2.drawString(dFormat.format(playTime), getHorizontalCenter(dFormat.format(playTime), g2, gp.screenWidth/4) + (gp.screenWidth * 3/4), 64);
 
 		// Message
