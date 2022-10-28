@@ -42,6 +42,8 @@ public class InputHandler implements KeyListener {
         int keyCode = e.getKeyCode();
 
         switch(gamePanel.currState){
+
+            //PAUSE STATE
             case PAUSE:
                 switch(keyCode) {
                     case KeyEvent.VK_ESCAPE:
@@ -51,6 +53,8 @@ public class InputHandler implements KeyListener {
                     paused = true;
                 }
                 break;
+
+            //PLAY STATE
             case PLAY:
                 switch(keyCode) {
                     case KeyEvent.VK_W:
@@ -82,6 +86,8 @@ public class InputHandler implements KeyListener {
                         paused = true;
                 }
                 break;
+            
+            // TILE STATE
             case TITLE:
                 switch(keyCode) {
                     case KeyEvent.VK_W:
@@ -127,8 +133,12 @@ public class InputHandler implements KeyListener {
                         break;
                 }
                 break;
+
+            // WIN STATE
             case WIN:
                 break;
+
+            // LOSE STATE
             case LOSE:
                 switch(keyCode) {
                     case KeyEvent.VK_W:
@@ -137,7 +147,7 @@ public class InputHandler implements KeyListener {
                             gamePanel.playSoundE(6);
                             gamePanel.ui.commandNum--;
                             if(gamePanel.ui.commandNum < 0){
-                                gamePanel.ui.commandNum = 3;
+                                gamePanel.ui.commandNum = 2;
                             }
                         }
                         select = true;
@@ -158,7 +168,6 @@ public class InputHandler implements KeyListener {
                             gamePanel.playSoundE(7);
                             if(gamePanel.ui.commandNum == 0){
                                 gamePanel.currState = gameState.PLAY;
-                                gamePanel.playMusic(0);
                             }
                             if(gamePanel.ui.commandNum == 1){
                                 //TODO: implement for setting
@@ -183,6 +192,8 @@ public class InputHandler implements KeyListener {
         int keyCode = e.getKeyCode();
         
         switch(gamePanel.currState) {
+
+            // PAUSE STATE
             case PAUSE:
             switch(keyCode) {
                 case KeyEvent.VK_ESCAPE:
@@ -190,6 +201,8 @@ public class InputHandler implements KeyListener {
                 break;
             }
             break;
+
+            // PLAY STATE
             case PLAY:
             switch(keyCode) {
                 case KeyEvent.VK_W:
@@ -231,7 +244,11 @@ public class InputHandler implements KeyListener {
                 // TODO: implement function to activate developer mode cheats
             }
             break;
+
+            // LOSE STATE
             case LOSE:
+
+            // TITLE STATE
             case TITLE:
                 switch(keyCode) {
                     case KeyEvent.VK_W:
@@ -244,6 +261,8 @@ public class InputHandler implements KeyListener {
                         enter = false;
                 }
                 break;
+
+            // WIN STATE
             case WIN:
                 break;
         }
