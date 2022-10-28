@@ -157,6 +157,7 @@ public class Player extends Entity{
                 case "Trap":
                     health--;
                     respawnPlayer();
+                    gamePanel.playSoundE(5);
                     break;
             }
         }
@@ -169,7 +170,6 @@ public class Player extends Entity{
             health--;
             gamePanel.ui.showMessage("TEST! HP minus 1");
 
-            // Reset player to start coordinates
             respawnPlayer();
 
             gamePanel.playSoundE(5);

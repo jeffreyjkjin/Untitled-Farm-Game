@@ -18,7 +18,7 @@ public class Map {
     public SuperObject objects[];
     public Farmer farmers[];
 
-    String levelName;
+    public String levelName;
     public int maxWorldCol, maxWorldRow, playerStartX, playerStartY, objectNum, keyNum;
     public int gateIndex;
 
