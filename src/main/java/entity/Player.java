@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import app.GamePanel;
+import app.GamePanel.gameState;
 import app.InputHandler;
 
 public class Player extends Entity{
@@ -42,9 +43,6 @@ public class Player extends Entity{
         worldY = gamePanel.mapM.getMap().playerStartY;
         speed = 4;
         direction = "down";
-
-        curLife = 3;
-        maxLife = 3;
     }
 
     public void getPlayerImage() {
@@ -63,6 +61,10 @@ public class Player extends Entity{
     }
 
     public void update() {
+        if (health == 0) {
+            gamePanel.currState = gameState.LOSE;
+        }
+
         if (input.up || input.left || input.down || input.right) {
             if (input.up) {
                 
@@ -129,8 +131,13 @@ public class Player extends Entity{
             
             switch(objectName) {
                 case "Egg":
-                    gamePanel.playSoundE(4); // play 'egg.wav'
-                    score += 100;
+                    gamePanel.playSoundE(4);
+                    if (health >= 3) {
+                        score += 100;
+                    }
+                    else {
+                        health++;
+                    }
                     gamePanel.mapM.getMap().objects[index] = null;
                     gamePanel.ui.showMessage("My Egg!");
                     break;
@@ -155,7 +162,7 @@ public class Player extends Entity{
     {
         if (index != 999)
         {
-            curLife--;
+            health--;
             gamePanel.ui.showMessage("TEST! HP minus 1");
 
             // Reset player to start coordinates

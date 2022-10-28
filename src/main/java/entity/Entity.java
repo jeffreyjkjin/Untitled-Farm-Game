@@ -17,8 +17,4 @@ public abstract class Entity {
     public int hitboxDefaultX, hitboxDefaultY;
     public boolean collisionOn;
     public boolean onPath;
-
-    //character's status
-    public int maxLife;
-    public int curLife;
 }
