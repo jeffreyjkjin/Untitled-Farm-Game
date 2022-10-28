@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 
 import app.GamePanel;
 
+import app.GamePanel.gameState;
+
 import object.SuperObject;
 
 public class MapManager {
@@ -39,7 +41,12 @@ public class MapManager {
 
     public void nextMap() {
         currMap++;
-        setupMap();
+        if (currMap == mapList.length) {
+            gamePanel.currState = gameState.WIN;
+        }
+        else {
+            setupMap();
+        }
     }
 
     public Map getMap() {
