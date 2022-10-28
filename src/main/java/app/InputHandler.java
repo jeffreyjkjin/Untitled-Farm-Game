@@ -12,6 +12,7 @@ public class InputHandler implements KeyListener {
     public boolean up, down, left, right;
     public boolean select, enter;
     public boolean cluck;
+    public boolean paused;
 
     int[] konamiCode = {
         KeyEvent.VK_UP, 
@@ -39,86 +40,92 @@ public class InputHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
+
         switch(gamePanel.currState){
-            case PLAY:
-            switch(keyCode) {
-                case KeyEvent.VK_W:
-                case KeyEvent.VK_UP:
-                    up = true;
-                    break;
-                case KeyEvent.VK_A:
-                case KeyEvent.VK_LEFT:
-                    left = true;
-                    break;
-                case KeyEvent.VK_S:
-                case KeyEvent.VK_DOWN:
-                    down = true;
-                    break;
-                case KeyEvent.VK_D:
-                case KeyEvent.VK_RIGHT:
-                    right = true;
-                    break;
-                case KeyEvent.VK_H:
-                    if (!cluck) {
-                        gamePanel.playSoundE(2);
-                    }
-                    cluck = true;
-                    break;
-                case KeyEvent.VK_ESCAPE:
-                    if (gamePanel.currState == gameState.PLAY) {
-                        gamePanel.currState = gameState.PAUSE;
-                    }
-                    else {
+            case PAUSE:
+                switch(keyCode) {
+                    case KeyEvent.VK_ESCAPE:
+                    if (!paused) {
                         gamePanel.currState = gameState.PLAY;
                     }
-            }
+                    paused = true;
+                }
+                break;
+            case PLAY:
+                switch(keyCode) {
+                    case KeyEvent.VK_W:
+                    case KeyEvent.VK_UP:
+                        up = true;
+                        break;
+                    case KeyEvent.VK_A:
+                    case KeyEvent.VK_LEFT:
+                        left = true;
+                        break;
+                    case KeyEvent.VK_S:
+                    case KeyEvent.VK_DOWN:
+                        down = true;
+                        break;
+                    case KeyEvent.VK_D:
+                    case KeyEvent.VK_RIGHT:
+                        right = true;
+                        break;
+                    case KeyEvent.VK_H:
+                        if (!cluck) {
+                            gamePanel.playSoundE(2);
+                        }
+                        cluck = true;
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        if (!paused) {
+                            gamePanel.currState = gameState.PAUSE;
+                        }
+                        paused = true;
+                }
                 break;
             case TITLE:
-            switch(keyCode) {
-                case KeyEvent.VK_W:
-                case KeyEvent.VK_UP:
-                    if (!select) {
-                        gamePanel.playSoundE(6);
-                        gamePanel.ui.commandNum--;
-                        if(gamePanel.ui.commandNum < 0){
-                            gamePanel.ui.commandNum = 3;
+                switch(keyCode) {
+                    case KeyEvent.VK_W:
+                    case KeyEvent.VK_UP:
+                        if (!select) {
+                            gamePanel.playSoundE(6);
+                            gamePanel.ui.commandNum--;
+                            if(gamePanel.ui.commandNum < 0){
+                                gamePanel.ui.commandNum = 3;
+                            }
                         }
-                    }
-                    select = true;
-                    break;
-                case KeyEvent.VK_S:
-                case KeyEvent.VK_DOWN:
-                    if (!select) {
-                        gamePanel.playSoundE(6);
-                        gamePanel.ui.commandNum++;
-                        if(gamePanel.ui.commandNum > 3){
-                            gamePanel.ui.commandNum = 0;
+                        select = true;
+                        break;
+                    case KeyEvent.VK_S:
+                    case KeyEvent.VK_DOWN:
+                        if (!select) {
+                            gamePanel.playSoundE(6);
+                            gamePanel.ui.commandNum++;
+                            if(gamePanel.ui.commandNum > 3){
+                                gamePanel.ui.commandNum = 0;
+                            }
                         }
-                    }
-                    select = true;
-                    break;
-                case KeyEvent.VK_ENTER:
-                    if (!enter) {
-                        gamePanel.playSoundE(7);
-                        if(gamePanel.ui.commandNum == 0){
-                            gamePanel.currState = gameState.PLAY;
-                            gamePanel.playMusic(0);
+                        select = true;
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        if (!enter) {
+                            gamePanel.playSoundE(7);
+                            if(gamePanel.ui.commandNum == 0){
+                                gamePanel.currState = gameState.PLAY;
+                                gamePanel.playMusic(0);
+                            }
+                            if(gamePanel.ui.commandNum == 1){
+                                //implement for setting
+                            }
+                            if(gamePanel.ui.commandNum == 2){
+                                //implement for credit
+                            }
+                            if(gamePanel.ui.commandNum == 3){
+                                System.exit(0);
+                            }
                         }
-                        if(gamePanel.ui.commandNum == 1){
-                            //implement for setting
-                        }
-                        if(gamePanel.ui.commandNum == 2){
-                            //implement for credit
-                        }
-                        if(gamePanel.ui.commandNum == 3){
-                            System.exit(0);
-                        }
-                    }
-                    enter = true;
-                    break;
-            }
-                break;
-            case PAUSE:
+                        enter = true;
+                        break;
+                }
                 break;
             case WIN:
                 break;
@@ -136,6 +143,11 @@ public class InputHandler implements KeyListener {
             case LOSE:
                 break;
             case PAUSE:
+                switch(keyCode) {
+                    case KeyEvent.VK_ESCAPE:
+                    paused = false;
+                    break;
+                }
                 break;
             case PLAY:
                 switch(keyCode) {
@@ -158,6 +170,9 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_H:
                         gamePanel.playSoundE(3);
                         cluck = false;
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        paused = false;
                         break;
                 }
         
