@@ -146,7 +146,7 @@ public class CollisionChecker {
     			entity.hitbox.x = entity.worldX + entity.hitbox.x; 
     			entity.hitbox.y = entity.worldY + entity.hitbox.y; 
     			// get farmers hitbox
-    			farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.y;
+    			farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.x;
     			farmers[i].hitbox.y = farmers[i].worldY + farmers[i].hitbox.y;
     			
     			switch(entity.direction) 
@@ -171,6 +171,7 @@ public class CollisionChecker {
 				if (entity.hitbox.intersects(farmers[i].hitbox)) {
 
 					entity.collisionOn = true;
+					farmers[i].collisionOn = true;
 					index = i;
 				}
 
