@@ -50,6 +50,10 @@ public class UI {
 		}
 	}
 
+	public void resetTimer() {
+		playTime = 0;
+	}
+
 	public void drawPlayerLife(Graphics2D g2) {
 		for(int i = 3; i >= 1; i--) {
 			if (gp.player.health < i) {
