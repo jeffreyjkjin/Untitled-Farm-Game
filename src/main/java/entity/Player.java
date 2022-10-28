@@ -42,6 +42,7 @@ public class Player extends Entity{
         worldX = gamePanel.mapM.getMap().playerStartX; // starting position
         worldY = gamePanel.mapM.getMap().playerStartY;
         speed = 4;
+        health = 3;
         direction = "down";
     }
 
@@ -63,6 +64,7 @@ public class Player extends Entity{
     public void update() {
         if (health == 0) {
             gamePanel.currState = gameState.LOSE;
+            gamePanel.mapM.resetMap();
         }
 
         if (input.up || input.left || input.down || input.right) {
