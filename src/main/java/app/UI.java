@@ -57,7 +57,7 @@ public class UI {
 			else {
 				playerHP[i-1].fullHeart();
 			}
-			g2.drawImage(playerHP[i-1].image, 35 + (i-1)*gp.tileSize , 32, gp.tileSize, gp.tileSize, null);
+			g2.drawImage(playerHP[i-1].image, 46 + (i-1)*gp.tileSize , 32, gp.tileSize, gp.tileSize, null);
 		}
 
 	}
@@ -92,7 +92,7 @@ public class UI {
 		g2.setColor(Color.white);
 
 		String text = "PAUSED";
-		g2.drawString(text, getXforCenter(text, g2), gp.tileSize * 6);
+		g2.drawString(text, getHorizontalCenter(text, g2, gp.screenWidth), gp.tileSize * 6);
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
@@ -103,23 +103,31 @@ public class UI {
 		// g2.drawImage(keyImage, 24, 88, gp.tileSize, gp.tileSize, null); // set imageSize & coordinate
 		// g2.drawString("X " +gp.player.keyCount, 72, 124); // 72 because eggImage obtain 24+48 = 72 size and 136 = 88 + 36. Draw string draw it differently from drawimage
 		
-		// TODO: need to figure out how to center these UI elements
+		String health = "HEALTH";
+		String level = "LEVEL";
+		String score = "SCORE";
+		String time = "TIME";
+
 		// Health
-		g2.drawString("HEALTH", 1 * gp.tileSize, 32);
+		g2.drawString(health, getHorizontalCenter(health, g2, gp.screenWidth/4), 32);
 		drawPlayerLife(g2);
 
 		// Level Name
-		g2.drawString("LEVEL", 6 * gp.tileSize, 32);
-		// g2.drawString(gp.map.levelName, 5 * gp.tileSize, 64);
+		g2.drawString(level, getHorizontalCenter(level, g2, gp.screenWidth/4) + (gp.screenWidth * 1/4), 32);
+
+		String mapName = gp.mapM.getMap().levelName;
+		g2.drawString(mapName, getHorizontalCenter(mapName, g2, gp.screenWidth/4) + (gp.screenWidth * 1/4), 64);
 		
 		// Score
-		g2.drawString("SCORE", 11 * gp.tileSize, 32);
-		g2.drawString(""+gp.player.score, 11 * gp.tileSize, 64);
+		g2.drawString(score, getHorizontalCenter(score, g2, gp.screenWidth/4) + (gp.screenWidth * 2/4), 32);
+		
+		String playerScore = String.valueOf(gp.player.score);
+		g2.drawString(playerScore, getHorizontalCenter(playerScore, g2, gp.screenWidth/4) + (gp.screenWidth * 2/4), 64);
 
 		// Time
-		g2.drawString("TIME", 16 * gp.tileSize, 32);
+		g2.drawString(time, getHorizontalCenter(time, g2, gp.screenWidth/4) + (gp.screenWidth * 3/4), 32);
 		playTime += (double)1/60;
-		g2.drawString(dFormat.format(playTime), 16 * gp.tileSize, 64);
+		g2.drawString(dFormat.format(playTime), getHorizontalCenter(dFormat.format(playTime), g2, gp.screenWidth/4) + (gp.screenWidth * 3/4), 64);
 
 		// Message
 		if (messageOn == true) {
@@ -137,6 +145,49 @@ public class UI {
 	}
 
 	private void drawLoseScreen(Graphics2D g2) {
+		// Game Over
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setColor(Color.white);
+		
+		String gameOver = "GAME OVER!";
+
+		g2.drawString(gameOver, getHorizontalCenter(gameOver, g2, gp.screenWidth), gp.tileSize * 3);
+
+		// High Score
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 15));
+
+		String highScore = "HIGH SCORE";
+		String yourScore = "YOUR SCORE";
+		
+		g2.drawString(highScore, getHorizontalCenter(highScore, g2, gp.screenWidth/2), gp.tileSize * 5);
+		g2.drawString(yourScore, getHorizontalCenter(yourScore, g2, gp.screenWidth/2) + gp.screenWidth/2, gp.tileSize * 5);
+
+		// TODO: save high scores to a file and show on lose screen
+
+		// Menu
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
+
+		String retry = "RETRY";
+		String menu = "MAIN MENU";
+		String quit = "QUIT";
+
+		// Retry
+		g2.drawString(retry, getHorizontalCenter(retry, g2, gp.screenWidth), gp.tileSize * 9);
+		if(commandNum == 0) {
+			g2.drawString(">",getHorizontalCenter(retry, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 9);
+		}
+
+		// Main Menu
+		g2.drawString(menu, getHorizontalCenter(menu, g2, gp.screenWidth), gp.tileSize * 10);
+		if(commandNum == 1) {
+			g2.drawString(">",getHorizontalCenter(menu, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 10);
+		}
+
+		// Quit
+		g2.drawString(quit, getHorizontalCenter(quit, g2, gp.screenWidth), gp.tileSize * 11);
+		if(commandNum == 2) {
+			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
+		}
 	}
 
 	private void drawWinScreen(Graphics2D g2) {
@@ -150,13 +201,13 @@ public class UI {
 		
 		// Complete Message
 		text = "Stage Complete!";
-		x = getXforCenter(text, g2);
+		x = getHorizontalCenter(text, g2, gp.screenWidth);
 		y = gp.screenHeight/2 - (gp.tileSize*3);
 		g2.drawString(text, x, y);
 		
 		// Time Message
 		text = "Your time is :" + dFormat.format(playTime) + " SEC";
-		x = getXforCenter(text, g2);
+		x = getHorizontalCenter(text, g2, gp.screenWidth);
 		y = gp.screenHeight/2 + (gp.tileSize*3);
 		g2.drawString(text, x, y);
 
@@ -164,7 +215,6 @@ public class UI {
 	}
 
 	private void drawTitleScreen(Graphics2D g2){
-		
 		// Title
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
 		g2.setColor(Color.white);
@@ -172,8 +222,8 @@ public class UI {
 		String title1 = "UNTITLED";
 		String title2 = "FARM GAME";
 
-		g2.drawString(title1, getXforCenter(title1, g2), gp.tileSize * 2);
-		g2.drawString(title2, getXforCenter(title2, g2), gp.tileSize * 4);
+		g2.drawString(title1, getHorizontalCenter(title1, g2, gp.screenWidth), gp.tileSize * 2);
+		g2.drawString(title2, getHorizontalCenter(title2, g2, gp.screenWidth), gp.tileSize * 4);
 
 		// High Score
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 15));
@@ -192,28 +242,35 @@ public class UI {
 		String credits = "CREDITS";
 		String quit = "QUIT";
 
-		g2.drawString(play, getXforCenter(play, g2), gp.tileSize * 8);
+		// Play
+		g2.drawString(play, getHorizontalCenter(play, g2, gp.screenWidth), gp.tileSize * 8);
 		if(commandNum == 0){
-			g2.drawString(">",getXforCenter(play, g2) - gp.tileSize, gp.tileSize * 8); //drawing > before the button
+			g2.drawString(">",getHorizontalCenter(play, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 8); //drawing > before the button
 		}
-		g2.drawString(settings, getXforCenter(settings, g2), gp.tileSize * 9);
+
+		// Settings
+		g2.drawString(settings, getHorizontalCenter(settings, g2, gp.screenWidth), gp.tileSize * 9);
 		if(commandNum == 1){
-			g2.drawString(">",getXforCenter(settings, g2) - gp.tileSize, gp.tileSize * 9);
+			g2.drawString(">",getHorizontalCenter(settings, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 9);
 		}
-		g2.drawString(credits, getXforCenter(credits, g2), gp.tileSize * 10);
+
+		// Credits
+		g2.drawString(credits, getHorizontalCenter(credits, g2, gp.screenWidth), gp.tileSize * 10);
 		if(commandNum == 2){
-			g2.drawString(">",getXforCenter(credits, g2) - gp.tileSize, gp.tileSize * 10);
+			g2.drawString(">",getHorizontalCenter(credits, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 10);
 		}
-		g2.drawString(quit, getXforCenter(quit, g2), gp.tileSize * 11);
+
+		// Quit
+		g2.drawString(quit, getHorizontalCenter(quit, g2, gp.screenWidth), gp.tileSize * 11);
 		if(commandNum == 3){
-			g2.drawString(">",getXforCenter(quit, g2) - gp.tileSize, gp.tileSize * 11);
+			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}
 	}
 
 	//method for centering text
-	public int getXforCenter(String text, Graphics2D g2){
+	public int getHorizontalCenter(String text, Graphics2D g2, int screenWidth) {
 		int textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-		int x = gp.screenWidth/2 - textLength/2; // Print message on center of screen
+		int x = screenWidth/2 - textLength/2; // Print message on center of screen
 		return x;
 	}
 }
