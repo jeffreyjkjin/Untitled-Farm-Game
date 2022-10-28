@@ -64,7 +64,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         mapM.setupMap();
         
-        playMusic(0);
+        // playMusic(0);
+        currState = gameState.TITLE;
     }
 
     public void startGameThread() {
@@ -135,6 +136,8 @@ public class GamePanel extends JPanel implements Runnable {
                 ui.draw(graphic2);
                 break;
             case TITLE:
+                ui.draw(graphic2);
+                break;
             case LOSE:
             case WIN:
                 ui.draw(graphic2);
