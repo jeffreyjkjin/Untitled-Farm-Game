@@ -156,6 +156,7 @@ public class Player extends Entity{
                     break;
                 case "Trap":
                     health--;
+                    gamePanel.mapM.getMap().objects[index] = null;
                     respawnPlayer();
                     gamePanel.playSoundE(5);
                     break;
