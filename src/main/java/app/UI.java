@@ -10,18 +10,9 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 
 import object.OBJ_Heart;
-import object.OBJ_Key;
+// import object.OBJ_Key;
 
 public class UI {
-	public enum menu {
-		PLAY,
-		SETTINGS,
-		CREDITS,
-		QUIT
-	}
-
-	menu menuSelect = menu.PLAY;
-
 	GamePanel gp;
 	Font arial_30, arial_80B; // set font as 'Arial' with size '40'
 	BufferedImage keyImage, heartImage;
@@ -31,16 +22,20 @@ public class UI {
 	int messageCounter = 0;
 	public int commandNum = 0;
 	
+	OBJ_Heart playerHP[] = new OBJ_Heart[3];
+
 	double playTime;
 	DecimalFormat dFormat = new DecimalFormat("#0.00");
 	
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
-		OBJ_Heart heart = new OBJ_Heart();
-		heartImage = heart.image;
-		OBJ_Key key = new OBJ_Key();
-		keyImage = key.image;
+		// OBJ_Key key = new OBJ_Key();
+		// keyImage = key.image;
+
+		playerHP[0] = new OBJ_Heart();
+		playerHP[1] = new OBJ_Heart();
+		playerHP[2] = new OBJ_Heart();
 
 		try {
 			InputStream input = getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf");
@@ -55,9 +50,16 @@ public class UI {
 	}
 
 	public void drawPlayerLife(Graphics2D g2) {
-		for(int i =0; i < gp.player.curLife; i++) {
-			g2.drawImage(heartImage, 24 + i*gp.tileSize , 32, gp.tileSize, gp.tileSize, null);
+		for(int i = 3; i >= 1; i--) {
+			if (gp.player.health < i) {
+				playerHP[i-1].emptyHeart();
+			}
+			else {
+				playerHP[i-1].fullHeart();
+			}
+			g2.drawImage(playerHP[i-1].image, 35 + (i-1)*gp.tileSize , 32, gp.tileSize, gp.tileSize, null);
 		}
+
 	}
 	
 	public void showMessage(String text) {
@@ -98,25 +100,26 @@ public class UI {
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20));
 
 		// Keys
-		g2.drawImage(keyImage, 24, 88, gp.tileSize, gp.tileSize, null); // set imageSize & coordinate
-		g2.drawString("X " +gp.player.keyCount, 72, 124); // 72 because eggImage obtain 24+48 = 72 size and 136 = 88 + 36. Draw string draw it differently from drawimage
+		// g2.drawImage(keyImage, 24, 88, gp.tileSize, gp.tileSize, null); // set imageSize & coordinate
+		// g2.drawString("X " +gp.player.keyCount, 72, 124); // 72 because eggImage obtain 24+48 = 72 size and 136 = 88 + 36. Draw string draw it differently from drawimage
 		
 		// TODO: need to figure out how to center these UI elements
 		// Health
+		g2.drawString("HEALTH", 1 * gp.tileSize, 32);
 		drawPlayerLife(g2);
 
 		// Level Name
 		g2.drawString("LEVEL", 5 * gp.tileSize, 32);
 		// g2.drawString(gp.map.levelName, 5 * gp.tileSize, 64);
 		
+		// Score
+		g2.drawString("SCORE", 9 * gp.tileSize, 32);
+		g2.drawString(""+gp.player.score, 9 * gp.tileSize, 64);
+
 		// Time
 		g2.drawString("TIME", 13 * gp.tileSize, 32);
 		playTime += (double)1/60;
 		g2.drawString(dFormat.format(playTime), 13 * gp.tileSize, 64);
-		
-		// Score
-		g2.drawString("SCORE", 9 * gp.tileSize, 32);
-		g2.drawString(""+gp.player.score, 9 * gp.tileSize, 64);
 
 		// Message
 		if (messageOn == true) {
