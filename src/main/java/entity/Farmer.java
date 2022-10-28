@@ -32,14 +32,14 @@ public class Farmer extends Entity {
     {
         try 
         {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/enemy/chickendown1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/enemy/chickendown1.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/enemy/chickendown1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/enemy/chickendown1.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/enemy/chickendown1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/enemy/chickendown1.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/enemy/chickendown1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/enemy/chickendown1.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerup1.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerup2.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerdown1.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerdown2.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerleft1.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerleft2.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerright1.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerright2.png"));
         } catch(IOException e) 
         {
             e.printStackTrace();
