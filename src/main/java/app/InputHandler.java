@@ -38,38 +38,66 @@ public class InputHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-
-        switch(keyCode) {
-            case KeyEvent.VK_W:
-            case KeyEvent.VK_UP:
-                up = true;
+        switch(gamePanel.currState){
+            case PLAY:
+            switch(keyCode) {
+                case KeyEvent.VK_W:
+                case KeyEvent.VK_UP:
+                    up = true;
+                    break;
+                case KeyEvent.VK_A:
+                case KeyEvent.VK_LEFT:
+                    left = true;
+                    break;
+                case KeyEvent.VK_S:
+                case KeyEvent.VK_DOWN:
+                    down = true;
+                    break;
+                case KeyEvent.VK_D:
+                case KeyEvent.VK_RIGHT:
+                    right = true;
+                    break;
+                case KeyEvent.VK_H:
+                    if (!cluck) {
+                        gamePanel.playSoundE(2);
+                    }
+                    cluck = true;
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    if (gamePanel.currState == gameState.PLAY) {
+                        gamePanel.currState = gameState.PAUSE;
+                    }
+                    else {
+                        gamePanel.currState = gameState.PLAY;
+                    }
+            }
                 break;
-            case KeyEvent.VK_A:
-            case KeyEvent.VK_LEFT:
-                left = true;
+            case TITLE:
+            switch(keyCode) {
+                case KeyEvent.VK_W:
+                case KeyEvent.VK_UP:
+                    gamePanel.ui.commandNum--;
+                    if(gamePanel.ui.commandNum < 0){
+                        gamePanel.ui.commandNum = 3;
+                    }
+                    break;
+                case KeyEvent.VK_S:
+                case KeyEvent.VK_DOWN:
+                    gamePanel.ui.commandNum++;
+                    if(gamePanel.ui.commandNum > 3){
+                        gamePanel.ui.commandNum = 0;
+                    }
+                    break;
+            }
                 break;
-            case KeyEvent.VK_S:
-            case KeyEvent.VK_DOWN:
-                down = true;
+            case PAUSE:
                 break;
-            case KeyEvent.VK_D:
-            case KeyEvent.VK_RIGHT:
-                right = true;
+            case WIN:
                 break;
-            case KeyEvent.VK_H:
-                if (!cluck) {
-                    gamePanel.playSoundE(2);
-                }
-                cluck = true;
+            case LOSE:
                 break;
-            case KeyEvent.VK_ESCAPE:
-                if (gamePanel.currState == gameState.PLAY) {
-                    gamePanel.currState = gameState.PAUSE;
-                }
-                else {
-                    gamePanel.currState = gameState.PLAY;
-                }
         }
+
     }
 
     @Override

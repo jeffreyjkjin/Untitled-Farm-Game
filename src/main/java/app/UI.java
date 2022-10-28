@@ -29,7 +29,7 @@ public class UI {
 	public boolean messageOn = false;
 	public String message = "";
 	int messageCounter = 0;
-	int commandNum = 0;
+	public int commandNum = 0;
 	
 	double playTime;
 	DecimalFormat dFormat = new DecimalFormat("#0.00");
