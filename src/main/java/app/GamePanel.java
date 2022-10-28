@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -30,10 +33,16 @@ public class GamePanel extends JPanel implements Runnable {
     public final int tileSize = originalTileSize * scale;
 
     // Screen
-    public final int maxScreenCol = 16;
+    public final int maxScreenCol = 20;
     public final int maxScreenRow = 12;
-    public final int screenWidth = tileSize * maxScreenCol;
-    public final int screenHeight = tileSize * maxScreenRow;
+    public final int screenWidth = tileSize * maxScreenCol; // 960 pix.
+    public final int screenHeight = tileSize * maxScreenRow; // 576 pix.
+    // Full Screen
+    int screenWidth2 = screenWidth;
+    int screenHeight2 = screenHeight;
+    BufferedImage tempScreen;
+    Graphics2D full_g2;
+    
     
     // FPS
     final int FPS = 60;
@@ -66,6 +75,24 @@ public class GamePanel extends JPanel implements Runnable {
         
         // playMusic(0);
         currState = gameState.TITLE;
+        
+        // For FullScreen: draw on tempscreen(g2) and resize it
+        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+        full_g2 = (Graphics2D)tempScreen.getGraphics();
+        
+        //setFullScreen();
+    }
+    
+    public void setFullScreen() {
+    	
+    	// Get Local Screen Device
+    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    	GraphicsDevice gd = ge.getDefaultScreenDevice();
+    	gd.setFullScreenWindow(App.window);
+    	
+    	// Get Full Screen width & height
+    	screenWidth2 = App.window.getWidth();
+    	screenHeight2 = App.window.getHeight();
     }
 
     public void startGameThread() {
@@ -88,7 +115,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (delta >= 1) {
                 update();
-                repaint();
+                repaint(); //-> changed it to drawToTempScreen/drawToScreen for FullScreen
+                //drawToTempScreen(); // draw to the BufferedImage
+                //drawToScreen(); // draw BufferImage to the screen
                 delta--;
             }
         }
@@ -117,7 +146,41 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
         }
     }
-
+    
+    public void drawToTempScreen() {
+    	
+    	switch(currState) {
+        case PAUSE:
+        case PLAY:
+            // Map
+            mapM.draw(full_g2);
+            
+            // Player
+            player.draw(full_g2);            
+            
+            // UI
+            ui.draw(full_g2);
+            break;
+        case TITLE:
+            ui.draw(full_g2);
+            break;
+        case LOSE:
+        case WIN:
+            ui.draw(full_g2);
+            break;
+    } // The order inside is really important! It could hide your player or objects and etc.
+    }
+    
+    public void drawToScreen() {
+    	
+    	Graphics g = getGraphics();
+    	g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+    	g.dispose();
+    }
+    
+    
+     //* This Method was used to draw things directly which can't use on FullScreen
+     
     public void paintComponent(Graphics graphic) {
         super.paintComponent(graphic);
 
@@ -145,8 +208,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         graphic2.dispose();
-    } // The order inside is really important! It could hide your player or objects and etc.
-
+    } 
+	
+    
     public void playMusic(int i) {
         sound.setFile(i);
         sound.play();
@@ -161,4 +225,4 @@ public class GamePanel extends JPanel implements Runnable {
         sound.setFile(i);
         sound.play();
     }
-}
+} 
