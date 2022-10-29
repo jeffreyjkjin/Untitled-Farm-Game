@@ -33,6 +33,9 @@ public class InputHandler implements KeyListener {
 
     public InputHandler(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+
+        gamePanel.playMusic(0);
+        bgMusic = true;
     }
 
     @Override
@@ -44,10 +47,9 @@ public class InputHandler implements KeyListener {
         int keyCode = e.getKeyCode();
 
         switch(gamePanel.currState){
-
-            //PAUSE STATE
             case PAUSE:
                 switch(keyCode) {
+                    // Unpause
                     case KeyEvent.VK_ESCAPE:
                     if (!paused) {
                         gamePanel.currState = gameState.PLAY;
@@ -56,9 +58,9 @@ public class InputHandler implements KeyListener {
                 }
                 break;
 
-            //PLAY STATE
             case PLAY:
                 switch(keyCode) {
+                    // Movement
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
                         up = true;
@@ -75,12 +77,16 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_RIGHT:
                         right = true;
                         break;
+
+                    // Cluck
                     case KeyEvent.VK_H:
                         if (!cluck) {
                             gamePanel.playSoundE(2);
                         }
                         cluck = true;
                         break;
+
+                    // Pause
                     case KeyEvent.VK_ESCAPE:
                         if (!paused) {
                             gamePanel.currState = gameState.PAUSE;
@@ -89,15 +95,15 @@ public class InputHandler implements KeyListener {
                 }
                 break;
             
-            // TILE STATE
             case TITLE:
                 switch(keyCode) {
+                    // Select
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
                         if (!select) {
                             gamePanel.playSoundE(6);
                             gamePanel.ui.commandNum--;
-                            if(gamePanel.ui.commandNum < 0){
+                            if(gamePanel.ui.commandNum < 0) {
                                 gamePanel.ui.commandNum = 3;
                             }
                         }
@@ -108,30 +114,30 @@ public class InputHandler implements KeyListener {
                         if (!select) {
                             gamePanel.playSoundE(6);
                             gamePanel.ui.commandNum++;
-                            if(gamePanel.ui.commandNum > 3){
+                            if(gamePanel.ui.commandNum > 3) {
                                 gamePanel.ui.commandNum = 0;
                             }
                         }
                         select = true;
                         break;
+
+                    // Enter
                     case KeyEvent.VK_ENTER:
                         if (!enter) {
                             gamePanel.playSoundE(7);
-                            if(gamePanel.ui.commandNum == 0){
-                                gamePanel.currState = gameState.PLAY;
+                            if(gamePanel.ui.commandNum == 0){ // Play
+                                gamePanel.mapM.resetMap();
+                                gamePanel.ui.resetTimer();
                                 gamePanel.player.setDefaultValues();
-                                if (!bgMusic) {
-                                    gamePanel.playMusic(0);
-                                }
-                                bgMusic = true;
+                                gamePanel.currState = gameState.PLAY;
                             }
-                            if(gamePanel.ui.commandNum == 1){
+                            if(gamePanel.ui.commandNum == 1) { // Settings 
                                 //TODO: implement for setting
                             }
-                            if(gamePanel.ui.commandNum == 2){
+                            if(gamePanel.ui.commandNum == 2) { // Credits
                                 //TODO: implement for credit
                             }
-                            if(gamePanel.ui.commandNum == 3){
+                            if(gamePanel.ui.commandNum == 3) { // Quit
                                 System.exit(0);
                             }
                         }
@@ -140,19 +146,16 @@ public class InputHandler implements KeyListener {
                 }
                 break;
 
-            // WIN STATE
             case WIN:
-                break;
-
-            // LOSE STATE
             case LOSE:
                 switch(keyCode) {
+                    // Select
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
                         if (!select) {
                             gamePanel.playSoundE(6);
                             gamePanel.ui.commandNum--;
-                            if(gamePanel.ui.commandNum < 0){
+                            if(gamePanel.ui.commandNum < 0) {
                                 gamePanel.ui.commandNum = 2;
                             }
                         }
@@ -163,30 +166,29 @@ public class InputHandler implements KeyListener {
                         if (!select) {
                             gamePanel.playSoundE(6);
                             gamePanel.ui.commandNum++;
-                            if(gamePanel.ui.commandNum > 2){
+                            if(gamePanel.ui.commandNum > 2) {
                                 gamePanel.ui.commandNum = 0;
                             }
                         }
                         select = true;
                         break;
+
+                    // Enter
                     case KeyEvent.VK_ENTER:
                         if (!enter) {
                             gamePanel.playSoundE(7);
-                            if(gamePanel.ui.commandNum == 0){
-                                gamePanel.currState = gameState.PLAY;
+                            if(gamePanel.ui.commandNum == 0) { // retry
+                                gamePanel.mapM.resetMap();
+                                gamePanel.ui.resetTimer();
                                 gamePanel.player.setDefaultValues();
-                                if (!bgMusic) {
-                                    gamePanel.playMusic(0);
-                                }
+                                gamePanel.currState = gameState.PLAY;
                             }
-                            if(gamePanel.ui.commandNum == 1){
-                                //TODO: implement for setting
+                            if(gamePanel.ui.commandNum == 1) { // Main Menu
                                 gamePanel.currState = gameState.TITLE;
                             }
-                            if(gamePanel.ui.commandNum == 2){
+                            if(gamePanel.ui.commandNum == 2) { // Quit
                                 
                                 System.exit(0);
-                                //TODO: implement for credit
                             }
                         }
                         enter = true;
@@ -202,19 +204,9 @@ public class InputHandler implements KeyListener {
         int keyCode = e.getKeyCode();
         
         switch(gamePanel.currState) {
-
-            // PAUSE STATE
-            case PAUSE:
-            switch(keyCode) {
-                case KeyEvent.VK_ESCAPE:
-                paused = false;
-                break;
-            }
-            break;
-
-            // PLAY STATE
             case PLAY:
                 switch(keyCode) {
+                    // Movement
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
                         up = false;
@@ -231,10 +223,14 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_RIGHT:
                         right = false;
                         break;
+
+                    // Cluck
                     case KeyEvent.VK_H:
                         gamePanel.playSoundE(3);
                         cluck = false;
                         break;
+
+                    // Pause Menu functions
                     case KeyEvent.VK_ESCAPE:
                         paused = false;
                         break;
@@ -242,66 +238,51 @@ public class InputHandler implements KeyListener {
                         enter = false;
                 }
             
-            // Konami Code
-            if (keyCode == konamiCode[konamiCount]) {
-                konamiCount++;
-            }
-            else {
-                konamiCount = 0;
-            }
-            
-            if (konamiCount == 11) {
-                System.out.println("Cheats Activated!");
-                konamiCount = 0;
-                // TODO: implement function to activate developer mode cheats
-            }
+                // Konami Code
+                if (keyCode == konamiCode[konamiCount]) {
+                    konamiCount++;
+                }
+                else {
+                    konamiCount = 0;
+                }
+                
+                if (konamiCount == 11) {
+                    System.out.println("Cheats Activated!");
+                    konamiCount = 0;
+                    // TODO: implement function to activate developer mode cheats
+                }
             break;
 
-            // LOSE STATE
+            case WIN:
             case LOSE:
-
-            // TITLE STATE
+            case PAUSE:
+            case TITLE:
                 switch(keyCode) {
+                    // Movement
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
-                        up = false;
-                        break;
-                    case KeyEvent.VK_A:
-                    case KeyEvent.VK_LEFT:
-                        left = false;
-                        break;
                     case KeyEvent.VK_S:
                     case KeyEvent.VK_DOWN:
+                        up = false;
+                        left = false;
                         down = false;
-                        break;
-                    case KeyEvent.VK_D:
-                    case KeyEvent.VK_RIGHT:
                         right = false;
+                        select = false;
                         break;
+
+                    // Cluck
                     case KeyEvent.VK_H:
                         cluck = false;
                         break;
+
+                    // Menu functions
                     case KeyEvent.VK_ESCAPE:
                         paused = false;
                         break;
                     case KeyEvent.VK_ENTER:
                         enter = false;
-                }
-            case TITLE:
-                switch(keyCode) {
-                    case KeyEvent.VK_W:
-                    case KeyEvent.VK_UP:
-                    case KeyEvent.VK_S:
-                    case KeyEvent.VK_DOWN:
-                        select = false;
                         break;
-                    case KeyEvent.VK_ENTER:
-                        enter = false;
                 }
-                break;
-
-            // WIN STATE
-            case WIN:
                 break;
         }
     }
