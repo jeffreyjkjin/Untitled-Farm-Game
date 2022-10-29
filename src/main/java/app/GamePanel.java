@@ -48,8 +48,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     // System
-    InputHandler input = new InputHandler(this);
     Sound sound = new Sound();
+    InputHandler input = new InputHandler(this);
     Thread gameThread;
     public UI ui = new UI(this);
     
@@ -73,7 +73,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         mapM.setupMap();
         
-        // playMusic(0);
         currState = gameState.TITLE;
         
         // For FullScreen: draw on tempscreen(g2) and resize it
@@ -136,14 +135,16 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
                 break;
-            case PAUSE:
+            default:
                 break;
-            case WIN:
-                break;
-            case LOSE:
-                break;
-            case TITLE:
-                break;
+            // case PAUSE:
+            //     break;
+            // case WIN:
+            //     break;
+            // case LOSE:
+            //     break;
+            // case TITLE:
+            //     break;
         }
     }
     
@@ -199,11 +200,7 @@ public class GamePanel extends JPanel implements Runnable {
                 ui.draw(graphic2);
                 break;
             case TITLE:
-                ui.draw(graphic2);
-                break;
             case LOSE:
-                ui.draw(graphic2);
-                break;
             case WIN:
                 ui.draw(graphic2);
                 break;

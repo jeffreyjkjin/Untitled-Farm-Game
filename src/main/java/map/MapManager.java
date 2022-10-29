@@ -6,7 +6,6 @@ import app.GamePanel;
 
 import app.GamePanel.gameState;
 
-import entity.Farmer;
 import object.SuperObject;
 
 public class MapManager {
@@ -16,7 +15,7 @@ public class MapManager {
 
     public MapManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        mapList = new Map[10]; // 10 maps, can increase/decrease as needed;
+        mapList = new Map[2]; // 2 maps, can increase/decrease as needed;
         currMap = 0;
 
         loadMapFiles();
@@ -36,8 +35,7 @@ public class MapManager {
 
     public void resetMap() {
         currMap = 0;
-        mapList[currMap].objects = new SuperObject[mapList[currMap].objectNum];
-        mapList[currMap].farmers = new Farmer[10];
+        loadMapFiles();
         setupMap();
     }
 
@@ -48,12 +46,17 @@ public class MapManager {
     }
 
     public void nextMap() {
-        currMap++;
-        if (currMap == mapList.length) {
+        gamePanel.player.score += 1000;
+        if (currMap == mapList.length-1) {
             gamePanel.currState = gameState.WIN;
         }
         else {
+            currMap++;
+
+            gamePanel.player.keyCount = 0;
+            
             setupMap();
+            gamePanel.player.spawnPlayer();
         }
     }
 

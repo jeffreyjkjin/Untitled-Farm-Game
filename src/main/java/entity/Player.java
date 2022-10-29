@@ -42,9 +42,15 @@ public class Player extends Entity{
         worldX = gamePanel.mapM.getMap().playerStartX; // starting position
         worldY = gamePanel.mapM.getMap().playerStartY;
         speed = 4;
-        score = 0;
         health = 3;
+        score = 0;
+        keyCount = 0;
         direction = "down";
+    }
+
+    public void spawnPlayer() {
+        worldX = gamePanel.mapM.getMap().playerStartX;
+        worldY = gamePanel.mapM.getMap().playerStartY;
     }
 
     public void getPlayerImage() {
@@ -65,8 +71,6 @@ public class Player extends Entity{
     public void update() {
         if (health == 0) {
             gamePanel.currState = gameState.LOSE;
-            gamePanel.mapM.resetMap();
-            gamePanel.ui.resetTimer();
         }
 
         if (input.up || input.left || input.down || input.right) {
@@ -94,8 +98,10 @@ public class Player extends Entity{
             objectInteraction(objIndex);
 
             // Check for collision with enemy whie moving
-            int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
-            farmerInteraction(farmerIndex);
+            if (gamePanel.currState == gameState.PLAY) {
+                int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
+                farmerInteraction(farmerIndex);
+            }
 
             if(collisionOn == false) {
                 switch(direction){
@@ -129,8 +135,10 @@ public class Player extends Entity{
         else
         {
             // Check for collision with enemy while standing still
-            int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
-            farmerInteraction(farmerIndex);
+            if (gamePanel.currState == gameState.PLAY) {
+                int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
+                farmerInteraction(farmerIndex);
+            }
         }
     }
 

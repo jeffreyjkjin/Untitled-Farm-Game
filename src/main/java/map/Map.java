@@ -22,7 +22,7 @@ public class Map {
     public Farmer farmers[];
 
     public String levelName;
-    public int maxWorldCol, maxWorldRow, playerStartX, playerStartY, objectNum, keyNum;
+    public int maxWorldCol, maxWorldRow, playerStartX, playerStartY, objectNum, entityNum, keyNum;
     public int gateIndex;
 
     boolean drawPath = true; // FOR TESTING PATHFINDING
@@ -36,14 +36,16 @@ public class Map {
 
     public void loadMap(String mapFile) {
         try {
-            // format of mapFile:
-            // first line of mapFile contains level data and should be formatted as shown below:
-            // levelName,maxWorldRow,maxWorldCol,playerStartX,playerStartY,objectNum,keyNum
-            // below this header, there is a maxWorldRow x maxWorldCol array with numbers that
-            // correspond with tiles in TileManager
-            // below the array is a line break
-            // below the line break is another maxWorldRow x maxWorldCol array with numbers that
-            // correspond with objects in ObjectManager
+            /**
+             format of mapFile:
+             first line of mapFile contains level data and should be formatted as shown below:
+             levelName,maxWorldRow,maxWorldCol,playerStartX,playerStartY,objectNum,entityNum,keyNum
+             below this header, there is a maxWorldRow x maxWorldCol array with numbers that
+             correspond with tiles in TileManager
+             below the array is a line break
+             below the line break is another maxWorldRow x maxWorldCol array with numbers that
+             correspond with objects in ObjectManager
+            */
 
             InputStream input = getClass().getResourceAsStream(mapFile);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
@@ -57,7 +59,8 @@ public class Map {
             playerStartX = Integer.parseInt(settings[3]) * gp.tileSize;
             playerStartY = Integer.parseInt(settings[4]) * gp.tileSize;
             objectNum = Integer.parseInt(settings[5]);
-            keyNum = Integer.parseInt(settings[6]);
+            entityNum = Integer.parseInt(settings[6]);
+            keyNum = Integer.parseInt(settings[7]);
 
             // creating array for tile locations
             tileMap = new int[maxWorldRow][maxWorldCol];
@@ -67,7 +70,7 @@ public class Map {
             reader.readLine(); // skip blank space line
             objMap = new int[maxWorldRow][maxWorldCol];
             objects = new SuperObject[objectNum];
-            farmers = new Farmer[10];
+            farmers = new Farmer[entityNum];
             readArray(reader, objMap);
 
             reader.close();

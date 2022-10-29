@@ -165,9 +165,12 @@ public class UI {
 
 		String highScore = "HIGH SCORE";
 		String yourScore = "YOUR SCORE";
-		
+		String playerScore = String.valueOf(gp.player.score);
+
 		g2.drawString(highScore, getHorizontalCenter(highScore, g2, gp.screenWidth/2), gp.tileSize * 5);
+
 		g2.drawString(yourScore, getHorizontalCenter(yourScore, g2, gp.screenWidth/2) + gp.screenWidth/2, gp.tileSize * 5);
+		g2.drawString(playerScore, getHorizontalCenter(playerScore, g2, gp.screenWidth/2) + gp.screenWidth/2, (int)(gp.tileSize * 5.5));
 
 		// TODO: save high scores to a file and show on lose screen
 
@@ -198,27 +201,52 @@ public class UI {
 	}
 
 	private void drawWinScreen(Graphics2D g2) {
-		g2.setFont(pressStart2P);
+		// Game Over
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
 		g2.setColor(Color.white);
 		
-		String text;
-		// int textLength;
-		int x;
-		int y;
-		
-		// Complete Message
-		text = "Stage Complete!";
-		x = getHorizontalCenter(text, g2, gp.screenWidth);
-		y = gp.screenHeight/2 - (gp.tileSize*3);
-		g2.drawString(text, x, y);
-		
-		// Time Message
-		text = "Your time is :" + dFormat.format(playTime) + " SEC";
-		x = getHorizontalCenter(text, g2, gp.screenWidth);
-		y = gp.screenHeight/2 + (gp.tileSize*3);
-		g2.drawString(text, x, y);
+		String gameOver = "YOU'VE ESCAPED!";
 
-		gp.gameThread = null;
+		g2.drawString(gameOver, getHorizontalCenter(gameOver, g2, gp.screenWidth), gp.tileSize * 3);
+
+		// High Score
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 15));
+
+		String highScore = "HIGH SCORE";
+		String yourScore = "YOUR SCORE";
+		String playerScore = String.valueOf(gp.player.score);
+		
+		g2.drawString(highScore, getHorizontalCenter(highScore, g2, gp.screenWidth/2), gp.tileSize * 5);
+		
+		g2.drawString(yourScore, getHorizontalCenter(yourScore, g2, gp.screenWidth/2) + gp.screenWidth/2, gp.tileSize * 5);
+		g2.drawString(playerScore, getHorizontalCenter(playerScore, g2, gp.screenWidth/2) + gp.screenWidth/2, (int)(gp.tileSize * 5.5));
+
+		// TODO: save high scores to a file and show on win screen
+
+		// Menu
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
+
+		String retry = "RETRY";
+		String menu = "MAIN MENU";
+		String quit = "QUIT";
+
+		// Retry
+		g2.drawString(retry, getHorizontalCenter(retry, g2, gp.screenWidth), gp.tileSize * 9);
+		if(commandNum == 0) {
+			g2.drawString(">",getHorizontalCenter(retry, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 9);
+		}
+
+		// Main Menu
+		g2.drawString(menu, getHorizontalCenter(menu, g2, gp.screenWidth), gp.tileSize * 10);
+		if(commandNum == 1) {
+			g2.drawString(">",getHorizontalCenter(menu, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 10);
+		}
+
+		// Quit
+		g2.drawString(quit, getHorizontalCenter(quit, g2, gp.screenWidth), gp.tileSize * 11);
+		if(commandNum == 2) {
+			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
+		}
 	}
 
 	private void drawTitleScreen(Graphics2D g2){
