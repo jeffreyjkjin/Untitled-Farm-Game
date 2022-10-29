@@ -177,8 +177,8 @@ public class CollisionChecker {
 				if (player.hitbox.intersects(farmers[i].hitbox))
 				{
 					index = i;
-					player.collisionOn = true;
-					farmers[i].collisionOn = true;
+					player.entityCollisionOn = true;
+					farmers[i].entityCollisionOn = true;
 				}
 
 				farmers[i].hitbox.x = farmerOrigX;

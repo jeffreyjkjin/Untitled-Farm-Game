@@ -60,6 +60,7 @@ public class Farmer extends Entity {
     public void update()
     {
         collisionOn = false;
+        entityCollisionOn = false;
         setAction();
         gamePanel.checker.checkCollision(this);
 
@@ -241,7 +242,7 @@ public class Farmer extends Entity {
                 }
             }
 
-            if (nextCol == goalCol && nextRow == goalRow && this.collisionOn)
+            if (nextCol == goalCol && nextRow == goalRow && this.entityCollisionOn)
             {
                 onPath = false;
             } 
@@ -257,6 +258,7 @@ public class Farmer extends Entity {
                 farmers[i].worldX = farmers[i].startingX;
                 farmers[i].worldY = farmers[i].startingY;
                 farmers[i].collisionOn = false;
+                farmers[i].entityCollisionOn = false;
             }
         }
     }
