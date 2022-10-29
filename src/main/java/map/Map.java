@@ -211,11 +211,12 @@ public class Map {
             if (objMap[row][col] == 19) {
                 
                 farmers[i] = new Farmer(gp);
-                farmers[i].worldX = col * gp.tileSize;
-                farmers[i].worldY = row * gp.tileSize;
+                farmers[i].startingX = col * gp.tileSize;
+                farmers[i].startingY = row * gp.tileSize;
+                farmers[i].worldX = farmers[i].startingX;
+                farmers[i].worldY = farmers[i].startingY;
 
-                i++;
-                
+                i++;  
             }
 
             col++;

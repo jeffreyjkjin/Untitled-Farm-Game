@@ -181,7 +181,7 @@ public class Player extends Entity{
             gamePanel.ui.showMessage("You were caught!");
 
             respawnPlayer();
-            //respawnFarmers();
+            Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
 
             gamePanel.playSoundE(5);
         }

@@ -11,7 +11,7 @@ public class Farmer extends Entity {
 
     GamePanel gamePanel;
 
-    public int screenX, screenY;
+    public int screenX, screenY, startingX, startingY;
     public boolean collision = true;
 
     public Farmer(GamePanel gp)
@@ -241,6 +241,18 @@ public class Farmer extends Entity {
                 onPath = false;
             } 
         }
+    }
 
+    public static void respawnFarmers(Farmer[] farmers)
+    {
+        for (int i = 0; i < farmers.length; i++)
+        {
+            if (farmers[i] != null)
+            {
+                farmers[i].worldX = farmers[i].startingX;
+                farmers[i].worldY = farmers[i].startingY;
+                farmers[i].collisionOn = false;
+            }
+        }
     }
 }
