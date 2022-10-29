@@ -13,12 +13,15 @@ public class Farmer extends Entity {
 
     public int screenX, screenY, startingX, startingY;
     public boolean collision = true;
+    public static int frozen = 0; // This and below are for speed
+    public static int normal = 2;
+    public boolean knownCollision = false;
 
     public Farmer(GamePanel gp)
     {
         this.gamePanel = gp;
 
-        speed = 1;
+        speed = normal;
         hitboxDefaultX = 10;
         hitboxDefaultY = 16;
         hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 28, 32); //2*10 +28 = 48 (tileSize), 16 +32 = 48
@@ -60,11 +63,17 @@ public class Farmer extends Entity {
     public void update()
     {
         collisionOn = false;
-        entityCollisionOn = false;
+        speed = normal;
         setAction();
         gamePanel.checker.checkCollision(this);
+        if (!gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers))
+        {
+            entityCollisionOn = false;
+        }
 
-        if(collisionOn == false) {
+        knownCollision = false;
+  
+        if(!collisionOn && !entityCollisionOn) {
             switch(direction){
                 case"up":
                     worldY -= speed;
@@ -82,8 +91,10 @@ public class Farmer extends Entity {
         }
 
         gamePanel.checker.checkCollision(this);
+        gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers);
+        
         // Band-aid bugfix to enemies getting stuck on objects if they have to move left
-        if (collisionOn)
+        if (collisionOn && !entityCollisionOn)
         {
             direction = "left";
             worldX -= speed;
@@ -242,7 +253,7 @@ public class Farmer extends Entity {
                 }
             }
 
-            if (nextCol == goalCol && nextRow == goalRow && this.entityCollisionOn)
+            if (nextCol == goalCol && nextRow == goalRow && this.entityCollisionOn && gamePanel.player.entityCollisionOn)
             {
                 onPath = false;
             } 

@@ -5,18 +5,6 @@ import java.lang.Math;
 
 import app.GamePanel;
 
-/*
- *  KNOWN BUGS WITH PATHFINDING:
- * 
- *  - Collision is only checked when the player moves, so if you stand still the enemies will go through you
- * 
- *  - They seem to randomly stop pathing if you move to certain areas
- * 
- *  - Can easily safespot by either moving up and down repeatedly or getting them stuck behind a tree
- * 
- *  - Enemies can walk inside of eachother so collision detection needs fixing
- */
-
 public class Pathfinding {
     
     GamePanel gp;

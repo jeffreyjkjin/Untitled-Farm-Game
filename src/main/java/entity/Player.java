@@ -167,6 +167,7 @@ public class Player extends Entity{
                     health--;
                     gamePanel.mapM.getMap().objects[index] = null;
                     respawnPlayer();
+                    Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
                     gamePanel.playSoundE(5);
                     break;
             }

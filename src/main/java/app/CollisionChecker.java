@@ -137,9 +137,6 @@ public class CollisionChecker {
 	public int checkEntityCollision(Entity player, Farmer[] farmers)
 	{
 		int index = 999;
-		// Store players original hitbox location
-		int playerOriginalHitboxY = player.hitbox.y;
-		int playerOriginalHitboxX = player.hitbox.x;
 		// Get players hitbox coords
 		player.hitbox.x = player.worldX + player.hitbox.x; 
 		player.hitbox.y = player.worldY + player.hitbox.y;
@@ -167,9 +164,6 @@ public class CollisionChecker {
 		{
 			if (farmers[i] != null)
 			{	
-				// Store farmers original hitbox
-				int farmerOrigX = farmers[i].hitbox.x;
-				int farmerOrigY = farmers[i].hitbox.y;
 				// Get farmer's hitbox
 				farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.x;
     			farmers[i].hitbox.y = farmers[i].worldY + farmers[i].hitbox.y;
@@ -181,14 +175,77 @@ public class CollisionChecker {
 					farmers[i].entityCollisionOn = true;
 				}
 
-				farmers[i].hitbox.x = farmerOrigX;
-				farmers[i].hitbox.y = farmerOrigY;
+				farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
+				farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
 			}
 		}
 
-		player.hitbox.x = playerOriginalHitboxX;
-		player.hitbox.y = playerOriginalHitboxY;
+		player.hitbox.x = player.hitboxDefaultX;
+		player.hitbox.y = player.hitboxDefaultY;
 
 		return index;
+	}
+
+	public boolean checkFarmerCollision(Farmer toCheck, Farmer[] farmers)
+	{
+		if (toCheck.knownCollision)
+		{
+			return false;
+		}
+		// Get toCheck's hitbox
+		toCheck.hitbox.x = toCheck.worldX + toCheck.hitbox.x; 
+		toCheck.hitbox.y = toCheck.worldY + toCheck.hitbox.y;
+		// Temporarily move the players hitbox to test collision
+		switch(toCheck.direction) 
+		{
+			case "up":
+				toCheck.hitbox.y -= toCheck.speed;
+				break;
+				
+			case "down":
+				toCheck.hitbox.y += toCheck.speed;
+				break;
+				
+			case "left":
+				toCheck.hitbox.x -= toCheck.speed;
+				break;
+				
+			case "right":
+				toCheck.hitbox.x -= toCheck.speed;
+				break;
+		}
+		for (int i = 0; i < farmers.length; i++)
+		{
+			if (farmers[i] != null)
+			{
+				if (farmers[i] == toCheck)
+				{
+					continue;
+				}
+				// Get farmer's hitbox
+				farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.x;
+    			farmers[i].hitbox.y = farmers[i].worldY + farmers[i].hitbox.y;
+
+				if (toCheck.hitbox.intersects(farmers[i].hitbox))
+				{
+					toCheck.hitbox.x = toCheck.hitboxDefaultX;
+					toCheck.hitbox.y = toCheck.hitboxDefaultY;
+					farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
+					farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
+
+					toCheck.entityCollisionOn = true;
+					farmers[i].knownCollision = true;
+					return true;
+				}
+
+				farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
+				farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
+			}
+		}
+
+		toCheck.hitbox.x = toCheck.hitboxDefaultX;
+		toCheck.hitbox.y = toCheck.hitboxDefaultY;
+
+		return false;
 	}
 }
