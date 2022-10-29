@@ -48,7 +48,6 @@ public class Farmer extends Entity {
 
     public void setAction()
     {
-        // Need to change it so they are only onPath when they can see the chicken?
         if(onPath)
         {
             int goalCol = (gamePanel.player.worldX + gamePanel.player.hitbox.x) / gamePanel.tileSize;
@@ -61,8 +60,6 @@ public class Farmer extends Entity {
     public void update()
     {
         collisionOn = false;
-        gamePanel.checker.checkCollision(this);
-
         setAction();
         gamePanel.checker.checkCollision(this);
 
@@ -81,6 +78,14 @@ public class Farmer extends Entity {
                     worldX += speed;
                     break;
             }
+        }
+
+        gamePanel.checker.checkCollision(this);
+        // Band-aid bugfix to enemies getting stuck on objects if they have to move left
+        if (collisionOn)
+        {
+            direction = "left";
+            worldX -= speed;
         }
 
         spriteCounter++;
@@ -188,7 +193,7 @@ public class Farmer extends Entity {
             }
             else if (farmerTopY > nextY && farmerLeftX > nextX)
             {
-                // Can go up or left, have to figoure out wich
+                // Can go up or left, have to figoure out which
                 direction = "up";
 
                 gamePanel.checker.checkCollision(this);

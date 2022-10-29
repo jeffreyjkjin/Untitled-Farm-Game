@@ -137,7 +137,7 @@ public class Map {
 
         if (hitboxTest) // VISUALIZE HITBOXES
         {
-            graphic2.setColor(new Color(0,0,255,70));
+            graphic2.setColor(new Color(0,0,255,100));
 
             for (int i = 0; i < farmers.length; i++)
             {
