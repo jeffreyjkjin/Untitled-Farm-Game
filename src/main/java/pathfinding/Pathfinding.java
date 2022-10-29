@@ -46,6 +46,8 @@ public class Pathfinding {
         int col = 0;
         int row = 0;
 
+        createNodes();
+
         while (col < gp.mapM.getMap().maxWorldCol && row < gp.mapM.getMap().maxWorldRow)
         {
             node[col][row].open = false;
