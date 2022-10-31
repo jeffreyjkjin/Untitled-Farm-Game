@@ -163,8 +163,6 @@ public class GamePanel extends JPanel implements Runnable {
             ui.draw(full_g2);
             break;
         case TITLE:
-            ui.draw(full_g2);
-            break;
         case LOSE:
         case WIN:
             ui.draw(full_g2);
