@@ -169,7 +169,7 @@ public class Map {
 
         while (col < maxWorldCol && row < maxWorldRow) {
             if (objMap[row][col] != 0) {
-                if (objects[i] == null && objMap[row][col] != 19) {
+                if (objects[i] == null && objMap[row][col] != 99) {
                     objects[i] = ObjectManager.createObject(objMap[row][col]);
                     if (objects[i].name == "Egg") {
                         int n = randGen.nextInt(10);
@@ -211,7 +211,7 @@ public class Map {
         int i = 0;
 
         while (col < maxWorldCol && row < maxWorldRow) {
-            if (objMap[row][col] == 19) {
+            if (objMap[row][col] == 99) {
                 
                 farmers[i] = new Farmer(gp);
                 farmers[i].startingX = col * gp.tileSize;

@@ -11,11 +11,9 @@ import java.text.DecimalFormat;
 
 import app.GamePanel.gameState;
 import object.OBJ_Heart;
-// import object.OBJ_Key;
 
 public class UI {
 	GamePanel gp;
-	Font arial_30, arial_80B; // set font as 'Arial' with size '40'
 	BufferedImage keyImage, heartImage;
 	Font pressStart2P;
 	public boolean messageOn = false;
@@ -31,9 +29,6 @@ public class UI {
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
-		// OBJ_Key key = new OBJ_Key();
-		// keyImage = key.image;
-
 		playerHP[0] = new OBJ_Heart();
 		playerHP[1] = new OBJ_Heart();
 		playerHP[2] = new OBJ_Heart();
@@ -89,6 +84,12 @@ public class UI {
 			case TITLE:
 				drawTitleScreen(g2);
 				break;
+			case SETTINGS:
+				drawSettingsScreen(g2);
+				break;
+			case CREDITS:
+				drawCreditsScreen(g2);
+				break;
 		}
 	}
 
@@ -109,6 +110,7 @@ public class UI {
 		String resume = "RESUME";
 		String menu = "MAIN MENU";
 		String settings = "SETTINGS";
+		String quit = "QUIT";
 
 		// resume
 		g2.drawString(resume, getHorizontalCenter(resume, g2, gp.screenWidth), gp.tileSize * 8);
@@ -126,17 +128,20 @@ public class UI {
 		g2.drawString(menu, getHorizontalCenter(menu, g2, gp.screenWidth), gp.tileSize * 10);
 		if(commandNum == 2) {
 			g2.drawString(">",getHorizontalCenter(menu, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 10);
+		}
+		
+		// Quit
+		g2.drawString(quit, getHorizontalCenter(quit, g2, gp.screenWidth), gp.tileSize * 11);
+		if(commandNum == 3) {
+			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}	
+		
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
 		g2.setColor(Color.WHITE);
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20));
 
-		// Keys
-		// g2.drawImage(keyImage, 24, 88, gp.tileSize, gp.tileSize, null); // set imageSize & coordinate
-		// g2.drawString("X " +gp.player.keyCount, 72, 124); // 72 because eggImage obtain 24+48 = 72 size and 136 = 88 + 36. Draw string draw it differently from drawimage
-		
 		String health = "HEALTH";
 		String level = "LEVEL";
 		String score = "SCORE";
@@ -329,6 +334,38 @@ public class UI {
 		if(commandNum == 3){
 			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}
+	}
+
+	public void drawSettingsScreen(Graphics2D g2) {
+		// Settings
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setColor(Color.white);
+		
+		String settings = "SETTINGS";
+
+		g2.drawString(settings, getHorizontalCenter(settings, g2, gp.screenWidth), gp.tileSize * 3);
+
+		// Music Volume
+
+		// Sound Effect Volume
+
+		// Fullscreen
+
+		// Reset High Score
+
+		// Return
+
+	}
+	
+	public void drawCreditsScreen(Graphics2D g2) {
+		// Credits
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setColor(Color.white);
+		
+		String credits = "CREDITS";
+
+		g2.drawString(credits, getHorizontalCenter(credits, g2, gp.screenWidth), gp.tileSize * 3);
+
 	}
 
 	//method for centering text

@@ -22,7 +22,9 @@ public class GamePanel extends JPanel implements Runnable {
         PAUSE,
         WIN,
         LOSE,
-        TITLE
+        TITLE,
+        SETTINGS,
+        CREDITS
     }
     
     public gameState currState = gameState.TITLE;
@@ -197,8 +199,10 @@ public class GamePanel extends JPanel implements Runnable {
                 // UI
                 ui.draw(graphic2);
                 break;
+            case CREDITS:
             case TITLE:
             case LOSE:
+            case SETTINGS:
             case WIN:
                 ui.draw(graphic2);
                 break;
