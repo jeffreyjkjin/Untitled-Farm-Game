@@ -20,6 +20,7 @@ public class UI {
 	public String message = "";
 	int messageCounter = 0;
 	public int commandNum = 0;
+	public int fullscreen = 0;
 	
 	OBJ_Heart playerHP[] = new OBJ_Heart[3];
 
@@ -345,16 +346,44 @@ public class UI {
 
 		g2.drawString(settings, getHorizontalCenter(settings, g2, gp.screenWidth), gp.tileSize * 3);
 
+		String music = "MUSIC VOLUME";
+		String se = "SE VOLUME";
+		String fullscreen = "FULL SCREEN";
+		String resetScore = "RESET HIGH SCORE";
+		String back = "RETURN";
+
+		// Menu
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 35));
+
 		// Music Volume
+		g2.drawString(music, 2*gp.tileSize, gp.tileSize * 5);
+		if(commandNum == 0){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 5); //drawing > before the button
+		}
 
 		// Sound Effect Volume
+		g2.drawString(se, 2*gp.tileSize, gp.tileSize * 6);
+		if(commandNum == 1){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 6); //drawing > before the button
+		}
 
 		// Fullscreen
+		g2.drawString(fullscreen, 2*gp.tileSize, gp.tileSize * 7);
+		if(commandNum == 2){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 7); //drawing > before the button
+		}
 
 		// Reset High Score
+		g2.drawString(resetScore, 2*gp.tileSize, gp.tileSize * 8);
+		if(commandNum == 3){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 8); //drawing > before the button
+		}
 
 		// Return
-
+		g2.drawString(back, 2*gp.tileSize, gp.tileSize * 9);
+		if(commandNum == 4){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 9); //drawing > before the button
+		}
 	}
 	
 	public void drawCreditsScreen(Graphics2D g2) {

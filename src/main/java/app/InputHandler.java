@@ -92,10 +92,12 @@ public class InputHandler implements KeyListener {
                             if(gamePanel.ui.commandNum == 1) { // Settings
                                 prevState = gamePanel.currState;
                                 gamePanel.currState = gameState.SETTINGS;
+                                gamePanel.ui.commandNum = 0;
                             }
                             if(gamePanel.ui.commandNum == 2) { // Main Menu
                                 
                                 gamePanel.currState = gameState.TITLE;
+                                gamePanel.ui.commandNum = 0;
                             }
                             if (gamePanel.ui.commandNum == 3) { // Quit
                                 System.exit(0);
@@ -182,6 +184,7 @@ public class InputHandler implements KeyListener {
                             if(gamePanel.ui.commandNum == 1) { // Settings 
                                 prevState = gamePanel.currState;
                                 gamePanel.currState = gameState.SETTINGS;
+                                gamePanel.ui.commandNum = 0;
                             }
                             if(gamePanel.ui.commandNum == 2) { // Credits
                                 gamePanel.currState = gameState.CREDITS;
@@ -247,6 +250,49 @@ public class InputHandler implements KeyListener {
                     switch(keyCode) {
                         case KeyEvent.VK_ESCAPE:
                             gamePanel.currState = prevState;
+                        case KeyEvent.VK_W:
+                        case KeyEvent.VK_UP:
+                            if (!select) {
+                                gamePanel.playSoundE(6);
+                                gamePanel.ui.commandNum--;
+                                if(gamePanel.ui.commandNum < 0) {
+                                    gamePanel.ui.commandNum = 4;
+                                }
+                            }
+                            select = true;
+                            break;
+                        case KeyEvent.VK_S:
+                        case KeyEvent.VK_DOWN:
+                            if (!select) {
+                                gamePanel.playSoundE(6);
+                                gamePanel.ui.commandNum++;
+                                if(gamePanel.ui.commandNum > 4) {
+                                    gamePanel.ui.commandNum = 0;
+                                }
+                            }
+                            select = true;
+                            break;
+
+                        // Enter
+                        case KeyEvent.VK_ENTER:
+                            if (!enter) {
+                                gamePanel.playSoundE(7);
+                                if(gamePanel.ui.commandNum == 2){ // Full screen
+                                    if (gamePanel.ui.fullscreen == 0)
+                                        gamePanel.ui.fullscreen = 1;
+                                    if (gamePanel.ui.fullscreen == 1)
+                                        gamePanel.ui.fullscreen = 0;
+                                }
+                                if(gamePanel.ui.commandNum == 3) { // Reset high score
+                                    //Reset high score
+                                }
+                                if(gamePanel.ui.commandNum == 4) { // Return
+                                    gamePanel.currState = prevState;
+                                    gamePanel.ui.commandNum = 0;
+                                }
+                            }
+                            enter = true;
+                            break;
                     }
                 break;
 
