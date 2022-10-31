@@ -84,6 +84,12 @@ public class UI {
 			case TITLE:
 				drawTitleScreen(g2);
 				break;
+			case SETTINGS:
+				drawSettingsScreen(g2);
+				break;
+			case CREDITS:
+				drawCreditsScreen(g2);
+				break;
 		}
 	}
 
@@ -127,7 +133,7 @@ public class UI {
 		// Quit
 		g2.drawString(quit, getHorizontalCenter(quit, g2, gp.screenWidth), gp.tileSize * 11);
 		if(commandNum == 3) {
-			g2.drawString(">",getHorizontalCenter(menu, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
+			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}	
 		
 	}
@@ -328,6 +334,38 @@ public class UI {
 		if(commandNum == 3){
 			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}
+	}
+
+	public void drawSettingsScreen(Graphics2D g2) {
+		// Settings
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setColor(Color.white);
+		
+		String settings = "SETTINGS";
+
+		g2.drawString(settings, getHorizontalCenter(settings, g2, gp.screenWidth), gp.tileSize * 3);
+
+		// Music Volume
+
+		// Sound Effect Volume
+
+		// Fullscreen
+
+		// Reset High Score
+
+		// Return
+
+	}
+	
+	public void drawCreditsScreen(Graphics2D g2) {
+		// Credits
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setColor(Color.white);
+		
+		String credits = "CREDITS";
+
+		g2.drawString(credits, getHorizontalCenter(credits, g2, gp.screenWidth), gp.tileSize * 3);
+
 	}
 
 	//method for centering text

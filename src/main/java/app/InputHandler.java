@@ -16,6 +16,8 @@ public class InputHandler implements KeyListener {
 
     public boolean bgMusic;
 
+    gameState prevState;
+
     int[] konamiCode = {
         KeyEvent.VK_UP, 
         KeyEvent.VK_UP, 
@@ -88,7 +90,8 @@ public class InputHandler implements KeyListener {
                                 gamePanel.currState = gameState.PLAY;
                             }
                             if(gamePanel.ui.commandNum == 1) { // Settings
-                                //gamePanel.currState = gameState.SETTINGS;
+                                prevState = gamePanel.currState;
+                                gamePanel.currState = gameState.SETTINGS;
                             }
                             if(gamePanel.ui.commandNum == 2) { // Main Menu
                                 
@@ -177,10 +180,11 @@ public class InputHandler implements KeyListener {
                                 gamePanel.currState = gameState.PLAY;
                             }
                             if(gamePanel.ui.commandNum == 1) { // Settings 
-                                //TODO: implement for setting
+                                prevState = gamePanel.currState;
+                                gamePanel.currState = gameState.SETTINGS;
                             }
                             if(gamePanel.ui.commandNum == 2) { // Credits
-                                //TODO: implement for credit
+                                gamePanel.currState = gameState.CREDITS;
                             }
                             if(gamePanel.ui.commandNum == 3) { // Quit
                                 System.exit(0);
@@ -239,6 +243,19 @@ public class InputHandler implements KeyListener {
                         enter = true;
                         break;
                 }
+                case SETTINGS:
+                    switch(keyCode) {
+                        case KeyEvent.VK_ESCAPE:
+                            gamePanel.currState = prevState;
+                    }
+                break;
+
+                case CREDITS:
+                    switch(keyCode) {
+                        case KeyEvent.VK_ESCAPE:
+                            gamePanel.currState = gameState.TITLE;
+                            break;
+                    }
                 break;
         }
 
@@ -298,6 +315,8 @@ public class InputHandler implements KeyListener {
                 }
             break;
 
+            case CREDITS:
+            case SETTINGS:
             case WIN:
             case LOSE:
             case PAUSE:
