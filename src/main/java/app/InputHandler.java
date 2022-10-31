@@ -55,6 +55,48 @@ public class InputHandler implements KeyListener {
                         gamePanel.currState = gameState.PLAY;
                     }
                     paused = true;
+
+                    // Select
+                    case KeyEvent.VK_W:
+                    case KeyEvent.VK_UP:
+                        if (!select) {
+                            gamePanel.playSoundE(6);
+                            gamePanel.ui.commandNum--;
+                            if(gamePanel.ui.commandNum < 0) {
+                                gamePanel.ui.commandNum = 2;
+                            }
+                        }
+                        select = true;
+                        break;
+                    case KeyEvent.VK_S:
+                    case KeyEvent.VK_DOWN:
+                        if (!select) {
+                            gamePanel.playSoundE(6);
+                            gamePanel.ui.commandNum++;
+                            if(gamePanel.ui.commandNum > 2) {
+                                gamePanel.ui.commandNum = 0;
+                            }
+                        }
+                        select = true;
+                        break;
+
+                    // Enter
+                    case KeyEvent.VK_ENTER:
+                        if (!enter) {
+                            gamePanel.playSoundE(7);
+                            if(gamePanel.ui.commandNum == 0) { // resume
+                                gamePanel.currState = gameState.PLAY;
+                            }
+                            if(gamePanel.ui.commandNum == 1) { // Settings
+                                //gamePanel.currState = gameState.SETTINGS;
+                            }
+                            if(gamePanel.ui.commandNum == 2) { // Main Menu
+                                
+                                gamePanel.currState = gameState.TITLE;
+                            }
+                        }
+                        enter = true;
+                        break;
                 }
                 break;
 

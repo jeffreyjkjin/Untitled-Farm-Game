@@ -93,11 +93,40 @@ public class UI {
 	}
 
 	private void drawPauseScreen(Graphics2D g2) {
+		//Making the screen darker
+		g2.setColor(new Color(0,0,0,150));
+		g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 80F));
 		g2.setColor(Color.white);
 
 		String text = "PAUSED";
-		g2.drawString(text, getHorizontalCenter(text, g2, gp.screenWidth), gp.tileSize * 6);
+		g2.drawString(text, getHorizontalCenter(text, g2, gp.screenWidth), gp.tileSize * 4);
+
+		// Menu
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
+
+		String resume = "RESUME";
+		String menu = "MAIN MENU";
+		String settings = "SETTINGS";
+
+		// resume
+		g2.drawString(resume, getHorizontalCenter(resume, g2, gp.screenWidth), gp.tileSize * 8);
+		if(commandNum == 0) {
+			g2.drawString(">",getHorizontalCenter(resume, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 8);
+		}
+
+		// Settings
+		g2.drawString(settings, getHorizontalCenter(settings, g2, gp.screenWidth), gp.tileSize * 9);
+		if(commandNum == 1) {
+			g2.drawString(">",getHorizontalCenter(settings, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 9);
+		}
+
+		// Main Menu
+		g2.drawString(menu, getHorizontalCenter(menu, g2, gp.screenWidth), gp.tileSize * 10);
+		if(commandNum == 2) {
+			g2.drawString(">",getHorizontalCenter(menu, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 10);
+		}	
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
