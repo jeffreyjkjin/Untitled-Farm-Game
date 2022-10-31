@@ -278,10 +278,12 @@ public class InputHandler implements KeyListener {
                             if (!enter) {
                                 gamePanel.playSoundE(7);
                                 if(gamePanel.ui.commandNum == 2){ // Full screen
-                                    if (gamePanel.ui.fullscreen == 0)
-                                        gamePanel.ui.fullscreen = 1;
-                                    if (gamePanel.ui.fullscreen == 1)
-                                        gamePanel.ui.fullscreen = 0;
+                                    if (gamePanel.ui.fullscreenCounter == false){
+                                        gamePanel.ui.fullscreenCounter = true;
+                                    }
+                                    else if (gamePanel.ui.fullscreenCounter == true){
+                                        gamePanel.ui.fullscreenCounter = false;
+                                    }
                                 }
                                 if(gamePanel.ui.commandNum == 3) { // Reset high score
                                     //Reset high score

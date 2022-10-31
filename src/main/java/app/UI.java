@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.awt.BasicStroke;
 
 import app.GamePanel.gameState;
 import object.OBJ_Heart;
@@ -20,7 +21,7 @@ public class UI {
 	public String message = "";
 	int messageCounter = 0;
 	public int commandNum = 0;
-	public int fullscreen = 0;
+	public boolean fullscreenCounter = false;
 	
 	OBJ_Heart playerHP[] = new OBJ_Heart[3];
 
@@ -362,27 +363,38 @@ public class UI {
 		}
 
 		// Sound Effect Volume
-		g2.drawString(se, 2*gp.tileSize, gp.tileSize * 6);
+		g2.drawString(se, 2*gp.tileSize, gp.tileSize * 13/2);
 		if(commandNum == 1){
-			g2.drawString(">", gp.tileSize, gp.tileSize * 6); //drawing > before the button
+			g2.drawString(">", gp.tileSize, gp.tileSize * 13/2); //drawing > before the button
 		}
 
 		// Fullscreen
-		g2.drawString(fullscreen, 2*gp.tileSize, gp.tileSize * 7);
+		g2.drawString(fullscreen, 2*gp.tileSize, gp.tileSize * 16/2);
 		if(commandNum == 2){
-			g2.drawString(">", gp.tileSize, gp.tileSize * 7); //drawing > before the button
+			g2.drawString(">", gp.tileSize, gp.tileSize * 16/2); //drawing > before the button
+		}
+		// g2.setStroke(new BasicStroke(3));
+		// g2.drawRect(gp.tileSize*12, gp.tileSize*6, 48, 48);
+		if(fullscreenCounter == false){
+			g2.drawString("OFF",gp.tileSize*12, gp.tileSize*16/2);
+			System.out.println(fullscreenCounter);
+		}
+		if(fullscreenCounter == true){
+			g2.drawString("ON",gp.tileSize*12, gp.tileSize*16/2);
+			System.out.println(fullscreenCounter);
+			
 		}
 
 		// Reset High Score
-		g2.drawString(resetScore, 2*gp.tileSize, gp.tileSize * 8);
+		g2.drawString(resetScore, 2*gp.tileSize, gp.tileSize * 19/2);
 		if(commandNum == 3){
-			g2.drawString(">", gp.tileSize, gp.tileSize * 8); //drawing > before the button
+			g2.drawString(">", gp.tileSize, gp.tileSize * 19/2); //drawing > before the button
 		}
 
 		// Return
-		g2.drawString(back, 2*gp.tileSize, gp.tileSize * 9);
+		g2.drawString(back, 2*gp.tileSize, gp.tileSize * 22/2);
 		if(commandNum == 4){
-			g2.drawString(">", gp.tileSize, gp.tileSize * 9); //drawing > before the button
+			g2.drawString(">", gp.tileSize, gp.tileSize * 22/2); //drawing > before the button
 		}
 	}
 	
