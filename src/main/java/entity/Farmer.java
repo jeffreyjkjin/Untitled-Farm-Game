@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.lang.Math;
 
 public class Farmer extends Entity {
 
@@ -72,8 +73,32 @@ public class Farmer extends Entity {
         }
 
         knownCollision = false;
-  
-        if(!collisionOn && !entityCollisionOn) {
+
+        int middleOfPlayerX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
+        //int middleOfPlayerY = gamePanel.player.worldY + gamePanel.player.hitbox.y + (gamePanel.player.hitbox.height / 2);
+        int distanceToPlayer = Math.abs(worldX - middleOfPlayerX);
+        boolean goalRow = false;
+
+        if (worldY / gamePanel.tileSize == gamePanel.player.worldY / gamePanel.tileSize)
+        {
+            goalRow = true;
+        }
+        
+        if (distanceToPlayer < 48 && goalRow)
+        {
+            if (worldX > middleOfPlayerX)
+            {
+                direction = "left";
+                worldX -= speed;
+            }
+            else if (worldX < middleOfPlayerX)
+            {
+                direction = "right";
+                worldX += speed;
+            }
+        }
+        
+         else if(!collisionOn && !entityCollisionOn) {
             switch(direction){
                 case"up":
                     worldY -= speed;
@@ -251,7 +276,7 @@ public class Farmer extends Entity {
                 {
                     direction = "right";
                 }
-            }
+            } 
 
             if (nextCol == goalCol && nextRow == goalRow && this.entityCollisionOn && gamePanel.player.entityCollisionOn)
             {
