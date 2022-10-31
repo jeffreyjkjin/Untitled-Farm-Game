@@ -73,7 +73,7 @@ public class InputHandler implements KeyListener {
                         if (!select) {
                             gamePanel.playSoundE(6);
                             gamePanel.ui.commandNum++;
-                            if(gamePanel.ui.commandNum > 2) {
+                            if(gamePanel.ui.commandNum > 3) {
                                 gamePanel.ui.commandNum = 0;
                             }
                         }
@@ -93,6 +93,9 @@ public class InputHandler implements KeyListener {
                             if(gamePanel.ui.commandNum == 2) { // Main Menu
                                 
                                 gamePanel.currState = gameState.TITLE;
+                            }
+                            if (gamePanel.ui.commandNum == 3) { // Quit
+                                System.exit(0);
                             }
                         }
                         enter = true;
