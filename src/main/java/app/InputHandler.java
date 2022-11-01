@@ -140,6 +140,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_ESCAPE:
                         if (!paused) {
                             gamePanel.currState = gameState.PAUSE;
+                            gamePanel.ui.commandNum = 0;
                         }
                         paused = true;
                 }
@@ -273,6 +274,30 @@ public class InputHandler implements KeyListener {
                             select = true;
                             break;
 
+                        case KeyEvent.VK_A:
+                        case KeyEvent.VK_LEFT:
+                            if(gamePanel.ui.commandNum == 0 && gamePanel.sound.volumeScale > 0){
+                                gamePanel.sound.volumeScale--;
+                                gamePanel.sound.checkVolume();
+                                gamePanel.playSoundE(6);
+                            }
+                            // if(gamePanel.ui.commandNum == 1 && gamePanel.sound.volumeScale > 0){
+
+                            // }
+                            break;
+                        
+                        case KeyEvent.VK_D:
+                        case KeyEvent.VK_RIGHT:
+                            if(gamePanel.ui.commandNum == 0 && gamePanel.sound.volumeScale < 5){
+                                gamePanel.sound.volumeScale++;
+                                gamePanel.sound.checkVolume();
+                                gamePanel.playSoundE(6);
+                            }
+                            // if(gamePanel.ui.commandNum == 1 && gamePanel.sound.volumeScale < 5){
+                                
+                            // }
+                            break;
+ 
                         // Enter
                         case KeyEvent.VK_ENTER:
                             if (!enter) {

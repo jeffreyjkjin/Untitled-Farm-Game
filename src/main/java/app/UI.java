@@ -358,6 +358,9 @@ public class UI {
 
 		// Music Volume
 		g2.drawString(music, 2*gp.tileSize, gp.tileSize * 5);
+		g2.drawRect(gp.tileSize*13, gp.tileSize*4, 240, 48);
+		int volumeWidth = 48* gp.sound.volumeScale;
+		g2.fillRect(gp.tileSize*13, gp.tileSize*4, volumeWidth, 48);
 		if(commandNum == 0){
 			g2.drawString(">", gp.tileSize, gp.tileSize * 5); //drawing > before the button
 		}
