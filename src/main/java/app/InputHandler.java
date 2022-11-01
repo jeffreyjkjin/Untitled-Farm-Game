@@ -303,11 +303,14 @@ public class InputHandler implements KeyListener {
                             if (!enter) {
                                 gamePanel.playSoundE(7);
                                 if(gamePanel.ui.commandNum == 2){ // Full screen
+                                    // TODO: check if previous state was playing/pause; don't let player fullscreen
                                     if (gamePanel.ui.fullscreenCounter == false){
                                         gamePanel.ui.fullscreenCounter = true;
+                                        gamePanel.setFullScreen();
                                     }
                                     else if (gamePanel.ui.fullscreenCounter == true){
                                         gamePanel.ui.fullscreenCounter = false;
+                                        gamePanel.setWindowScreen();
                                     }
                                 }
                                 if(gamePanel.ui.commandNum == 3) { // Reset high score

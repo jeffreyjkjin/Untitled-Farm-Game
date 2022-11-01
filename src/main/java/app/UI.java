@@ -380,12 +380,9 @@ public class UI {
 		// g2.drawRect(gp.tileSize*12, gp.tileSize*6, 48, 48);
 		if(fullscreenCounter == false){
 			g2.drawString("OFF",gp.tileSize*12, gp.tileSize*16/2);
-			System.out.println(fullscreenCounter);
 		}
 		if(fullscreenCounter == true){
 			g2.drawString("ON",gp.tileSize*12, gp.tileSize*16/2);
-			System.out.println(fullscreenCounter);
-			
 		}
 
 		// Reset High Score
