@@ -358,15 +358,22 @@ public class UI {
 
 		// Music Volume
 		g2.drawString(music, 2*gp.tileSize, gp.tileSize * 5);
-		g2.drawRect(gp.tileSize*13, gp.tileSize*4, 240, 48);
-		int volumeWidth = 48* gp.sound.volumeScale;
-		g2.fillRect(gp.tileSize*13, gp.tileSize*4, volumeWidth, 48);
+
+		g2.drawRect(gp.tileSize*13, gp.tileSize*4, 240, 48); //draw a rect
+		int volumeWidth = 48* gp.music.volumeScale;
+		g2.fillRect(gp.tileSize*13, gp.tileSize*4, volumeWidth, 48); //fill part of the rect
+
 		if(commandNum == 0){
 			g2.drawString(">", gp.tileSize, gp.tileSize * 5); //drawing > before the button
 		}
 
 		// Sound Effect Volume
 		g2.drawString(se, 2*gp.tileSize, gp.tileSize * 13/2);
+
+		g2.drawRect(gp.tileSize*13, gp.tileSize*11/2, 240, 48); //draw a rect
+		int volumeWidth2 = 48* gp.se.volumeScale;
+		g2.fillRect(gp.tileSize*13, gp.tileSize*11/2, volumeWidth2, 48); //fill part of the rect
+
 		if(commandNum == 1){
 			g2.drawString(">", gp.tileSize, gp.tileSize * 13/2); //drawing > before the button
 		}
@@ -376,8 +383,7 @@ public class UI {
 		if(commandNum == 2){
 			g2.drawString(">", gp.tileSize, gp.tileSize * 16/2); //drawing > before the button
 		}
-		// g2.setStroke(new BasicStroke(3));
-		// g2.drawRect(gp.tileSize*12, gp.tileSize*6, 48, 48);
+
 		if(fullscreenCounter == false){
 			g2.drawString("OFF",gp.tileSize*12, gp.tileSize*16/2);
 		}

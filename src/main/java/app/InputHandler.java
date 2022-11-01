@@ -276,26 +276,30 @@ public class InputHandler implements KeyListener {
 
                         case KeyEvent.VK_A:
                         case KeyEvent.VK_LEFT:
-                            if(gamePanel.ui.commandNum == 0 && gamePanel.sound.volumeScale > 0){
-                                gamePanel.sound.volumeScale--;
-                                gamePanel.sound.checkVolume();
+                            if(gamePanel.ui.commandNum == 0 && gamePanel.music.volumeScale > 0){
+                                gamePanel.music.volumeScale--;
+                                gamePanel.music.checkVolume();
                                 gamePanel.playSoundE(6);
                             }
-                            // if(gamePanel.ui.commandNum == 1 && gamePanel.sound.volumeScale > 0){
-
-                            // }
+                            if(gamePanel.ui.commandNum == 1 && gamePanel.se.volumeScale > 0){
+                                gamePanel.se.volumeScale--;
+                                gamePanel.se.checkVolume();
+                                gamePanel.playSoundE(6);
+                            }
                             break;
                         
                         case KeyEvent.VK_D:
                         case KeyEvent.VK_RIGHT:
-                            if(gamePanel.ui.commandNum == 0 && gamePanel.sound.volumeScale < 5){
-                                gamePanel.sound.volumeScale++;
-                                gamePanel.sound.checkVolume();
+                            if(gamePanel.ui.commandNum == 0 && gamePanel.music.volumeScale < 5){
+                                gamePanel.music.volumeScale++;
+                                gamePanel.music.checkVolume();
                                 gamePanel.playSoundE(6);
                             }
-                            // if(gamePanel.ui.commandNum == 1 && gamePanel.sound.volumeScale < 5){
-                                
-                            // }
+                            if(gamePanel.ui.commandNum == 1 && gamePanel.se.volumeScale < 5){
+                                gamePanel.se.volumeScale++;
+                                gamePanel.se.checkVolume();
+                                gamePanel.playSoundE(6);
+                            }
                             break;
  
                         // Enter

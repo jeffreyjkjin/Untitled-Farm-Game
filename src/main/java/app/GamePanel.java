@@ -43,7 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     // System
-    Sound sound = new Sound();
+    Sound music = new Sound();
+    Sound se = new Sound();
     InputHandler input = new InputHandler(this);
     Thread gameThread;
     public UI ui = new UI(this);
@@ -177,17 +178,17 @@ public class GamePanel extends JPanel implements Runnable {
 	
     
     public void playMusic(int i) {
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
+        music.setFile(i);
+        music.play();
+        music.loop();
     }
 
     public void stopMusic(){
-        sound.stop();
+        music.stop();
     }
 
     public void playSoundE(int i) {
-        sound.setFile(i);
-        sound.play();
+        se.setFile(i);
+        se.play();
     }
 } 
