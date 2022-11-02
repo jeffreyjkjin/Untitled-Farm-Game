@@ -7,8 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.awt.BasicStroke;
 
 import app.GamePanel.gameState;
 import object.OBJ_Heart;
@@ -26,7 +24,6 @@ public class UI {
 	OBJ_Heart playerHP[] = new OBJ_Heart[3];
 
 	double playTime;
-	DecimalFormat dFormat = new DecimalFormat("#0.00");
 	
 	public UI(GamePanel gp) {
 		this.gp = gp;
@@ -45,6 +42,31 @@ public class UI {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String drawTimer() {
+		String timer = "";
+
+		int minutes = (int) playTime / 60;
+		int seconds = (int) playTime % 60;
+
+		if (minutes < 10) {
+			timer += "0" + minutes;
+		}
+		else {
+			timer += minutes;
+		}
+
+		timer += ":";
+
+		if (seconds < 10) {
+			timer += "0" + seconds;
+		}
+		else {
+			timer += seconds;
+		}
+
+		return timer;
 	}
 
 	public void resetTimer() {
@@ -170,7 +192,7 @@ public class UI {
 		if (gp.currState == gameState.PLAY) {
 			playTime += (double)1/60;
 		}
-		g2.drawString(dFormat.format(playTime), getHorizontalCenter(dFormat.format(playTime), g2, gp.screenWidth/4) + (gp.screenWidth * 3/4), 64);
+		g2.drawString(drawTimer(), getHorizontalCenter(drawTimer(), g2, gp.screenWidth/4) + (gp.screenWidth * 3/4), 64);
 
 		// Message
 		if (messageOn == true) {
