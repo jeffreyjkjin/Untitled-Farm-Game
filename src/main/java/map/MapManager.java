@@ -22,7 +22,7 @@ public class MapManager {
     }
     
     private void loadMapFiles() {
-        mapList[0] = new Map(gamePanel, "/levels/stageTest1.txt");
+        mapList[0] = new Map(gamePanel, "/levels/stage1.txt");
         mapList[1] = new Map(gamePanel, "/levels/stageTest2.txt");
         
         // add more maps here

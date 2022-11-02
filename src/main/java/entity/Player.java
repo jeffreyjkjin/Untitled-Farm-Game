@@ -159,7 +159,7 @@ public class Player extends Entity{
                         health++;
                     }
                     gamePanel.mapM.getMap().objects[index] = null;
-                    gamePanel.ui.showMessage("My Egg!");
+                    gamePanel.ui.showMessage("MY EGG!");
                     break;
                 case "Key":
                     gamePanel.mapM.getMap().objects[index] = null;
@@ -167,6 +167,7 @@ public class Player extends Entity{
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
                         gamePanel.mapM.getObject(gamePanel.mapM.getMap().gateIndex).update(gamePanel);
                         gamePanel.sound.play(8);
+                        gamePanel.ui.showMessage("DOOR IS OPENED!");
                     }
                     gamePanel.sound.play(2);
                     break;
