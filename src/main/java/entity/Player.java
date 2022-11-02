@@ -166,6 +166,7 @@ public class Player extends Entity{
                     keyCount++;
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
                         gamePanel.mapM.getObject(gamePanel.mapM.getMap().gateIndex).update(gamePanel);
+                        gamePanel.playSoundE(10);
                     }
                     gamePanel.playSoundE(4);
                     break;
@@ -179,6 +180,7 @@ public class Player extends Entity{
                     gamePanel.mapM.getMap().objects[index] = null;
                     respawnPlayer();
                     Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
+                    gamePanel.playSoundE(9);
                     gamePanel.playSoundE(5);
                     break;
             }

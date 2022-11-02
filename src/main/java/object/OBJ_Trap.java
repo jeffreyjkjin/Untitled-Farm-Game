@@ -11,7 +11,7 @@ public class OBJ_Trap extends SuperObject {
 		name = "Trap";
 		try {
 			// temporary sprite for trap
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/egg.png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/objects/trap.png"));
 			
 		}catch(IOException e) {
 			e.printStackTrace();

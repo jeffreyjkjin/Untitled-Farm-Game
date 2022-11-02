@@ -59,7 +59,7 @@ public class UI {
 			else {
 				playerHP[i-1].fullHeart();
 			}
-			g2.drawImage(playerHP[i-1].image, 46 + (i-1)*gp.tileSize , 32, gp.tileSize, gp.tileSize, null);
+			g2.drawImage(playerHP[i-1].image, (46 * (gp.scale - 2)) + (i-1)*gp.tileSize , 32, gp.tileSize, gp.tileSize, null);
 		}
 
 	}
@@ -348,13 +348,13 @@ public class UI {
 		g2.drawString(settings, getHorizontalCenter(settings, g2, gp.screenWidth), gp.tileSize * 3);
 
 		String music = "MUSIC VOLUME";
-		String se = "SE VOLUME";
+		String sound = "SOUND VOLUME";
 		String fullscreen = "FULL SCREEN";
 		String resetScore = "RESET HIGH SCORE";
 		String back = "RETURN";
 
 		// Menu
-		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 35));
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
 
 		// Music Volume
 		g2.drawString(music, 2*gp.tileSize, gp.tileSize * 5);
@@ -368,7 +368,7 @@ public class UI {
 		}
 
 		// Sound Effect Volume
-		g2.drawString(se, 2*gp.tileSize, gp.tileSize * 13/2);
+		g2.drawString(sound, 2*gp.tileSize, gp.tileSize * 13/2);
 
 		g2.drawRect(gp.tileSize*13, gp.tileSize*11/2, 240, 48); //draw a rect
 		int volumeWidth2 = 48* gp.se.volumeScale;
