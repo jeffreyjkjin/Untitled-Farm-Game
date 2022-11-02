@@ -120,9 +120,23 @@ public class Farmer extends Entity {
         
         // Band-aid bugfix to enemies getting stuck on objects if they have to move left
         if (collisionOn && !entityCollisionOn)
-        {
-            direction = "left";
-            worldX -= speed;
+        {   
+            if(direction == "down"){
+                direction = "left";
+                worldX -= speed;
+            }
+            else if(direction == "up"){
+                direction = "right";
+                worldX += speed;
+            }
+            else if(direction == "left"){
+                direction = "up";
+                worldY -= speed;
+            }
+            else if(direction == "right"){
+                direction = "down";
+                worldY += speed;
+            }
         }
 
         spriteCounter++;
