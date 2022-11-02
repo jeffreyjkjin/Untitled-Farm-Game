@@ -8,20 +8,20 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.awt.BasicStroke;
 
 import app.GamePanel.gameState;
 import object.OBJ_Heart;
-// import object.OBJ_Key;
 
 public class UI {
 	GamePanel gp;
-	Font arial_30, arial_80B; // set font as 'Arial' with size '40'
 	BufferedImage keyImage, heartImage;
 	Font pressStart2P;
 	public boolean messageOn = false;
 	public String message = "";
 	int messageCounter = 0;
 	public int commandNum = 0;
+	public boolean fullscreenCounter = false;
 	
 	OBJ_Heart playerHP[] = new OBJ_Heart[3];
 
@@ -31,9 +31,6 @@ public class UI {
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
-		// OBJ_Key key = new OBJ_Key();
-		// keyImage = key.image;
-
 		playerHP[0] = new OBJ_Heart();
 		playerHP[1] = new OBJ_Heart();
 		playerHP[2] = new OBJ_Heart();
@@ -89,25 +86,64 @@ public class UI {
 			case TITLE:
 				drawTitleScreen(g2);
 				break;
+			case SETTINGS:
+				drawSettingsScreen(g2);
+				break;
+			case CREDITS:
+				drawCreditsScreen(g2);
+				break;
 		}
 	}
 
 	private void drawPauseScreen(Graphics2D g2) {
+		//Making the screen darker
+		g2.setColor(new Color(0,0,0,150));
+		g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 80F));
 		g2.setColor(Color.white);
 
 		String text = "PAUSED";
-		g2.drawString(text, getHorizontalCenter(text, g2, gp.screenWidth), gp.tileSize * 6);
+		g2.drawString(text, getHorizontalCenter(text, g2, gp.screenWidth), gp.tileSize * 4);
+
+		// Menu
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
+
+		String resume = "RESUME";
+		String menu = "MAIN MENU";
+		String settings = "SETTINGS";
+		String quit = "QUIT";
+
+		// resume
+		g2.drawString(resume, getHorizontalCenter(resume, g2, gp.screenWidth), gp.tileSize * 8);
+		if(commandNum == 0) {
+			g2.drawString(">",getHorizontalCenter(resume, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 8);
+		}
+
+		// Settings
+		g2.drawString(settings, getHorizontalCenter(settings, g2, gp.screenWidth), gp.tileSize * 9);
+		if(commandNum == 1) {
+			g2.drawString(">",getHorizontalCenter(settings, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 9);
+		}
+
+		// Main Menu
+		g2.drawString(menu, getHorizontalCenter(menu, g2, gp.screenWidth), gp.tileSize * 10);
+		if(commandNum == 2) {
+			g2.drawString(">",getHorizontalCenter(menu, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 10);
+		}
+		
+		// Quit
+		g2.drawString(quit, getHorizontalCenter(quit, g2, gp.screenWidth), gp.tileSize * 11);
+		if(commandNum == 3) {
+			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
+		}	
+		
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
 		g2.setColor(Color.WHITE);
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20));
 
-		// Keys
-		// g2.drawImage(keyImage, 24, 88, gp.tileSize, gp.tileSize, null); // set imageSize & coordinate
-		// g2.drawString("X " +gp.player.keyCount, 72, 124); // 72 because eggImage obtain 24+48 = 72 size and 136 = 88 + 36. Draw string draw it differently from drawimage
-		
 		String health = "HEALTH";
 		String level = "LEVEL";
 		String score = "SCORE";
@@ -300,6 +336,93 @@ public class UI {
 		if(commandNum == 3){
 			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}
+	}
+
+	public void drawSettingsScreen(Graphics2D g2) {
+		// Settings
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setColor(Color.white);
+		
+		String settings = "SETTINGS";
+
+		g2.drawString(settings, getHorizontalCenter(settings, g2, gp.screenWidth), gp.tileSize * 3);
+
+		String music = "MUSIC VOLUME";
+		String se = "SE VOLUME";
+		String fullscreen = "FULL SCREEN";
+		String resetScore = "RESET HIGH SCORE";
+		String back = "RETURN";
+
+		// Menu
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 35));
+
+		// Music Volume
+		g2.drawString(music, 2*gp.tileSize, gp.tileSize * 5);
+
+		g2.drawRect(gp.tileSize*13, gp.tileSize*4, 240, 48); //draw a rect
+		int volumeWidth = 48* gp.music.volumeScale;
+		g2.fillRect(gp.tileSize*13, gp.tileSize*4, volumeWidth, 48); //fill part of the rect
+
+		if(commandNum == 0){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 5); //drawing > before the button
+		}
+
+		// Sound Effect Volume
+		g2.drawString(se, 2*gp.tileSize, gp.tileSize * 13/2);
+
+		g2.drawRect(gp.tileSize*13, gp.tileSize*11/2, 240, 48); //draw a rect
+		int volumeWidth2 = 48* gp.se.volumeScale;
+		g2.fillRect(gp.tileSize*13, gp.tileSize*11/2, volumeWidth2, 48); //fill part of the rect
+
+		if(commandNum == 1){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 13/2); //drawing > before the button
+		}
+
+		// Fullscreen
+		g2.drawString(fullscreen, 2*gp.tileSize, gp.tileSize * 16/2);
+		if(commandNum == 2){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 16/2); //drawing > before the button
+		}
+
+		if(fullscreenCounter == false){
+			g2.drawString("OFF",gp.tileSize*12, gp.tileSize*16/2);
+		}
+		if(fullscreenCounter == true){
+			g2.drawString("ON",gp.tileSize*12, gp.tileSize*16/2);
+		}
+
+		// Reset High Score
+		g2.drawString(resetScore, 2*gp.tileSize, gp.tileSize * 19/2);
+		if(commandNum == 3){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 19/2); //drawing > before the button
+		}
+
+		// Return
+		g2.drawString(back, 2*gp.tileSize, gp.tileSize * 22/2);
+		if(commandNum == 4){
+			g2.drawString(">", gp.tileSize, gp.tileSize * 22/2); //drawing > before the button
+		}
+	}
+	
+	public void drawCreditsScreen(Graphics2D g2) {
+		// Credits
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 90));
+		g2.setColor(Color.white);
+		
+		String credits = "CREDITS";
+		g2.drawString(credits, getHorizontalCenter(credits, g2, gp.screenWidth), gp.tileSize * 3);
+
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 50));
+		String name1 = "ANDREW HEIN";
+		String name2 = "JEFFREY JIN";
+		String name3 = "HWAN KIM";
+		String name4 = "LONG NGUYEN";
+
+		g2.drawString(name1, getHorizontalCenter(name1, g2, gp.screenWidth), gp.tileSize * 11/2);
+		g2.drawString(name2, getHorizontalCenter(name2, g2, gp.screenWidth), gp.tileSize * 14/2);
+		g2.drawString(name3, getHorizontalCenter(name3, g2, gp.screenWidth), gp.tileSize * 17/2);
+		g2.drawString(name4, getHorizontalCenter(name4, g2, gp.screenWidth), gp.tileSize * 20/2);
+
 	}
 
 	//method for centering text

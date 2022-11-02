@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -22,33 +21,30 @@ public class GamePanel extends JPanel implements Runnable {
         PAUSE,
         WIN,
         LOSE,
-        TITLE
+        TITLE,
+        SETTINGS,
+        CREDITS
     }
     
     public gameState currState = gameState.TITLE;
 
     // Tiles
     final int originalTileSize = 16;
-    final int scale = 3;
-    public final int tileSize = originalTileSize * scale;
+    public int scale = 3; 
+    public int tileSize = originalTileSize * scale;
 
     // Screen
     public final int maxScreenCol = 20;
     public final int maxScreenRow = 12;
-    public final int screenWidth = tileSize * maxScreenCol; // 960 pix.
-    public final int screenHeight = tileSize * maxScreenRow; // 576 pix.
-    // Full Screen
-    int screenWidth2 = screenWidth;
-    int screenHeight2 = screenHeight;
-    BufferedImage tempScreen;
-    Graphics2D full_g2;
-    
-    
+    public int screenWidth = tileSize * maxScreenCol; // 960 pix.
+    public int screenHeight = tileSize * maxScreenRow; // 576 pix.
+
     // FPS
     final int FPS = 60;
 
     // System
-    Sound sound = new Sound();
+    Sound music = new Sound();
+    Sound se = new Sound();
     InputHandler input = new InputHandler(this);
     Thread gameThread;
     public UI ui = new UI(this);
@@ -74,24 +70,35 @@ public class GamePanel extends JPanel implements Runnable {
         mapM.setupMap();
         
         currState = gameState.TITLE;
-        
-        // For FullScreen: draw on tempscreen(g2) and resize it
-        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-        full_g2 = (Graphics2D)tempScreen.getGraphics();
-        
-        //setFullScreen();
+
+        setWindowScreen();
     }
     
     public void setFullScreen() {
-    	
     	// Get Local Screen Device
     	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
     	GraphicsDevice gd = ge.getDefaultScreenDevice();
     	gd.setFullScreenWindow(App.window);
     	
     	// Get Full Screen width & height
-    	screenWidth2 = App.window.getWidth();
-    	screenHeight2 = App.window.getHeight();
+    	screenWidth = App.window.getWidth();
+    	screenHeight = App.window.getHeight();
+
+        scale = 4;
+        tileSize = scale * originalTileSize;
+    }
+
+    public void setWindowScreen() {
+    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    	GraphicsDevice gd = ge.getDefaultScreenDevice();
+
+        scale = 3;
+        tileSize = scale * originalTileSize;
+
+        screenWidth = tileSize * maxScreenCol; // 960 pix.
+        screenHeight = tileSize * maxScreenRow; // 576 pix.
+        
+        gd.setFullScreenWindow(null);
     }
 
     public void startGameThread() {
@@ -137,51 +144,9 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
             default:
                 break;
-            // case PAUSE:
-            //     break;
-            // case WIN:
-            //     break;
-            // case LOSE:
-            //     break;
-            // case TITLE:
-            //     break;
         }
     }
     
-    public void drawToTempScreen() {
-    	
-    	switch(currState) {
-        case PAUSE:
-        case PLAY:
-            // Map
-            mapM.draw(full_g2);
-            
-            // Player
-            player.draw(full_g2);            
-            
-            // UI
-            ui.draw(full_g2);
-            break;
-        case TITLE:
-            ui.draw(full_g2);
-            break;
-        case LOSE:
-        case WIN:
-            ui.draw(full_g2);
-            break;
-    } // The order inside is really important! It could hide your player or objects and etc.
-    }
-    
-    public void drawToScreen() {
-    	
-    	Graphics g = getGraphics();
-    	g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
-    	g.dispose();
-    }
-    
-    
-     //* This Method was used to draw things directly which can't use on FullScreen
-     
     public void paintComponent(Graphics graphic) {
         super.paintComponent(graphic);
 
@@ -199,8 +164,10 @@ public class GamePanel extends JPanel implements Runnable {
                 // UI
                 ui.draw(graphic2);
                 break;
+            case CREDITS:
             case TITLE:
             case LOSE:
+            case SETTINGS:
             case WIN:
                 ui.draw(graphic2);
                 break;
@@ -211,17 +178,17 @@ public class GamePanel extends JPanel implements Runnable {
 	
     
     public void playMusic(int i) {
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
+        music.setFile(i);
+        music.play();
+        music.loop();
     }
 
     public void stopMusic(){
-        sound.stop();
+        music.stop();
     }
 
     public void playSoundE(int i) {
-        sound.setFile(i);
-        sound.play();
+        se.setFile(i);
+        se.play();
     }
 } 

@@ -15,8 +15,8 @@ public class Player extends Entity{
 
     GamePanel gamePanel;
     InputHandler input;
-    public final int screenX;
-    public final int screenY;
+    public int screenX;
+    public int screenY;
     
     public int health = 3;
     public int score = 0;
@@ -39,6 +39,9 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
+        screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
+        screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
+
         worldX = gamePanel.mapM.getMap().playerStartX; // starting position
         worldY = gamePanel.mapM.getMap().playerStartY;
         speed = 4;
