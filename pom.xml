@@ -10,7 +10,7 @@
 
   <name>project</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://csil-git1.cs.surrey.sfu.ca/CMPT276F22_Group7/project</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
