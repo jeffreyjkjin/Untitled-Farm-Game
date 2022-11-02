@@ -31,7 +31,7 @@ public class OBJ_Egg extends SuperObject {
 		expireTime -= (double) 1/60;
 		if (expireTime < 0) {
 			gp.mapM.getMap().objects[index] = null;
-			gp.playSoundE(8);
+			gp.sound.play(6);
 		}
 	}
 

@@ -360,7 +360,7 @@ public class UI {
 		g2.drawString(music, 2*gp.tileSize, gp.tileSize * 5);
 
 		g2.drawRect(gp.tileSize*13, gp.tileSize*4, 240, 48); //draw a rect
-		int volumeWidth = 48* gp.music.volumeScale;
+		int volumeWidth = 48* gp.music.getVolumeScale();
 		g2.fillRect(gp.tileSize*13, gp.tileSize*4, volumeWidth, 48); //fill part of the rect
 
 		if(commandNum == 0){
@@ -371,7 +371,7 @@ public class UI {
 		g2.drawString(sound, 2*gp.tileSize, gp.tileSize * 13/2);
 
 		g2.drawRect(gp.tileSize*13, gp.tileSize*11/2, 240, 48); //draw a rect
-		int volumeWidth2 = 48* gp.se.volumeScale;
+		int volumeWidth2 = 48* gp.sound.getVolumeScale();
 		g2.fillRect(gp.tileSize*13, gp.tileSize*11/2, volumeWidth2, 48); //fill part of the rect
 
 		if(commandNum == 1){

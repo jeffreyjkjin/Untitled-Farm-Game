@@ -9,6 +9,8 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;
 
+import audio.SoundEffects;
+import audio.Music;
 import entity.Player;
 import map.MapManager; 
 import tile.TileManager;
@@ -43,8 +45,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     // System
-    Sound music = new Sound();
-    Sound se = new Sound();
+    public Music music = new Music();
+    public SoundEffects sound = new SoundEffects();
     InputHandler input = new InputHandler(this);
     Thread gameThread;
     public UI ui = new UI(this);
@@ -176,19 +178,4 @@ public class GamePanel extends JPanel implements Runnable {
         graphic2.dispose();
     } 
 	
-    
-    public void playMusic(int i) {
-        music.setFile(i);
-        music.play();
-        music.loop();
-    }
-
-    public void stopMusic(){
-        music.stop();
-    }
-
-    public void playSoundE(int i) {
-        se.setFile(i);
-        se.play();
-    }
 } 

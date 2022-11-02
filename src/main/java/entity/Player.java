@@ -151,7 +151,7 @@ public class Player extends Entity{
             
             switch(objectName) {
                 case "Egg":
-                    gamePanel.playSoundE(4);
+                    gamePanel.sound.play(2);
                     if (health >= 3) {
                         score += 100;
                     }
@@ -166,9 +166,9 @@ public class Player extends Entity{
                     keyCount++;
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
                         gamePanel.mapM.getObject(gamePanel.mapM.getMap().gateIndex).update(gamePanel);
-                        gamePanel.playSoundE(10);
+                        gamePanel.sound.play(8);
                     }
-                    gamePanel.playSoundE(4);
+                    gamePanel.sound.play(2);
                     break;
                 case "Gate":
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
@@ -180,8 +180,8 @@ public class Player extends Entity{
                     gamePanel.mapM.getMap().objects[index] = null;
                     respawnPlayer();
                     Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
-                    gamePanel.playSoundE(9);
-                    gamePanel.playSoundE(5);
+                    gamePanel.sound.play(3);
+                    gamePanel.sound.play(7);
                     break;
             }
         }
@@ -197,7 +197,7 @@ public class Player extends Entity{
             respawnPlayer();
             Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
 
-            gamePanel.playSoundE(5);
+            gamePanel.sound.play(3);
         }
     }
 
