@@ -93,11 +93,9 @@ public class Farmer extends Entity {
 
         double distanceApart = Math.hypot(ac, cb);
         // This is the only reliable fix I could come up with. Play around with this number to see what feels best
-        if (distanceApart < 60)
-        {
-            System.out.println(distanceApart);
-        }
-        
+        // Can realistically change this number to 32 and nobody but the developers would notice a bug
+        // It would just introduce a scenario where the farmers can not catch you if you stand still in a certain way
+        // 45 Feels a bit annoying tbh so probably 32 for the final game
         if (distanceApart <= 45)
         {
             gamePanel.player.farmerInteraction(0);
