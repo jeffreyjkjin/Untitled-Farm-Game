@@ -73,6 +73,11 @@ public class Player extends Entity{
 
     public void update() {
         if (health == 0) {
+            if (gamePanel.player.score > gamePanel.settings.getHighScore()) {
+                gamePanel.settings.setHighScore(gamePanel.player.score);
+                gamePanel.settings.saveConfigFile();
+            }
+            
             gamePanel.currState = gameState.LOSE;
         }
 

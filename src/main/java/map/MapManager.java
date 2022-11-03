@@ -48,6 +48,11 @@ public class MapManager {
     public void nextMap() {
         gamePanel.player.score += 1000;
         if (currMap == mapList.length-1) {
+            if (gamePanel.player.score > gamePanel.settings.getHighScore()) {
+                gamePanel.settings.setHighScore(gamePanel.player.score);
+                gamePanel.settings.saveConfigFile();
+            }
+
             gamePanel.currState = gameState.WIN;
         }
         else {

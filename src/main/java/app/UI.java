@@ -19,7 +19,7 @@ public class UI {
 	public String message = "";
 	int messageCounter = 0;
 	public int commandNum = 0;
-	public boolean fullscreenCounter = false;
+	public boolean fullScreen;
 	
 	OBJ_Heart playerHP[] = new OBJ_Heart[3];
 
@@ -42,6 +42,8 @@ public class UI {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
+
+		fullScreen = gp.settings.getFullScreen();		
 	}
 
 	public String drawTimer() {
@@ -222,15 +224,17 @@ public class UI {
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 15));
 
 		String highScore = "HIGH SCORE";
+		String savedHighScore = String.valueOf(gp.settings.getHighScore());
+
+		g2.drawString(highScore, getHorizontalCenter(highScore, g2, gp.screenWidth/2), gp.tileSize * 5);
+		g2.drawString(savedHighScore, getHorizontalCenter(savedHighScore, g2, gp.screenWidth/2), (int)(gp.tileSize * 5.5));
+
+		// Your Score 
 		String yourScore = "YOUR SCORE";
 		String playerScore = String.valueOf(gp.player.score);
 
-		g2.drawString(highScore, getHorizontalCenter(highScore, g2, gp.screenWidth/2), gp.tileSize * 5);
-
 		g2.drawString(yourScore, getHorizontalCenter(yourScore, g2, gp.screenWidth/2) + gp.screenWidth/2, gp.tileSize * 5);
 		g2.drawString(playerScore, getHorizontalCenter(playerScore, g2, gp.screenWidth/2) + gp.screenWidth/2, (int)(gp.tileSize * 5.5));
-
-		// TODO: save high scores to a file and show on lose screen
 
 		// Menu
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
@@ -271,15 +275,17 @@ public class UI {
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 15));
 
 		String highScore = "HIGH SCORE";
+		String savedHighScore = String.valueOf(gp.settings.getHighScore());
+
+		g2.drawString(highScore, getHorizontalCenter(highScore, g2, gp.screenWidth/2), gp.tileSize * 5);
+		g2.drawString(savedHighScore, getHorizontalCenter(savedHighScore, g2, gp.screenWidth/2), (int)(gp.tileSize * 5.5));
+
+		// Your Score
 		String yourScore = "YOUR SCORE";
 		String playerScore = String.valueOf(gp.player.score);
 		
-		g2.drawString(highScore, getHorizontalCenter(highScore, g2, gp.screenWidth/2), gp.tileSize * 5);
-		
 		g2.drawString(yourScore, getHorizontalCenter(yourScore, g2, gp.screenWidth/2) + gp.screenWidth/2, gp.tileSize * 5);
 		g2.drawString(playerScore, getHorizontalCenter(playerScore, g2, gp.screenWidth/2) + gp.screenWidth/2, (int)(gp.tileSize * 5.5));
-
-		// TODO: save high scores to a file and show on win screen
 
 		// Menu
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
@@ -322,10 +328,10 @@ public class UI {
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 15));
 
 		String highScore = "HIGH SCORE";
+		String savedHighScore = String.valueOf(gp.settings.getHighScore());
 
-		// TODO: save high scores to a file and show on menu screen
-
-		g2.drawString(highScore, gp.tileSize, gp.tileSize * 5);
+		g2.drawString(highScore, getHorizontalCenter(highScore, g2, gp.screenWidth/4), gp.tileSize * 5);
+		g2.drawString(savedHighScore, getHorizontalCenter(savedHighScore, g2, gp.screenWidth/4), (int)(gp.tileSize * 5.5));
 
 		// Menu
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
@@ -406,10 +412,10 @@ public class UI {
 			g2.drawString(">", gp.tileSize, gp.tileSize * 16/2); //drawing > before the button
 		}
 
-		if(fullscreenCounter == false){
+		if(!fullScreen){
 			g2.drawString("OFF",gp.tileSize*12, gp.tileSize*16/2);
 		}
-		if(fullscreenCounter == true){
+		if(fullScreen){
 			g2.drawString("ON",gp.tileSize*12, gp.tileSize*16/2);
 		}
 

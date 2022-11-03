@@ -15,6 +15,7 @@ import entity.Player;
 import map.MapManager; 
 import tile.TileManager;
 import pathfinding.Pathfinding;
+import settings.Settings;
 
 public class GamePanel extends JPanel implements Runnable {
     // Game States
@@ -40,13 +41,15 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 12;
     public int screenWidth = tileSize * maxScreenCol; // 960 pix.
     public int screenHeight = tileSize * maxScreenRow; // 576 pix.
+    public Boolean fullScreen;
 
     // FPS
     final int FPS = 60;
 
     // System
-    public Music music = new Music();
-    public SoundEffects sound = new SoundEffects();
+    public Settings settings = new Settings();
+    public Music music = new Music(this);
+    public SoundEffects sound = new SoundEffects(this);
     InputHandler input = new InputHandler(this);
     Thread gameThread;
     public UI ui = new UI(this);
@@ -73,7 +76,12 @@ public class GamePanel extends JPanel implements Runnable {
         
         currState = gameState.TITLE;
 
-        setWindowScreen();
+        if (ui.fullScreen) {
+            setFullScreen();
+        }
+        else {
+            setWindowScreen();
+        }
     }
     
     public void setFullScreen() {
@@ -123,9 +131,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (delta >= 1) {
                 update();
-                repaint(); //-> changed it to drawToTempScreen/drawToScreen for FullScreen
-                //drawToTempScreen(); // draw to the BufferedImage
-                //drawToScreen(); // draw BufferImage to the screen
+                repaint();
                 delta--;
             }
         }

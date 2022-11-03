@@ -279,11 +279,13 @@ public class InputHandler implements KeyListener {
                             if(gamePanel.ui.commandNum == 0){
                                 gamePanel.music.lowerVolume();
                                 gamePanel.music.checkVolume();
+                                gamePanel.settings.setMusicVolume(gamePanel.music.getVolumeScale());
                                 gamePanel.sound.play(4);
                             }
                             if(gamePanel.ui.commandNum == 1){
                                 gamePanel.sound.lowerVolume();
                                 gamePanel.sound.checkVolume();
+                                gamePanel.settings.setSoundVolume(gamePanel.sound.getVolumeScale());
                                 gamePanel.sound.play(4);
                             }
                             break;
@@ -293,11 +295,13 @@ public class InputHandler implements KeyListener {
                             if(gamePanel.ui.commandNum == 0){
                                 gamePanel.music.increaseVolume();
                                 gamePanel.music.checkVolume();
+                                gamePanel.settings.setMusicVolume(gamePanel.music.getVolumeScale());
                                 gamePanel.sound.play(4);
                             }
                             if(gamePanel.ui.commandNum == 1){
                                 gamePanel.sound.increaseVolume();
                                 gamePanel.sound.checkVolume();
+                                gamePanel.settings.setSoundVolume(gamePanel.sound.getVolumeScale());
                                 gamePanel.sound.play(4);
                             }
                             break;
@@ -307,18 +311,24 @@ public class InputHandler implements KeyListener {
                             if (!enter) {
                                 gamePanel.sound.play(5);
                                 if(gamePanel.ui.commandNum == 2){ // Full screen
-                                    // TODO: check if previous state was playing/pause; don't let player fullscreen
-                                    if (gamePanel.ui.fullscreenCounter == false){
-                                        gamePanel.ui.fullscreenCounter = true;
-                                        gamePanel.setFullScreen();
+                                    if (gamePanel.ui.fullScreen == false){
+                                        if (prevState != gameState.PLAY) {
+                                            gamePanel.ui.fullScreen = true;
+                                            gamePanel.settings.setFullScreen(gamePanel.ui.fullScreen);
+                                            gamePanel.settings.saveConfigFile();
+                                            gamePanel.setFullScreen();
+                                        }
                                     }
-                                    else if (gamePanel.ui.fullscreenCounter == true){
-                                        gamePanel.ui.fullscreenCounter = false;
+                                    else if (gamePanel.ui.fullScreen == true){
+                                        gamePanel.ui.fullScreen = false;
+                                        gamePanel.settings.setFullScreen(gamePanel.ui.fullScreen);
+                                        gamePanel.settings.saveConfigFile();
                                         gamePanel.setWindowScreen();
                                     }
                                 }
                                 if(gamePanel.ui.commandNum == 3) { // Reset high score
-                                    //Reset high score
+                                    gamePanel.settings.setHighScore(0);
+                                    gamePanel.settings.saveConfigFile();
                                 }
                                 if(gamePanel.ui.commandNum == 4) { // Return
                                     gamePanel.currState = prevState;
