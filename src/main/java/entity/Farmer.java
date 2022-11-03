@@ -13,10 +13,8 @@ public class Farmer extends Entity {
     GamePanel gamePanel;
 
     public int screenX, screenY, startingX, startingY;
-    public boolean collision = true;
     public static int frozen = 0; // This and below are for speed
     public static int normal = 2;
-    public boolean knownCollision = false;
 
     public Farmer(GamePanel gp)
     {
@@ -24,8 +22,8 @@ public class Farmer extends Entity {
 
         speed = normal;
         hitboxDefaultX = 10;
-        hitboxDefaultY = 10;
-        hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 28, 28); //2*10 +28 = 48 (tileSize), 16 +32 = 48
+        hitboxDefaultY = 16;
+        hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 28, 32); //2*10 +28 = 48 (tileSize), 16 +32 = 48
         direction = "down";
 
         getFarmerImage();
@@ -62,38 +60,11 @@ public class Farmer extends Entity {
         speed = normal;
         setAction();
         collisionOn = false;
-        //gamePanel.checker.checkTileCollision(this);
-        if (!gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers))
-        {
-            entityCollisionOn = false;
-        }
-
-        knownCollision = false;
-
-        int middleOfPlayerX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
-        int distanceToPlayer = Math.abs(worldX - middleOfPlayerX);
-        boolean goalRow = false;
-
-        if (worldY / gamePanel.tileSize == gamePanel.player.worldY / gamePanel.tileSize)
-        {
-            goalRow = true;
-        }
+        gamePanel.checker.checkPlayerCollision(this);
+        gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
         
-        if (distanceToPlayer < 48 && goalRow)
-        {
-            if (worldX > middleOfPlayerX)
-            {
-                direction = "left";
-                worldX -= speed;
-            }
-            else if (worldX < middleOfPlayerX)
-            {
-                direction = "right";
-                worldX += speed;
-            }
-        }
-        
-         /*else*/ if(!collisionOn && !entityCollisionOn) {
+         if(!collisionOn) 
+         {
             switch(direction){
                 case"up":
                     worldY -= speed;
@@ -110,8 +81,31 @@ public class Farmer extends Entity {
             }
         }
 
+        // Set up variables to determine the distance this farmer and the player are apart
+        // Using Pythagorean theorem
+        double midPX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
+        double midPY = gamePanel.player.worldY + gamePanel.player.hitbox.y + (gamePanel.player.hitbox.height / 2);
+        double midFX = this.worldX + this.hitbox.x + (this.hitbox.width / 2);
+        double midFY = this.worldY + this.hitbox.y + (this.hitbox.height / 2);
+
+        double ac = Math.abs(midPY - midFY);
+        double cb = Math.abs(midPX - midFX);
+
+        double distanceApart = Math.hypot(ac, cb);
+        // This is the only reliable fix I could come up with. Play around with this number to see what feels best
+        if (distanceApart < 60)
+        {
+            System.out.println(distanceApart);
+        }
+        
+        if (distanceApart <= 45)
+        {
+            gamePanel.player.farmerInteraction(0);
+        }
+
         gamePanel.checker.checkTileCollision(this);
-        gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers);
+        gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
+        //gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers);
 
         spriteCounter++;
     
@@ -274,7 +268,6 @@ public class Farmer extends Entity {
                 farmers[i].worldX = farmers[i].startingX;
                 farmers[i].worldY = farmers[i].startingY;
                 farmers[i].collisionOn = false;
-                farmers[i].entityCollisionOn = false;
             }
         }
     }

@@ -212,13 +212,11 @@ public class Player extends Entity{
         worldY = gamePanel.mapM.getMap().playerStartY;
 
         this.collisionOn = false;
-        this.entityCollisionOn = false;
         for (int i = 0; i < gamePanel.mapM.getMap().farmers.length; i++)
         {
             if (gamePanel.mapM.getMap().farmers[i] != null)
             {
                 gamePanel.mapM.getMap().farmers[i].collisionOn = false;
-                gamePanel.mapM.getMap().farmers[i].entityCollisionOn = false;
             }
         }
     }

@@ -134,29 +134,26 @@ public class CollisionChecker {
     	return index;
     } 
 
-	public int checkEntityCollision(Entity player, Farmer[] farmers)
+	public int checkEntityCollision(Entity entity, Farmer[] farmers)
 	{
 		int index = 999;
-		// Get players hitbox coords
-		player.hitbox.x = player.worldX + player.hitbox.x; 
-		player.hitbox.y = player.worldY + player.hitbox.y;
-		// Temporarily move the players hitbox to test collision
-		switch(player.direction) 
+		// Temporarily move the entitys hitbox to test collision
+		switch(entity.direction) 
 		{
 			case "up":
-				player.hitbox.y -= player.speed;
+				entity.hitbox.y -= entity.speed;
 				break;
 				
 			case "down":
-				player.hitbox.y += player.speed;
+				entity.hitbox.y += entity.speed;
 				break;
 				
 			case "left":
-				player.hitbox.x -= player.speed;
+				entity.hitbox.x -= entity.speed;
 				break;
 				
 			case "right":
-				player.hitbox.x -= player.speed;
+				entity.hitbox.x -= entity.speed;
 				break;
 		}
 
@@ -164,88 +161,72 @@ public class CollisionChecker {
 		{
 			if (farmers[i] != null)
 			{	
+				// Get Entity's hitbox coords
+				entity.hitbox.x = entity.worldX + entity.hitbox.x; 
+				entity.hitbox.y = entity.worldY + entity.hitbox.y;
 				// Get farmer's hitbox
 				farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.x;
     			farmers[i].hitbox.y = farmers[i].worldY + farmers[i].hitbox.y;
 				// Check for hitbox intersection
-				if (player.hitbox.intersects(farmers[i].hitbox))
-				{
-					index = i;
-					player.entityCollisionOn = true;
-					farmers[i].entityCollisionOn = true;
+				if (entity.hitbox.intersects(farmers[i].hitbox))
+				{	// Check to see if entity is the farmer being checked. Otherwise it will collide with itself
+					if (farmers[i] != entity)
+					{	
+						index = i;
+						entity.collisionOn = true;
+						farmers[i].collisionOn = true;
+					}
 				}
 
+				entity.hitbox.x = entity.hitboxDefaultX;
+				entity.hitbox.y = entity.hitboxDefaultY;
 				farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
 				farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
 			}
 		}
 
-		player.hitbox.x = player.hitboxDefaultX;
-		player.hitbox.y = player.hitboxDefaultY;
 
 		return index;
 	}
 
-	public boolean checkFarmerCollision(Farmer toCheck, Farmer[] farmers)
+	public void checkPlayerCollision(Entity entity)
 	{
-		if (toCheck.knownCollision)
-		{
-			return false;
-		}
-		// Get toCheck's hitbox
-		toCheck.hitbox.x = toCheck.worldX + toCheck.hitbox.x; 
-		toCheck.hitbox.y = toCheck.worldY + toCheck.hitbox.y;
-		// Temporarily move the players hitbox to test collision
-		switch(toCheck.direction) 
+		// Get Entity's hitbox
+		entity.hitbox.x = entity.worldX + entity.hitbox.x; 
+		entity.hitbox.y = entity.worldY + entity.hitbox.y;
+		// Get Player's hitbox
+		gp.player.hitbox.x = gp.player.worldX + gp.player.hitbox.x;
+		gp.player.hitbox.y = gp.player.worldY + gp.player.hitbox.y;
+
+		// Temporarily move the gp.players hitbox to test collision
+		switch(entity.direction) 
 		{
 			case "up":
-				toCheck.hitbox.y -= toCheck.speed;
+				entity.hitbox.y -= entity.speed;
 				break;
 				
 			case "down":
-				toCheck.hitbox.y += toCheck.speed;
+				entity.hitbox.y += entity.speed;
 				break;
 				
 			case "left":
-				toCheck.hitbox.x -= toCheck.speed;
+				entity.hitbox.x -= entity.speed;
 				break;
 				
 			case "right":
-				toCheck.hitbox.x -= toCheck.speed;
+				entity.hitbox.x -= entity.speed;
 				break;
 		}
-		for (int i = 0; i < farmers.length; i++)
+
+		if (entity.hitbox.intersects(gp.player.hitbox))
 		{
-			if (farmers[i] != null)
-			{
-				if (farmers[i] == toCheck)
-				{
-					continue;
-				}
-				// Get farmer's hitbox
-				farmers[i].hitbox.x = farmers[i].worldX + farmers[i].hitbox.x;
-    			farmers[i].hitbox.y = farmers[i].worldY + farmers[i].hitbox.y;
-
-				if (toCheck.hitbox.intersects(farmers[i].hitbox))
-				{
-					toCheck.hitbox.x = toCheck.hitboxDefaultX;
-					toCheck.hitbox.y = toCheck.hitboxDefaultY;
-					farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
-					farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
-
-					toCheck.entityCollisionOn = true;
-					farmers[i].knownCollision = true;
-					return true;
-				}
-
-				farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
-				farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
-			}
+			entity.collisionOn = true;
+			gp.player.farmerInteraction(0);
 		}
 
-		toCheck.hitbox.x = toCheck.hitboxDefaultX;
-		toCheck.hitbox.y = toCheck.hitboxDefaultY;
-
-		return false;
+		entity.hitbox.x = entity.hitboxDefaultX;
+		entity.hitbox.y = entity.hitboxDefaultY;
+		gp.player.hitbox.x = gp.player.hitboxDefaultX;
+		gp.player.hitbox.y = gp.player.hitboxDefaultY;
 	}
 }
