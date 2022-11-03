@@ -7,7 +7,10 @@ import javax.sound.sampled.FloatControl;
 
 import java.net.URL;
 
+import app.GamePanel;
+
 public abstract class Audio {
+    GamePanel gp;    
     Clip clip;
     URL audioURL[];
     FloatControl fc;
