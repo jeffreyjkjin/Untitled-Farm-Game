@@ -17,5 +17,4 @@ public abstract class Entity {
     public int hitboxDefaultX, hitboxDefaultY;
     public boolean collisionOn;
     public boolean entityCollisionOn;
-    public boolean onPath;
 }

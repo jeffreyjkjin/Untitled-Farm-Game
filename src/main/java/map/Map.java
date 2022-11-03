@@ -1,6 +1,7 @@
 package map;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,8 +26,9 @@ public class Map {
     public int maxWorldCol, maxWorldRow, playerStartX, playerStartY, objectNum, entityNum, keyNum;
     public int gateIndex;
 
-    boolean drawPath = true; // FOR TESTING PATHFINDING
-    boolean hitboxTest = true; // FOR VISUALIZING HITBOXES
+    boolean drawPath = false; // FOR TESTING PATHFINDING
+    boolean hitboxTest = false; // FOR VISUALIZING HITBOXES
+    boolean showCoords = false;; // FOR SEEING TILE COORDS
 
     public Map(GamePanel gp, String mapFile) {
         this.gp = gp;
@@ -119,6 +121,31 @@ public class Map {
             if (col == maxWorldCol) {
                 col = 0;
                 row++;
+            }
+        }
+
+        if (showCoords) // To show tile coordinates
+        {
+            col = 0;
+            row = 0;
+
+            while (col < maxWorldCol && row < maxWorldRow)
+            {
+                int worldX = (col * gp.tileSize) + 8;
+                int worldY = (row * gp.tileSize) + 24;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+                String toPrint = "(" + col + ", " + row + ")";
+
+                graphic2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                graphic2.drawString(toPrint, screenX, screenY);
+
+                col++;
+                if (col == maxWorldCol)
+                {
+                    col = 0;
+                    row++;
+                }
             }
         }
 

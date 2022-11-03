@@ -24,10 +24,9 @@ public class Farmer extends Entity {
 
         speed = normal;
         hitboxDefaultX = 10;
-        hitboxDefaultY = 16;
-        hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 28, 32); //2*10 +28 = 48 (tileSize), 16 +32 = 48
+        hitboxDefaultY = 10;
+        hitbox = new Rectangle(hitboxDefaultX, hitboxDefaultY, 28, 28); //2*10 +28 = 48 (tileSize), 16 +32 = 48
         direction = "down";
-        onPath = true;
 
         getFarmerImage();
     }
@@ -52,21 +51,18 @@ public class Farmer extends Entity {
 
     public void setAction()
     {
-        if(onPath)
-        {
-            int goalCol = (gamePanel.player.worldX + gamePanel.player.hitbox.x) / gamePanel.tileSize;
-            int goalRow = (gamePanel.player.worldY + gamePanel.player.hitbox.y) / gamePanel.tileSize;
+        int goalCol = (gamePanel.player.worldX + gamePanel.player.hitbox.x) / gamePanel.tileSize;
+        int goalRow = (gamePanel.player.worldY + gamePanel.player.hitbox.y) / gamePanel.tileSize;
             
-            searchPath(goalCol, goalRow);
-        }
+        searchPath(goalCol, goalRow);
     }
 
     public void update()
     {
-        collisionOn = false;
         speed = normal;
         setAction();
-        gamePanel.checker.checkCollision(this);
+        collisionOn = false;
+        //gamePanel.checker.checkTileCollision(this);
         if (!gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers))
         {
             entityCollisionOn = false;
@@ -75,7 +71,6 @@ public class Farmer extends Entity {
         knownCollision = false;
 
         int middleOfPlayerX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
-        //int middleOfPlayerY = gamePanel.player.worldY + gamePanel.player.hitbox.y + (gamePanel.player.hitbox.height / 2);
         int distanceToPlayer = Math.abs(worldX - middleOfPlayerX);
         boolean goalRow = false;
 
@@ -98,7 +93,7 @@ public class Farmer extends Entity {
             }
         }
         
-         else if(!collisionOn && !entityCollisionOn) {
+         /*else*/ if(!collisionOn && !entityCollisionOn) {
             switch(direction){
                 case"up":
                     worldY -= speed;
@@ -115,29 +110,8 @@ public class Farmer extends Entity {
             }
         }
 
-        gamePanel.checker.checkCollision(this);
+        gamePanel.checker.checkTileCollision(this);
         gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers);
-        
-        // Band-aid bugfix to enemies getting stuck on objects if they have to move left
-        if (collisionOn && !entityCollisionOn)
-        {   
-            if(direction == "down"){
-                direction = "left";
-                worldX -= speed;
-            }
-            else if(direction == "up"){
-                direction = "right";
-                worldX += speed;
-            }
-            else if(direction == "left"){
-                direction = "up";
-                worldY -= speed;
-            }
-            else if(direction == "right"){
-                direction = "down";
-                worldY += speed;
-            }
-        }
 
         spriteCounter++;
     
@@ -195,9 +169,9 @@ public class Farmer extends Entity {
         worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.player.screenX &&
         worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.player.screenY &&
         worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY)
-            {
+        {
             graphic2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
-            }
+        }
     }
 
     public void searchPath(int goalCol, int goalRow)
@@ -212,9 +186,6 @@ public class Farmer extends Entity {
             // Next worldX and Y
             int nextX = gamePanel.pathFinder.pathList.get(0).col * gamePanel.tileSize;
             int nextY = gamePanel.pathFinder.pathList.get(0).row * gamePanel.tileSize;
-            // Next col and row
-            int nextCol = gamePanel.pathFinder.pathList.get(0).col;
-            int nextRow = gamePanel.pathFinder.pathList.get(0).row;
             // Entity's hitbox
             int farmerLeftX = worldX + hitbox.x;
             int farmerRightX = worldX + hitbox.x + hitbox.width;
@@ -247,7 +218,7 @@ public class Farmer extends Entity {
                 // Can go up or left, have to figoure out which
                 direction = "up";
 
-                gamePanel.checker.checkCollision(this);
+                gamePanel.checker.checkTileCollision(this);
 
                 if (collisionOn)
                 {
@@ -259,7 +230,7 @@ public class Farmer extends Entity {
                 // Can go up or right
                 direction = "up";
 
-                gamePanel.checker.checkCollision(this);
+                gamePanel.checker.checkTileCollision(this);
 
                 if (collisionOn)
                 {
@@ -271,7 +242,7 @@ public class Farmer extends Entity {
                 // down or left
                 direction = "down";
 
-                gamePanel.checker.checkCollision(this);
+                gamePanel.checker.checkTileCollision(this);
 
                 if (collisionOn)
                 {
@@ -284,18 +255,13 @@ public class Farmer extends Entity {
                 // down or left
                 direction = "down";
 
-                gamePanel.checker.checkCollision(this);
+                gamePanel.checker.checkTileCollision(this);
 
                 if (collisionOn)
                 {
                     direction = "right";
                 }
-            } 
-
-            if (nextCol == goalCol && nextRow == goalRow && this.entityCollisionOn && gamePanel.player.entityCollisionOn)
-            {
-                onPath = false;
-            } 
+            }
         }
     }
 

@@ -100,7 +100,7 @@ public class Player extends Entity{
             }
         
             collisionOn = false;
-            gamePanel.checker.checkCollision(this);
+            gamePanel.checker.checkTileCollision(this);
             
             int objIndex = gamePanel.checker.checkObjectCollision(this, true);
             objectInteraction(objIndex);

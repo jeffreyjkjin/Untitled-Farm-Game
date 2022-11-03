@@ -121,7 +121,7 @@ public class Pathfinding {
 
     public boolean search()
     {
-        while(!goalReached && step < 500)
+        while(!goalReached && step < 2000)
         {
             int col = current.col;
             int row = current.row;
