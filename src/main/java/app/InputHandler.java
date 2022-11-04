@@ -5,6 +5,10 @@ import java.awt.event.KeyListener;
 
 import app.GamePanel.gameState;
 
+/**
+ * This class handle the input from player's keyboard in order to perform the corresponding action
+ * Each input from the keyboard has a different effect depending on the game state
+ */
 public class InputHandler implements KeyListener {
 
     GamePanel gamePanel;
@@ -44,6 +48,10 @@ public class InputHandler implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
+    /**
+     * Perform the action depending on the key entered and the game state
+     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -351,6 +359,10 @@ public class InputHandler implements KeyListener {
 
     }
 
+    /** 
+     * Stop performing the action when the key is released
+     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
