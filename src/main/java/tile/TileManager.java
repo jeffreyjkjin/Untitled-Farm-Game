@@ -11,6 +11,12 @@ import javax.imageio.ImageIO;
 
 import app.GamePanel;
 
+/** 
+ * This class manages the tiles by setting their images and keeping track of their collision status
+ * It also creates the main array of tiles that is used to draw the map and place objects
+ * 
+ * @author Jeffrey Jin (jjj9)
+*/
 public class TileManager {
     
     GamePanel gp;
@@ -18,6 +24,11 @@ public class TileManager {
     ArrayList<String> fileNames = new ArrayList<>();
     ArrayList<String> collisionStatus = new ArrayList<>();
 
+    /**
+     * Constructs the tile manager by connecting it to gp, reading in and setting collision status, and gettin tile image
+     * 
+     * @param gp the main GamePanel used to build the game
+     */
     public TileManager(GamePanel gp)
     {
         this.gp = gp;
@@ -45,6 +56,9 @@ public class TileManager {
         getTileImage();
     }
 
+    /**
+     * Finds the proper images for the tiles and links them to collision status
+     */
     public void getTileImage()
     {
     	for(int i = 0; i < fileNames.size(); i++) {
@@ -67,6 +81,14 @@ public class TileManager {
     	}
     }
     	
+    /**
+     * This functions links the imageName and collision status to the indexed tile in the array
+     * This tile can now be placed on the map later and CollisionChecker will be able to tell if this tile is solid or not
+     * 
+     * @param index where the tile is in the tile[] array
+     * @param imageName the name of the image file that needs to be linked to this tile
+     * @param collision collision status of this tile that also needs to be linked
+     */
     public void setup(int index, String imageName, boolean collision) {
     	// Create the tiles and link them to their image and collision status
     	try {
@@ -79,10 +101,22 @@ public class TileManager {
     	}
     }
 
+    /**
+     * Returns the indexed tiles image
+     * 
+     * @param index tiles location in the tile[] array
+     * @return tiles image as type BufferedImage
+     */
     public BufferedImage getTileImage(int index) {
         return tile[index].image;
     }
 
+    /**
+     * Returns the indexed tiles collision status
+     * 
+     * @param index tiles location in the tile[] array
+     * @return tiles collision status as a boolean
+     */
     public Boolean checkTileCollision(int index) {
         return tile[index].collision;
     }

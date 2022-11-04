@@ -85,7 +85,9 @@ public class Farmer extends Entity {
         setAction();
         collisionOn = false;
         gamePanel.checker.checkPlayerCollision(this);
-        gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
+        // gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
+        // Removing the above line as it is causing a lot of bugs while not adding much to the game
+        // May re-add later but currently not a priority until rest of the game is completed
         
          if(!collisionOn) 
          {
@@ -126,8 +128,9 @@ public class Farmer extends Entity {
         }
 
         gamePanel.checker.checkTileCollision(this);
-        gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
-        //gamePanel.checker.checkFarmerCollision(this, gamePanel.mapM.getMap().farmers);
+        // gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
+        // Removing the above line as it is causing a lot of bugs while not adding much to the game
+        // May re-add later but currently not a priority until rest of the game is completed
 
         spriteCounter++;
     

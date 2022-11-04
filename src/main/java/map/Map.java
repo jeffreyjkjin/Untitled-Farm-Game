@@ -23,7 +23,7 @@ import object.SuperObject;
  * Used to draw and set objects, entities and tiles.
  * Must be instantiated within MapManager to be used in GamePanel and other classes within it.
  * 
- * @author Andrew Hein (ach9)
+ * @author Andrew Hein (ach17)
  * @author Jeffrey Jin (jjj9)
  * @see map.MapManager
  * @see object.ObjectManager
