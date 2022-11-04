@@ -5,6 +5,8 @@ import entity.Farmer;
 
 /**
  * This class is used to check collisions between entities and objects
+ * 
+ * @author Long Nguyen (dln3)
  */
 public class CollisionChecker {
     

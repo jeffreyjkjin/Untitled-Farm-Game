@@ -10,6 +10,7 @@ import app.GamePanel.gameState;
  * Each gameState has different control schemas.
  * 
  * @author Jeffrey Jin (jjj9)
+ * @author Long Nguyen (dln3)
  */
 public class InputHandler implements KeyListener {
 
