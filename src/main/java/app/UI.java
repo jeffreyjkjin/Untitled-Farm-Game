@@ -23,7 +23,7 @@ public class UI {
 	public int commandNum = 0;
 	public boolean fullScreen;
 	
-	BufferedImage titleScreen;
+	BufferedImage titleScreen, loseScreen, winScreen;
 	
 	OBJ_Heart playerHP[] = new OBJ_Heart[3];
 
@@ -40,6 +40,8 @@ public class UI {
 			InputStream input = getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf");
 			pressStart2P = Font.createFont(Font.TRUETYPE_FONT, input);
 			titleScreen = ImageIO.read(getClass().getResourceAsStream("/screens/titleScreen.png"));
+			loseScreen = ImageIO.read(getClass().getResourceAsStream("/screens/loseScreen.png"));
+			winScreen = ImageIO.read(getClass().getResourceAsStream("/screens/winScreen.png"));
 		}
 		catch(FontFormatException e) {
 			e.printStackTrace();
@@ -218,6 +220,10 @@ public class UI {
 	}
 
 	private void drawLoseScreen(Graphics2D g2) {
+		
+		// Background Image
+		g2.drawImage(loseScreen, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		
 		// Game Over
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
 		g2.setColor(Color.white);
@@ -269,6 +275,10 @@ public class UI {
 	}
 
 	private void drawWinScreen(Graphics2D g2) {
+		
+		// Background Image
+		g2.drawImage(winScreen, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		
 		// Game Over
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
 		g2.setColor(Color.white);
