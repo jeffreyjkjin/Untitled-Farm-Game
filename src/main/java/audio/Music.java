@@ -8,6 +8,7 @@ import app.GamePanel;
 
 /**
  * Music manages playing and stopping background music
+ * This class has an array of URL of music files
  */
 public class Music extends Audio {
     public Music(GamePanel gp) {

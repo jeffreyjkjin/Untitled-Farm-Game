@@ -6,6 +6,7 @@ import app.GamePanel;
 
 /**
  * SoundEffects is used to access the desired sound effect
+ * This class has an array of URL of sound effects files
  */
 public class SoundEffects extends Audio {
 
