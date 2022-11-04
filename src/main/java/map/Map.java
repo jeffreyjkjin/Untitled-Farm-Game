@@ -2,23 +2,32 @@ package map;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.awt.Color;
 
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-
 import app.GamePanel;
 import entity.Farmer;
-import object.SuperObject;
-import tile.Tile;
 import object.ObjectManager;
+import object.SuperObject;
 
+/**
+ * Reads and stores the level data for one map file.
+ * The game map is stored in a two-dimensional integer array which contains tile data and positions.
+ * Each position in this array contains an integer which corresponds to a specific tile.
+ * Another two-dimensional array stores the type and location of objects and entity .
+ * Also stores data for level name, size of the map, start and gate locations, number of objects and entities and the number of required keys to move on to the next level.
+ * Used to draw and set objects, entities and tiles.
+ * Must be instantiated within MapManager to be used in GamePanel and other classes within it.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @see map.MapManager
+ * @see object.ObjectManager
+ * @see tile.TileManager
+ */
 public class Map {
     GamePanel gp;
     Random randGen = new Random();
@@ -35,13 +44,30 @@ public class Map {
     boolean hitboxTest = false; // FOR VISUALIZING HITBOXES
     boolean showCoords = false;; // FOR SEEING TILE COORDS
 
-    public Map(GamePanel gp, String mapFile) {
+    /**
+     * Constructs a new Map object and loads the mapFile.
+     * Links gp to this class so that it can be used in this classes methods.
+     * Loads mapFile; saves data to classes attributes.
+     * 
+     * @param gp GamePanel object that is used to run the game
+     * @param mapFile The name of the map file
+     * @see app.GamePanel
+     */
+    protected Map(GamePanel gp, String mapFile) {
         this.gp = gp;
 
         loadMap(mapFile);
     }
 
-    public void loadMap(String mapFile) {
+    
+    /**
+     * Parses the data in the map file line by line and saves the data to this classes various attributes to be used by itself and other classes.
+     * Reads through the mapFile's tile and object arrays and stores that data in separate two-dimensional arrays.
+     * Also saves the header of the mapFile which contains general level data.
+     * 
+     * @param mapFile the name of the map file
+     */
+    private void loadMap(String mapFile) {
         try {
             /**
              format of mapFile:
@@ -60,6 +86,7 @@ public class Map {
             String firstLine = reader.readLine();
             String settings[] = firstLine.split(",");
 
+            // save level data
             levelName = settings[0];
             maxWorldRow = Integer.parseInt(settings[1]);
             maxWorldCol = Integer.parseInt(settings[2]);
@@ -86,6 +113,13 @@ public class Map {
         }
     }
     
+    /**
+     * Reads through an array in the mapFile from reader row by row.
+     * Saves the values from mapFile into arr.
+     * 
+     * @param reader BuffereredReader object that contains the data from mapFile
+     * @param arr the two-dimensional integer array that will store the data read by this method
+     */
     private void readArray(BufferedReader reader, int[][] arr) {
         try {
             for (int row = 0; row < maxWorldRow; row++) {
@@ -102,7 +136,13 @@ public class Map {
         }
     }
 
-    public void drawTiles(Graphics2D graphic2) {
+    /**
+     * Reads through the two-dimensional tile array and draws tiles corresponding to their tile number in TileManager.
+     * Only draws tiles that are currently visible to the player.
+     * 
+     * @param graphic2 the main graphics object used to draw sprites on the screen
+     */
+    protected void drawTiles(Graphics2D graphic2) {
     	
         int col = 0;
         int row = 0;
@@ -195,7 +235,16 @@ public class Map {
         }
     }
     
-    public void setObject() {
+    /**
+     * Reads the data from the two-dimensional object map array and creates objects corresponding to their object number in ObjectManager.
+     * Sets their spawn location to their location in the object map array.
+     * If the object is an egg, a random number generator is used to only spawn the eggs 50% of the time.
+     * The location of the exit gate is also saved to a variable. 
+     * 
+     * @see object.OBJ_Egg
+     * @see object.OBJ_Gate
+     */
+    protected void setObject() {
         int col = 0;
         int row = 0;
         int i = 0;
@@ -204,9 +253,11 @@ public class Map {
             if (objMap[row][col] != 0) {
                 if (objects[i] == null && objMap[row][col] != 99) {
                     objects[i] = ObjectManager.createObject(objMap[row][col]);
+
+                    // eggs on the map will only appear 50% of the time  
                     if (objects[i].name == "Egg") {
                         int n = randGen.nextInt(10);
-                        if (n <= 5) {
+                        if (n < 5) {
                             objects[i] = null;
                         }
                         else {
@@ -215,10 +266,13 @@ public class Map {
                             objects[i].worldY = row * gp.tileSize;
                         }
                     }
+
+                    // non-egg objects
                     else {
                         objects[i].worldX = col * gp.tileSize;
                         objects[i].worldY = row * gp.tileSize;
-                        // find exit gate
+
+                        // saves the location of the exit gate
                         if (objects[i].name == "Gate") {
                             gateIndex = i;
                     }
@@ -238,10 +292,10 @@ public class Map {
     }
 
     /**
-     * Uses the read in information about the map from earlier to determine where to place Farmers on the map
-     * Creates a new farmer and sets their starting location
+     * Uses the read information about the map from earlier to determine where to place Farmers on the map.
+     * Creates a new farmer and sets their starting location.
      */
-    public void setFarmer()
+    protected void setFarmer()
     {
         int col = 0;
         int row = 0;
@@ -268,10 +322,18 @@ public class Map {
         }
     }
 
-    public void drawObjects(Graphics2D graphic2) {
+    /**
+     * Reads the objects array and draws each object corresponding to their object numbers in ObjectManager.
+     * Calls update method in OBJ_Egg every time this method is called.
+     * 
+     * @param graphic2 the main graphics object used to draw sprites onto the screen
+     */
+    protected void drawObjects(Graphics2D graphic2) {
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] != null) {
                 objects[i].draw(graphic2, gp);
+
+                // updates timer in egg object
                 if (objects[i].name == "Egg") {
                     objects[i].update(gp);
                 }
@@ -280,11 +342,11 @@ public class Map {
     }
 
     /**
-     * Goes through Farmer ArrayList and draws each individual farm on to the map
+     * Goes through Farmer ArrayList and draws each individual farm on to the map.
      * 
      * @param graphic2 main graphic used by gamePanel to draw the maps sprites and tiles
      */
-    public void drawFarmers(Graphics2D graphic2)
+    protected void drawFarmers(Graphics2D graphic2)
     {
         for (int i = 0; i < farmers.length; i++)
         {

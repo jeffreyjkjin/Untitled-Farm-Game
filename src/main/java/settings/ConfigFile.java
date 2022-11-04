@@ -1,11 +1,21 @@
 package settings;
 
+/**
+ * Contains data for game settings such as volume of music and soundeffects, fullscreen status and stores high scores.
+ * Data inside this class will be accessed and modified using setters and getters from the Settings class. 
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @see settings.Settings
+ */
 public class ConfigFile {
     int musicVolume, soundVolume;
     Boolean fullScreen;
     int highScore;
 
-    public ConfigFile() {
+    /**
+     * Constructs a new configuration file with default values for settings.
+     */
+    protected ConfigFile() {
         musicVolume = 3;
         soundVolume = 3;
         fullScreen = false;
