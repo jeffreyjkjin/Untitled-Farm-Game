@@ -431,7 +431,7 @@ public class UI {
 	 * draw settings screen
 	 * @param g2
 	 */
-	public void drawSettingsScreen(Graphics2D g2) {
+	private void drawSettingsScreen(Graphics2D g2) {
 		// Settings
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
 		g2.setColor(Color.white);
@@ -501,7 +501,7 @@ public class UI {
 	 * draw credits screen
 	 * @param g2
 	 */
-	public void drawCreditsScreen(Graphics2D g2) {
+	private void drawCreditsScreen(Graphics2D g2) {
 		// Credits
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 90));
 		g2.setColor(Color.white);
