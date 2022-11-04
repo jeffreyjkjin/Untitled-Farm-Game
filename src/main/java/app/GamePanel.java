@@ -17,6 +17,10 @@ import tile.TileManager;
 import pathfinding.Pathfinding;
 import settings.Settings;
 
+/**
+ * 
+ * @author Jeffrey Jin (jjj9)
+ */
 public class GamePanel extends JPanel implements Runnable {
     // Game States
     public enum gameState {
@@ -85,7 +89,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     /**
-     * Setting the game to fullscreen by scaling up all the tiles
+     * Stores the size of the users computer screen and sets the game to fullscreen mode.
+     * Scaling of the tiles are also increased.
      */
     public void setFullScreen() {
     	// Get Local Screen Device
@@ -102,7 +107,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * Scaling down the tiles in order to return to windowed screen from fullscreen
+     * Sets the game window to windowed mode.
+     * Scaling of the tiles are also decreased.
      */
     public void setWindowScreen() {
     	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -117,11 +123,17 @@ public class GamePanel extends JPanel implements Runnable {
         gd.setFullScreenWindow(null);
     }
 
+    /**
+     * Starts the main game loop.
+     */
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
+    /**
+     * 
+     */
     @Override
     public void run() {
         double drawInterval = 1000000000/FPS;
@@ -165,6 +177,11 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
     
+    /**
+     * Draws the games sprites onto the screen depending on the games current state.
+     * 
+     * @param graphic graphics object
+     */
     public void paintComponent(Graphics graphic) {
         super.paintComponent(graphic);
 
@@ -192,6 +209,6 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         graphic2.dispose();
-    } 
+    }
 	
 } 
