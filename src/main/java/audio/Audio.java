@@ -9,6 +9,9 @@ import java.net.URL;
 
 import app.GamePanel;
 
+/**
+ * Audio class manages the volume of sound effects and musics
+ */
 public abstract class Audio {
     GamePanel gp;    
     Clip clip;
@@ -17,6 +20,10 @@ public abstract class Audio {
     int volumeScale = 3;
     float volume;
 
+    /**
+     * setting the audio file to play
+     * @param i
+     */
     protected void setFile(int i){
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(audioURL[i]);
@@ -30,6 +37,9 @@ public abstract class Audio {
         }
     }
 
+    /**
+     * check the volume to set it when player changes the loudness
+     */
     public void checkVolume(){
         switch(volumeScale){
             case 0: 
@@ -54,18 +64,27 @@ public abstract class Audio {
         fc.setValue(volume);
     }
 
+    /**
+     * lowering volume
+     */
     public void lowerVolume() {
         if (volumeScale > 0) {
             volumeScale--;
         }
     }
 
+    /**
+     * increasing volume
+     */
     public void increaseVolume() {
         if (volumeScale < 5) {
             volumeScale++;
         }
     }
 
+    /**
+     * @return the volume depending on the player's volume settings
+     */
     public int getVolumeScale() {
         return volumeScale;
     }

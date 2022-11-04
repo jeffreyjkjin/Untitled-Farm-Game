@@ -6,6 +6,9 @@ import javax.sound.sampled.Clip;
 
 import app.GamePanel;
 
+/**
+ * Music manages playing and stopping background music
+ */
 public class Music extends Audio {
     public Music(GamePanel gp) {
         this.gp = gp;
@@ -17,12 +20,19 @@ public class Music extends Audio {
         volumeScale = gp.settings.getMusicVolume();
     }
 
+    /**
+     * Play and loop background music depending on which file is set
+     * @param index
+     */
     public void play(int index) {
         setFile(index);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.start();
     }
 
+    /**
+     * Stop the music file that is being played
+     */
     public void stop() {
         clip.stop();
     }

@@ -4,6 +4,9 @@ import java.net.URL;
 
 import app.GamePanel;
 
+/**
+ * SoundEffects is used to access the desired sound effect
+ */
 public class SoundEffects extends Audio {
 
     public SoundEffects(GamePanel gp) {
@@ -23,6 +26,10 @@ public class SoundEffects extends Audio {
         volumeScale = gp.settings.getSoundVolume();
     }
 
+    /**
+     * Play a sound effect depending on which file is set
+     * @param index
+     */
     public void play(int index){
         setFile(index);
         clip.start();
