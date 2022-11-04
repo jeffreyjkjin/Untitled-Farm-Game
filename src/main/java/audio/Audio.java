@@ -10,7 +10,14 @@ import java.net.URL;
 import app.GamePanel;
 
 /**
- * Audio class manages the volume of sound effects and musics
+ * An abstract object that manages the playback of audio files.
+ * Contains an array of URLs which point to each audio file.
+ * Also stores and controls playback volume.
+ * 
+ * @author Long Nguyen (dln3)
+ * @author Jeffrey Jin (jjj9)
+ * @see audio.Music
+ * @see audio.Sounds
  */
 public abstract class Audio {
     GamePanel gp;    
@@ -21,8 +28,10 @@ public abstract class Audio {
     float volume;
 
     /**
-     * setting the audio file to play
-     * @param i
+     * Sets the current file to the i'th audio file in the URl array.
+     * Loads the desired audio file and adjusts its volume.
+     * 
+     * @param i the index of the file in the URL array
      */
     protected void setFile(int i){
         try {
@@ -38,7 +47,9 @@ public abstract class Audio {
     }
 
     /**
-     * check the volume to set it when player changes the loudness
+     * Determines the volume of the audio files based on the volumeScale.
+     * volumeScale ranges from zero to five.
+     * Sets the volume of this object.
      */
     public void checkVolume(){
         switch(volumeScale){
@@ -65,7 +76,8 @@ public abstract class Audio {
     }
 
     /**
-     * lowering volume
+     * Decrements the volumeScale by one.
+     * Does not change anything if the volumeScale is less than zero.
      */
     public void lowerVolume() {
         if (volumeScale > 0) {
@@ -74,7 +86,8 @@ public abstract class Audio {
     }
 
     /**
-     * increasing volume
+     * Increments the volumeScale by one.
+     * Does not change if the volumeScale is greater than five.
      */
     public void increaseVolume() {
         if (volumeScale < 5) {
@@ -83,7 +96,7 @@ public abstract class Audio {
     }
 
     /**
-     * @return the volume depending on the player's volume settings
+     * @return the current volumeScale of this object
      */
     public int getVolumeScale() {
         return volumeScale;

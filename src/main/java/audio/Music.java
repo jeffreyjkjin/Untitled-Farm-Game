@@ -7,10 +7,27 @@ import javax.sound.sampled.Clip;
 import app.GamePanel;
 
 /**
- * Music manages playing and stopping background music
- * This class has an array of URL of music files
+ * Manages and controls music tracks used by this game.
+ * Music files can be accessed by indexing an array which contains the URLs of the files.
+ * Should be instantiated in GamePanel so that other objects can access its music.
+ * 
+ * @author Long Nguyen (dln3)
+ * @author Jeffrey Jin (jjj9)
+ * @see audio.Audio
  */
 public class Music extends Audio {
+
+    
+    /**
+     * Constructs a new Music object and saves the music files to a URL array.
+     * This audio array can be resized as more music tracks are needed.
+     * Links a GamePanel object to this object so that it can access its other objects.
+     * Volume of the music is also loaded from the configuration file.
+     * 
+     * @param gp
+     * @see app.GamePanel
+     * @see settings.Settings
+     */
     public Music(GamePanel gp) {
         this.gp = gp;
 
@@ -22,7 +39,9 @@ public class Music extends Audio {
     }
 
     /**
-     * Play and loop background music depending on which file is set
+     * Plays the music file at position index in the URL array.
+     * Music track is loops until the stop method is called.
+     * 
      * @param index index of the file in URL array
      */
     public void play(int index) {
@@ -32,7 +51,7 @@ public class Music extends Audio {
     }
 
     /**
-     * Stop the music file that is being played
+     * Stops the music file that is currently being played.
      */
     public void stop() {
         clip.stop();
