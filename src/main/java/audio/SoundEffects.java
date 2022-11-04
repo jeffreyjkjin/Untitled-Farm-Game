@@ -29,7 +29,7 @@ public class SoundEffects extends Audio {
 
     /**
      * Play a sound effect depending on which file is set
-     * @param index
+     * @param index index of the file in URL array
      */
     public void play(int index){
         setFile(index);

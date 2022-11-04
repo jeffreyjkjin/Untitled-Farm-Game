@@ -521,10 +521,10 @@ public class UI {
 
 	/**
 	 * a method for centering text
-	 * @param text
+	 * @param text 
 	 * @param g2
 	 * @param screenWidth
-	 * @return x coordinate for the text you want to draw on screen
+	 * @return x coordinate for the text you want to draw on the center of the screen
 	 */
 	public int getHorizontalCenter(String text, Graphics2D g2, int screenWidth) {
 		int textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();

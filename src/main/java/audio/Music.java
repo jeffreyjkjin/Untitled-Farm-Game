@@ -23,7 +23,7 @@ public class Music extends Audio {
 
     /**
      * Play and loop background music depending on which file is set
-     * @param index
+     * @param index index of the file in URL array
      */
     public void play(int index) {
         setFile(index);
