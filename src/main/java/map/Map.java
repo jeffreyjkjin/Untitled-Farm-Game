@@ -2,16 +2,21 @@ package map;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.awt.Color;
 
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+
 import app.GamePanel;
 import entity.Farmer;
 import object.SuperObject;
+import tile.Tile;
 import object.ObjectManager;
 
 public class Map {
@@ -98,6 +103,7 @@ public class Map {
     }
 
     public void drawTiles(Graphics2D graphic2) {
+    	
         int col = 0;
         int row = 0;
 
