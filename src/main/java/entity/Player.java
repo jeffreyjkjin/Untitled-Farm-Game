@@ -12,7 +12,10 @@ import app.GamePanel.gameState;
 import app.InputHandler;
 
 /**
- * Player class manages player's stats, sprites and interactions
+ * Manages the player's stats, sprites and interactions.
+ * Needs to be instantiated in the GamePanel object so that its attributes can be accessed by other classes.
+ * 
+ * @author Jeffrey Jin (jjj9)
  */
 public class Player extends Entity{
 
@@ -26,6 +29,14 @@ public class Player extends Entity{
     public int keyCount = 0;
     
     
+    /**
+     * Constructs a new Player object and creates its hitbox and area of sight on the game map.
+     * Links GamePanel and InputHandler to this object so that their attributes and methods can be used.
+     * Also sets the default values of the player and loads its sprite images.
+     * 
+     * @param gamePanel GamePanel object that is used to the game
+     * @param input InputHandler object that manages the players keyboard inputs
+     */
     public Player(GamePanel gamePanel, InputHandler input) {
         this.gamePanel = gamePanel;
         this.input = input;
@@ -42,7 +53,7 @@ public class Player extends Entity{
     }
 
     /**
-     * setting default values for player
+     * Sets the default values of the player.
      */
     public void setDefaultValues() {
         screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
@@ -57,13 +68,16 @@ public class Player extends Entity{
         direction = "down";
     }
 
+    /**
+     * Sets the players current location to the start position of the current map.
+     */
     public void spawnPlayer() {
         worldX = gamePanel.mapM.getMap().playerStartX;
         worldY = gamePanel.mapM.getMap().playerStartY;
     }
 
     /**
-     * Adding sprites to player
+     * Loads the players sprites.
      */
     public void getPlayerImage() {
         try {
@@ -80,6 +94,13 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     * Updates the Player's stats depending on what is happening in the game.
+     * If Player's health points are zero, the user is sent to the gameover screen.
+     * Checks if using is pressing movement keys and moves the Player in the corresponding direction.
+     * Changes the players sprite depending on which direction the user is moving in.
+     * Also checks if player is colliding with an object or entity.
+     */
     public void update() {
         if (health == 0) {
             if (gamePanel.player.score > gamePanel.settings.getHighScore()) {
@@ -159,6 +180,11 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     * Determines the type of object the player is interacting with and calls the corresponding event.
+     * 
+     * @param index index of the object in the object array that the Player is interating with
+     */
     public void objectInteraction(int index) {
         if (index != 999) {
             String objectName = gamePanel.mapM.getMap().objects[index].name;
@@ -203,11 +229,11 @@ public class Player extends Entity{
     }
 
     /**
-     * Called when Player and Farmer collide with eachother
-     * Player loses one life and both Player and Farmer get reset back to their starting locations
-     * Also plays a sound and displays an appropriate mesage
+     * Called when Player and Farmer collide with each other.
+     * Player loses one life and both Player and Farmer get reset back to their starting locations.
+     * Also plays a sound and displays an appropriate mesage.
      * 
-     * @param index array index of the farmer Player is interacting with
+     * @param index index of the farmer in the farmer array that the Player is interacting with
      */
     public void farmerInteraction(int index)
     {
@@ -224,8 +250,8 @@ public class Player extends Entity{
     }
 
     /**
-     * Respawns Player to starting location after interacting with a Farmer
-     * Also sets Player and all Farmers collision status to false
+     * Sets the Player's current position to start position of the current map.
+     * Also sets Player and all Farmers collision status to false.
      */
     public void respawnPlayer() {
         worldX = gamePanel.mapM.getMap().playerStartX;
@@ -242,7 +268,7 @@ public class Player extends Entity{
     }
 
     /**
-     * Draws Player with the appropriate image based on the direction Player is moving
+     * Draws Player with the appropriate image based on the direction Player is moving in.
      * 
      * @param graphic2 main graphic used by gamePanel to draw the maps sprites and tiles
      */

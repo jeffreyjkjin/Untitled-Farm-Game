@@ -22,7 +22,6 @@ public class SoundEffects extends Audio {
      * Volume of the sound effects are also loaded from the configuration file.
      * 
      * @param gp GamePanel object that is used to run the game
-     * @see app.GamePanel
      * @see settings.Settings
      */
     public SoundEffects(GamePanel gp) {
