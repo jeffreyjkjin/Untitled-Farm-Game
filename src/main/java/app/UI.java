@@ -14,10 +14,11 @@ import app.GamePanel.gameState;
 import object.OBJ_Heart;
 
 /**
- * UI manages drawing screens in different states
+ * Manages the user interface for this game.
+ * Draws the different UI components to the screen depending on the games current state.
  * 
- * @author Jeffrey Jin (jjj9)
  * @author Long Nguyen (dln3)
+ * @author Jeffrey Jin (jjj9)
  */
 public class UI {
 	GamePanel gp;
@@ -35,6 +36,14 @@ public class UI {
 
 	double playTime;
 	
+	/**
+	 * Constructs a new UI object and loads all the required assets such as sprites and fonts.
+	 * Creates three heart objects that will be used to display the players health on the screen.
+	 * Links gp to this class so that its attributes and methods can be utilized.
+	 * Checks the configuration file to see if full screen mode is enabled or not.
+	 * 
+	 * @param gp GamePanel object that is used to run the game
+	 */
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
@@ -60,8 +69,9 @@ public class UI {
 	}
 
 	/**
-	 * draw a timer on screen
-	 * @return a timer in minutes
+	 * Creates a timer that displays minutes and seconds.
+	 * 
+	 * @return a string with the players current time
 	 */
 	public String drawTimer() {
 		String timer = "";
@@ -89,12 +99,18 @@ public class UI {
 	}
 
 	/**
-	 * Reset the timer to 0
+	 * Reset the timer to zero.
 	 */
 	public void resetTimer() {
 		playTime = 0;
 	}
 
+	/**
+	 * Displays the player's health points on the screen.
+	 * Hearts are either empty or full depending on how many health points the player has.
+	 * 
+	 * @param g2 the main graphics object that is used to draw the hearts onto the screen
+	 */
 	public void drawPlayerLife(Graphics2D g2) {
 		for(int i = 3; i >= 1; i--) {
 			if (gp.player.health < i) {
@@ -109,8 +125,9 @@ public class UI {
 	}
 	
 	/**
-	 * Show message on screen for an amount of time
-	 * @param text
+	 * Displays a message on the screen.
+	 * 
+	 * @param text the message that is to be displayed
 	 */
 	public void showMessage(String text) {
 		
@@ -119,8 +136,9 @@ public class UI {
 	}
 	
 	/**
-	 * draw screen depedning on which state
-	 * @param g2
+	 * Displays the games UI depending on what state the game is currently in.
+	 * 
+	 * @param g2 the main graphics object that is used to draw the UI onto the screen
 	 */
 	public void draw(Graphics2D g2) {
 		switch(gp.currState) {
@@ -148,8 +166,11 @@ public class UI {
 	}
 
 	/**
-	 * draw pause screen
-	 * @param g2
+	 * Display pause menu onto the player's screen.
+	 * Menu contains buttons for resuming the game, returning to main menu, going to settings screen and closing the game.
+	 * A selector icon is used to show the user what option they currently have selected.
+	 * 
+	 * @param g2 the main graphics object that is used to draw the UI onto the screen
 	 */
 	private void drawPauseScreen(Graphics2D g2) {
 		//Making the screen darker
@@ -197,8 +218,11 @@ public class UI {
 	}
 
 	/**
-	 * draw play screen
-	 * @param g2
+	 * Draws the game UI while the user is playing the game.
+	 * Shows current health, level name, score and time.
+	 * Messages may appear on the screen to indicate to the player what is happening such as when a player interacts with an object or entity.
+	 * 
+	 * @param g2 the main graphics object that is used to draw the UI onto the screen
 	 */
 	private void drawPlayScreen(Graphics2D g2) {
 		
@@ -249,8 +273,12 @@ public class UI {
 	}
 
 	/**
-	 * draw lose screen
-	 * @param g2
+	 * Draws the game over screen for the player with a menu.
+	 * Menu contains buttons for retrying, returning to main menu and closing the game.
+	 * A selector icon is used to show the user what they have currently selected.
+	 * Also displays the player's current score and high score.
+	 * 
+	 * @param g2 the main graphics object that is used to draw the UI to the screen
 	 */
 	private void drawLoseScreen(Graphics2D g2) {
 		
@@ -308,8 +336,12 @@ public class UI {
 	}
 
 	/**
-	 * draw win screen
-	 * @param g2
+	 * Draws the win game screen for the player with a menu.
+	 * Menu contains buttons for retrying, returning to main menu and closing the game.
+	 * A selector icon is used to show the user what they have currently selected.
+	 * Also displays the player's current score and high score.
+	 * 
+	 * @param g2 the main graphics object that is used to draw the UI to the screen
 	 */
 	private void drawWinScreen(Graphics2D g2) {
 		
@@ -367,8 +399,12 @@ public class UI {
 	}
 
 	/**
-	 * draw title screen
-	 * @param g2
+	 * Draws the title screen for the player with a menu.
+	 * Menu contains buttons for playing the game, heading to the settings menu, showing the credits and closing the game.
+	 * A selector icon is used to show the user what they have currently selected.
+	 * Also displays the player's highest score.
+	 * 
+	 * @param g2 the main graphics object that is used to draw the UI to the screen
 	 */
 	private void drawTitleScreen(Graphics2D g2){
 		
@@ -428,8 +464,11 @@ public class UI {
 	}
 
 	/**
-	 * draw settings screen
-	 * @param g2
+	 * Draws the settings menu for the player.
+	 * Menu contains options to change the music and sound effect volumes, toggle fullscreen mode, resetting the highest score and returning to the main menu.
+	 * A selector icon is used to show the user what they have currently selected.
+	 * 
+	 * @param g2 the main graphics object that is used to draw the UI to the screen
 	 */
 	private void drawSettingsScreen(Graphics2D g2) {
 		// Settings
@@ -498,8 +537,10 @@ public class UI {
 	}
 	
 	/**
-	 * draw credits screen
-	 * @param g2
+	 * Draws the credit screen for the player.
+	 * Shows the names of the creators of this game.
+	 * 
+	 * @param g2 the main graphics object that is used to draw the UI onto the screen
 	 */
 	private void drawCreditsScreen(Graphics2D g2) {
 		// Credits
@@ -523,10 +564,11 @@ public class UI {
 	}
 
 	/**
-	 * a method for centering text
-	 * @param text 
-	 * @param g2
-	 * @param screenWidth
+	 * Centers a string of text in the middle of the provided screen width.
+	 * 
+	 * @param text the text that is to be centered
+	 * @param g2 the main graphics object that is used to draw the text onto the screen
+	 * @param screenWidth the current width of the screen
 	 * @return x coordinate for the text you want to draw on the center of the screen
 	 */
 	public int getHorizontalCenter(String text, Graphics2D g2, int screenWidth) {
