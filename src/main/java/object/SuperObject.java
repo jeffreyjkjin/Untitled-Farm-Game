@@ -11,6 +11,7 @@ import app.GamePanel;
  * 
  * @author Jeffrey Jin (jjj9)
  * @author Seughwan Kim
+ * @see object.ObjectManager
  */
 public abstract class SuperObject {
 	
