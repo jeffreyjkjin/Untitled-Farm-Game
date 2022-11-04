@@ -5,6 +5,13 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import app.GamePanel;
 
+/**
+ * Abstract class for game objects that contains the objects properties.
+ * Data stored in this object are used by other objects.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @author Seughwan Kim
+ */
 public abstract class SuperObject {
 	
 	public BufferedImage image;
@@ -17,7 +24,13 @@ public abstract class SuperObject {
 	public int hitboxDefaultY = 0;
 	public int index;
 	
-	
+	/**
+	 * Determines the location of the object on the map.
+	 * Checks if the player is able to see the object on their screen, then draws the object if they are able to.
+	 * 
+	 * @param g2 the main graphics object used to draw object sprites onto the screen
+	 * @param gp GramePanel object that is used to run the game
+	 */
 	public void draw(Graphics2D g2, GamePanel gp) 
 	{
 		// Determine objects location on the screen
@@ -33,6 +46,11 @@ public abstract class SuperObject {
 		}
 	}
 
+	/**
+	 * Method is not used in this class but can be implemented by different objects for different features.
+	 * 
+	 * @param gp GamePanel object that is used to run the game
+	 */
 	public void update(GamePanel gp) {
 	}
 
