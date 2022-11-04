@@ -193,6 +193,13 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     * Called when Player and Farmer collide with eachother
+     * Player loses one life and both Player and Farmer get reset back to their starting locations
+     * Also plays a sound and displays an appropriate mesage
+     * 
+     * @param index array index of the farmer Player is interacting with
+     */
     public void farmerInteraction(int index)
     {
         if (index != 999)
@@ -207,6 +214,10 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     * Respawns Player to starting location after interacting with a Farmer
+     * Also sets Player and all Farmers collision status to false
+     */
     public void respawnPlayer() {
         worldX = gamePanel.mapM.getMap().playerStartX;
         worldY = gamePanel.mapM.getMap().playerStartY;
@@ -221,6 +232,11 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     * Draws Player with the appropriate image based on the direction Player is moving
+     * 
+     * @param graphic2 main graphic used by gamePanel to draw the maps sprites and tiles
+     */
     public void draw(Graphics2D graphic2) {
         BufferedImage image = null;
         

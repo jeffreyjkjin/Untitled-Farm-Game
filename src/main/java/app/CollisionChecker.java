@@ -10,7 +10,8 @@ public class CollisionChecker {
     public CollisionChecker(GamePanel gp) {
         this.gp = gp;
     }
- 
+	
+
     public void checkTileCollision(Entity entity) {
 
 		int entityLeftWorldX = entity.worldX + entity.hitbox.x;
@@ -134,6 +135,16 @@ public class CollisionChecker {
     	return index;
     } 
 
+	/**
+	 * Checks if entity will collide with any of the farmers in the array (the only enemies on the map currently)
+	 * If collision will happen, turns on their collisionOn variable to stop movement and returns index of farmer collided with
+	 * Checked by temporarily moving entities hitbox in the direction it is moving and seeing if collision happens
+	 * All of these check_____Collision() functions are very similar just for specific scenarios
+	 * 
+	 * @param entity the entity that is calling this function to check if it will collide with an entity on next movement
+	 * @param farmers the array of entities (currently farmers only) to check for possible collisions with
+	 * @return index of the farmer entity collided with
+	 */
 	public int checkEntityCollision(Entity entity, Farmer[] farmers)
 	{
 		int index = 999;
@@ -185,10 +196,16 @@ public class CollisionChecker {
 			}
 		}
 
-
 		return index;
 	}
 
+	/**
+	 * Checks if entity is colliding with the player by checking if on its next movement its hitbox will intersect with players
+	 * Always called by entities other than the player character
+	 * 
+	 * @param entity the entity (currently always farmer) that may collide with the player during movement
+	 * 
+	 */
 	public void checkPlayerCollision(Entity entity)
 	{
 		// Get Entity's hitbox

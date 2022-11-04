@@ -5,6 +5,16 @@ import java.lang.Math;
 
 import app.GamePanel;
 
+/** 
+ * Creates and sets Nodes to represent the tiles of the map player and farmers are on
+ * Also stores potential paths and the eventual final path towards the farmers goal location
+ * Once these tiles are stored in Nodes, the A-star pathfinding algorithm can be used to find the fastest path farmer can take to player
+ * Accounts for solid obstacles on the map such as trees and fenches, paths around them
+ * Only allows for up, down, left, right movement as per assignment instructions
+ * Needs to be instantiated in GamePanel to be called by Farmer in the future
+ * 
+ * @author Andrew Hein (ach17)
+*/
 public class Pathfinding {
     
     GamePanel gp;
@@ -13,14 +23,22 @@ public class Pathfinding {
     public ArrayList<Node> pathList = new ArrayList<>();
     Node start, goal, current;
     boolean goalReached = false;
-    int step = 0;
 
+    /**
+     * Constructs the pathfinding class by linking it to gp and creating Nodes
+     * 
+     * @param gp GamePanel which is the main way the game is run
+     */
     public Pathfinding(GamePanel gp)
     {
         this.gp = gp;
         createNodes();
     }
 
+    /**
+     * Creates the Nodes that will store the tiles of the current map
+     * The amount created equals the amount of tiles on the current map
+     */
     public void createNodes()
     {
         node = new Node[gp.mapM.getMap().maxWorldCol][gp.mapM.getMap().maxWorldRow];
@@ -41,6 +59,10 @@ public class Pathfinding {
         }
     }
 
+    /**
+     * Resets all of the nodes by changing their variables to default states and recalling createNodes()
+     * Also clears all potential and final paths that may have been created by other functions
+     */
     public void resetNodes()
     {
         int col = 0;
@@ -66,9 +88,18 @@ public class Pathfinding {
         openList.clear();
         pathList.clear();
         goalReached = false;
-        step = 0;
     }
 
+    /**
+     * Links the Nodes to the current maps tiles and determines whether they are solid or not for pathfinding purposes
+     * Takes in the farmers start location and its goal location and gets the cost of all tiles that the algorithm will use
+     * Adds everything to openList which stores all possible tiles to visit. Will determine proper path in other functions
+     * 
+     * @param startCol farmers starting column (current column)
+     * @param startRow farmers starting row (current row)
+     * @param goalCol farmers goal column to move to
+     * @param goalRow farmers foal row to move to
+     */
     public void setNodes(int startCol, int startRow, int goalCol, int goalRow)
     {
         resetNodes();
@@ -103,6 +134,12 @@ public class Pathfinding {
         }
     }
 
+    /**
+     * gets the gCost and hCost and uses them to calculate the final fCost of travelling to the tile
+     * This is the core of the A-star pathfinding algorithm. The tile with the lowest fCost will be moved to
+     * 
+     * @param node current node to get the cost of. This node represents a tile on the current map
+     */
     public void getCost(Node node)
     {
         // g cost
@@ -119,9 +156,17 @@ public class Pathfinding {
         node.fCost = node.gCost + node.hCost;
     }
 
+    /**
+     * Searches through all possible paths using A-star pathfinding algorithm and finds the most efficient path
+     * opens nodes and checks their costs until it finds the best one. Once found, adds that Node to the final pathList ArraytList
+     * If path is eventually found, returns true. Otherwise, returns false
+     * calls pathTracker() to actually add the best nodes to pathList
+     * 
+     * @return whether or not the goal location was able to be reached by the algorithm
+     */
     public boolean search()
     {
-        while(!goalReached && step < 2000)
+        while(!goalReached)
         {
             int col = current.col;
             int row = current.row;
@@ -180,12 +225,17 @@ public class Pathfinding {
                 goalReached = true;
                 pathTracker();
             }
-            step++;
         }
 
         return goalReached;
     }
 
+    /**
+     * Opens Node and adds it to list of opened nodes
+     * search() will use this to check the possible Nodes fCostts to determine best path forward
+     * 
+     * @param node current Node to be opened
+     */
     public void openNode(Node node)
     {
         if(!node.open && !node.checked && !node.blocked)
@@ -196,6 +246,9 @@ public class Pathfinding {
         }
     }
 
+    /**
+     * Adds all of the best nodes to the pathList which will be used by Farmer to determine how to move towards Player
+     */
     public void pathTracker()
     {
         Node currentNode = goal;

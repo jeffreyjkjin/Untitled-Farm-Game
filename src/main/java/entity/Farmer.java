@@ -8,6 +8,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.lang.Math;
 
+/** 
+ * An entity called Farmer which is the main enemy of the game. These are stored in an array in the map
+ * Has a different image for each direction it moves in
+ * Constantly tries to path towards the player character. If successful, player loses a life and is reset to spawn location
+ * 
+ * @author Andrew Hein (ach17)
+*/
 public class Farmer extends Entity {
 
     GamePanel gamePanel;
@@ -16,6 +23,11 @@ public class Farmer extends Entity {
     public static int frozen = 0; // This and below are for speed
     public static int normal = 2;
 
+    /**
+     *  Constructs the farmer and sets some default values like speed, creating hitbox, and getting images for later
+     * 
+     * @param gp
+     */
     public Farmer(GamePanel gp)
     {
         this.gamePanel = gp;
@@ -29,6 +41,9 @@ public class Farmer extends Entity {
         getFarmerImage();
     }
 
+    /**
+     * Reads in the farmers direction-based images and saves them in variables for later uses when farmer is drawn and moving
+     */
     public void getFarmerImage()
     {
         try 
@@ -47,6 +62,10 @@ public class Farmer extends Entity {
         }
     }
 
+    /**
+     * This function is called each time the farmer updates (60 times per second)
+     * Sets what the farmer will attempt to do which is currently just path towards the player and attempt to catch them
+     */
     public void setAction()
     {
         int goalCol = (gamePanel.player.worldX + gamePanel.player.hitbox.x) / gamePanel.tileSize;
@@ -55,9 +74,14 @@ public class Farmer extends Entity {
         searchPath(goalCol, goalRow);
     }
 
+    /**
+     * Main "brain" of the farmer. Controls what it does and how it acts
+     * Finds most efficient path to the player by calling setAction() and then checks various collision factors
+     * If there are no collisions, the farmer can move on this path towards the player
+     * If there are collisions, farmer does not move
+     */
     public void update()
     {
-        speed = normal;
         setAction();
         collisionOn = false;
         gamePanel.checker.checkPlayerCollision(this);
@@ -118,6 +142,13 @@ public class Farmer extends Entity {
         }
     }
 
+    /**
+     * Finds out where the farmer should be on the screen (if anywhere)
+     * Also sets the image of the farmer based on the direction it is going
+     * If the farmer should be on the players screen, this function draws them
+     * 
+     * @param graphic2 main graphic used to draw everything to the screen
+     */
     public void draw(Graphics2D graphic2) {
         BufferedImage image = null;
 
@@ -166,6 +197,13 @@ public class Farmer extends Entity {
         }
     }
 
+    /**
+     * Uses the pathfinding class to find the most efficient path to the player
+     * Once path is found, sets the appropriate direction farmer needs to go to avoid collisions based on next tile in path
+     * 
+     * @param goalCol goal column farmer attempts to reach. Currently the players current column
+     * @param goalRow goal row farmer attempts to reach. Currently the players current row
+     */
     public void searchPath(int goalCol, int goalRow)
     {
         int currCol = (worldX + hitbox.x) / gamePanel.tileSize;
@@ -257,6 +295,12 @@ public class Farmer extends Entity {
         }
     }
 
+    /**
+     * Resets all of the farmers to their starting locations and turns collision off
+     * Called when player and farmers collide and everything needs to be reset
+     * 
+     * @param farmers array of farmers stored in map
+     */
     public static void respawnFarmers(Farmer[] farmers)
     {
         for (int i = 0; i < farmers.length; i++)
