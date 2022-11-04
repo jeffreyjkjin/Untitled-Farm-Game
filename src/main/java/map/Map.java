@@ -231,7 +231,11 @@ public class Map {
         }
     }
 
-    public void setFarmer() // Same idea as setObject but places a farmer instead with code 19 in map txt file
+    /**
+     * Uses the read in information about the map from earlier to determine where to place Farmers on the map
+     * Creates a new farmer and sets their starting location
+     */
+    public void setFarmer()
     {
         int col = 0;
         int row = 0;
@@ -269,6 +273,11 @@ public class Map {
         }
     }
 
+    /**
+     * Goes through Farmer ArrayList and draws each individual farm on to the map
+     * 
+     * @param graphic2 main graphic used by gamePanel to draw the maps sprites and tiles
+     */
     public void drawFarmers(Graphics2D graphic2)
     {
         for (int i = 0; i < farmers.length; i++)
