@@ -11,9 +11,8 @@ public class CollisionChecker {
         this.gp = gp;
     }
 	
-
     public void checkTileCollision(Entity entity) {
-
+		// Get various values of Entity to help check for tile collision properly
 		int entityLeftWorldX = entity.worldX + entity.hitbox.x;
 		int entityRightWorldX = entity.worldX + entity.hitbox.x + entity.hitbox.width;
 		int entityTopWorldY = entity.worldY + entity.hitbox.y;
@@ -24,41 +23,35 @@ public class CollisionChecker {
 		int entityTopRow = entityTopWorldY / gp.tileSize;
 		int entityBottomRow = entityBottomWorldY / gp.tileSize;
 
-		int tilenum1, tilenum2;
-
-		switch(entity.direction){
+		int tilenum1 = 0; 
+		int tilenum2 = 0;
+		// Check the possible tiles entity can be on next time it moves in its direction and see if any have collision on
+		switch(entity.direction)
+		{
 			case"up":
 				entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
 				tilenum1 = gp.mapM.getTileMap()[entityTopRow][entityLeftCol];
 				tilenum2 = gp.mapM.getTileMap()[entityTopRow][entityRightCol];
-				if(gp.tileM.checkTileCollision(tilenum1) || gp.tileM.checkTileCollision(tilenum2)){
-					entity.collisionOn = true;
-				}
 				break;
 			case"down":
 				entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
 				tilenum1 = gp.mapM.getTileMap()[entityBottomRow][entityLeftCol];
 				tilenum2 = gp.mapM.getTileMap()[entityBottomRow][entityRightCol];
-				if(gp.tileM.checkTileCollision(tilenum1) || gp.tileM.checkTileCollision(tilenum2)){
-					entity.collisionOn = true;
-				}
 				break;
 			case"left":
 				entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
 				tilenum1 = gp.mapM.getTileMap()[entityTopRow][entityLeftCol];
 				tilenum2 = gp.mapM.getTileMap()[entityBottomRow][entityLeftCol];
-				if(gp.tileM.checkTileCollision(tilenum1) || gp.tileM.checkTileCollision(tilenum2)){
-					entity.collisionOn = true;
-				}
 				break;
 			case"right":
 				entityRightCol = (entityRightWorldX + entity.speed)/gp.tileSize;
 				tilenum1 = gp.mapM.getTileMap()[entityTopRow][entityRightCol];
 				tilenum2 = gp.mapM.getTileMap()[entityBottomRow][entityRightCol];
-				if(gp.tileM.checkTileCollision(tilenum1) || gp.tileM.checkTileCollision(tilenum2)){
-					entity.collisionOn = true;
-				}
 				break;
+		}
+
+		if(gp.tileM.checkTileCollision(tilenum1) || gp.tileM.checkTileCollision(tilenum2)){
+			entity.collisionOn = true;
 		}
 
     }
@@ -67,63 +60,46 @@ public class CollisionChecker {
     	
     	int index = 999;
     	
-    	for (int i = 0; i < gp.mapM.getMap().objects.length; i++) {
-    		
-    		if(gp.mapM.getMap().objects[i] != null) {
-    			
+    	for (int i = 0; i < gp.mapM.getMap().objects.length; i++) 
+		{	
+    		if(gp.mapM.getMap().objects[i] != null) {	
     			// get entity hitbox
     			entity.hitbox.x = entity.worldX + entity.hitbox.x; 
     			entity.hitbox.y = entity.worldY + entity.hitbox.y; 
     			// get object hitbox
     			gp.mapM.getObject(i).hitbox.x = gp.mapM.getObject(i).worldX + gp.mapM.getObject(i).hitbox.y;
     			gp.mapM.getObject(i).hitbox.y = gp.mapM.getObject(i).worldY + gp.mapM.getObject(i).hitbox.y;
-    			
+    			// Temporarily move hitbox to check collision
     			switch(entity.direction) {
     			case "up":
     				entity.hitbox.y -= entity.speed;
-    				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) {
-    					if(gp.mapM.getObject(i).collision == true) {
-    						entity.collisionOn = true;
-    					}
-    					if(player == true) {
-    						index = i;
-    					}
-    				}
     				break;
     				
     			case "down":
     				entity.hitbox.y += entity.speed;
-    				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) {
-    					if(gp.mapM.getObject(i).collision == true) {
-    						entity.collisionOn = true;
-    					}
-    					if(player == true) {
-    						index = i;
-    					}}
     				break;
     				
     			case "left":
     				entity.hitbox.x -= entity.speed;
-    				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) {
-              if(gp.mapM.getObject(i).collision == true) {
-    						entity.collisionOn = true;
-    					}
-    					if(player == true) {
-    						index = i;
-    					}}
     				break;
     				
     			case "right":
     				entity.hitbox.x -= entity.speed;
-    				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) {
-              if(gp.mapM.getObject(i).collision == true) {
-    						entity.collisionOn = true;
-    					}
-    					if(player == true) {
-    						index = i;
-    					}}
     				break;
     			}
+				// Check if player has collided with an object. If yes, turn collision on and return index if entity == player
+				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) 
+				{
+					if(gp.mapM.getObject(i).collision == true) 
+					{
+						entity.collisionOn = true;
+					}
+					if(player == true) 
+					{
+						index = i;
+					}
+				}
+				// Reset all hitboxes back to their original locations
     			entity.hitbox.x = entity.hitboxDefaultX;
     			entity.hitbox.y = entity.hitboxDefaultY;
     			gp.mapM.getObject(i).hitbox.x = gp.mapM.getObject(i).hitboxDefaultX;
@@ -188,7 +164,7 @@ public class CollisionChecker {
 						farmers[i].collisionOn = true;
 					}
 				}
-
+				// Reset all hitboxes back to their original coordinates
 				entity.hitbox.x = entity.hitboxDefaultX;
 				entity.hitbox.y = entity.hitboxDefaultY;
 				farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
@@ -215,7 +191,7 @@ public class CollisionChecker {
 		gp.player.hitbox.x = gp.player.worldX + gp.player.hitbox.x;
 		gp.player.hitbox.y = gp.player.worldY + gp.player.hitbox.y;
 
-		// Temporarily move the gp.players hitbox to test collision
+		// Temporarily move the Entity's hitbox to test collision
 		switch(entity.direction) 
 		{
 			case "up":
@@ -234,13 +210,13 @@ public class CollisionChecker {
 				entity.hitbox.x -= entity.speed;
 				break;
 		}
-
+		// If there is collision, enable the variable and call the farmerInteraction function
 		if (entity.hitbox.intersects(gp.player.hitbox))
 		{
 			entity.collisionOn = true;
-			gp.player.farmerInteraction(0);
+			gp.player.farmerInteraction(0); // Index does not matter in this case
 		}
-
+		// Reset all hitboxes back to their original coordinates
 		entity.hitbox.x = entity.hitboxDefaultX;
 		entity.hitbox.y = entity.hitboxDefaultY;
 		gp.player.hitbox.x = gp.player.hitboxDefaultX;

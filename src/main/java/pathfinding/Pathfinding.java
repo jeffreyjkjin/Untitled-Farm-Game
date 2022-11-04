@@ -19,8 +19,8 @@ public class Pathfinding {
     
     GamePanel gp;
     Node[][] node;
-    ArrayList<Node> openList = new ArrayList<>();
-    public ArrayList<Node> pathList = new ArrayList<>();
+    ArrayList<Node> openList = new ArrayList<>(); // For nodes that are open
+    public ArrayList<Node> pathList = new ArrayList<>(); // For the most efficient path to be stored in
     Node start, goal, current;
     boolean goalReached = false;
 
@@ -45,7 +45,7 @@ public class Pathfinding {
 
         int col = 0;
         int row = 0;
-
+        // Create a new node for each tile on the map and make its location in Node array equal to its position on map
         while (col < gp.mapM.getMap().maxWorldCol && row < gp.mapM.getMap().maxWorldRow)
         {
             node[col][row] = new Node(col, row);
@@ -103,7 +103,7 @@ public class Pathfinding {
     public void setNodes(int startCol, int startRow, int goalCol, int goalRow)
     {
         resetNodes();
-
+        // Variables to store where we are on the map and in the algorithm for later
         start = node[startCol][startRow];
         current = start;
         goal = node[goalCol][goalRow];
@@ -122,7 +122,7 @@ public class Pathfinding {
                 node[col][row].blocked = true;
             }
 
-            // Set cost for A* algo
+            // Set cost for A-star algorithm
             getCost(node[col][row]);
             col++;
 
@@ -142,17 +142,17 @@ public class Pathfinding {
      */
     public void getCost(Node node)
     {
-        // g cost
+        // gCost
         int xDist = Math.abs(node.col - start.col);
         int yDist = Math.abs(node.row - start.row);
         node.gCost = xDist + yDist;
 
-        // h cost
+        // hCost
         xDist = Math.abs(node.col - goal.col);
         yDist = Math.abs(node.row - goal.row);
         node.hCost = xDist + yDist;
 
-        // f cost
+        // fCost
         node.fCost = node.gCost + node.hCost;
     }
 
@@ -193,10 +193,10 @@ public class Pathfinding {
             {
                 openNode(node[col + 1][row]);
             }
-            // Find most efficient node to go to
+            // Variables to find most efficient node to go to
             int bestNodeIndex = 0;
             int bestNodeFCost = 999;
-
+            // Find most efficient node to go to
             for (int i = 0; i < openList.size(); i++)
             {
                 if (openList.get(i).fCost < bestNodeFCost)
@@ -212,14 +212,14 @@ public class Pathfinding {
                     }
                 }
             }
-            // End loop if empty
+            // End loop if empty and did not reach goal
             if(openList.size() == 0)
             {
                 break;
             }
 
             current = openList.get(bestNodeIndex);
-
+            // If we reached out goal, set goalReached to true and call pathTracker() to add Nodes to pathList
             if(current == goal)
             {
                 goalReached = true;

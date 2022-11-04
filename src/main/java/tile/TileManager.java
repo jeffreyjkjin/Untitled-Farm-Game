@@ -28,7 +28,7 @@ public class TileManager {
         
         // Get tilenames & collision info from the file
         String line;
-        
+        // Attempt to read in the collision status of each tile
         try {
         	while((line = br.readLine()) != null) {
         		fileNames.add(line);
@@ -62,13 +62,13 @@ public class TileManager {
     		else {
     			collision = false;
     		}
-    		
+    		// Create the tiles and link them to their image and collision status
     		setup(i, fileName, collision);
     	}
     }
     	
     public void setup(int index, String imageName, boolean collision) {
-    	
+    	// Create the tiles and link them to their image and collision status
     	try {
     		tile[index] = new Tile();
     		tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName));
