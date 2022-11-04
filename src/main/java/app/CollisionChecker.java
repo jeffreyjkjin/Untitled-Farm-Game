@@ -3,6 +3,9 @@ package app;
 import entity.Entity;
 import entity.Farmer;
 
+/**
+ * This class is used to check collisions between entities and objects
+ */
 public class CollisionChecker {
     
     GamePanel gp;
@@ -11,6 +14,10 @@ public class CollisionChecker {
         this.gp = gp;
     }
 	
+    /**
+	 * Checking the 2 tiles ahead for collision
+     * @param entity
+     */
     public void checkTileCollision(Entity entity) {
 		// Get various values of Entity to help check for tile collision properly
 		int entityLeftWorldX = entity.worldX + entity.hitbox.x;

@@ -13,6 +13,9 @@ import javax.imageio.ImageIO;
 import app.GamePanel.gameState;
 import object.OBJ_Heart;
 
+/**
+ * UI manages drawing screens in different states
+ */
 public class UI {
 	GamePanel gp;
 	BufferedImage keyImage, heartImage;
@@ -53,6 +56,10 @@ public class UI {
 		fullScreen = gp.settings.getFullScreen();		
 	}
 
+	/**
+	 * draw a timer on screen
+	 * @return a timer in minutes
+	 */
 	public String drawTimer() {
 		String timer = "";
 
@@ -78,6 +85,9 @@ public class UI {
 		return timer;
 	}
 
+	/**
+	 * Reset the timer to 0
+	 */
 	public void resetTimer() {
 		playTime = 0;
 	}
@@ -95,12 +105,20 @@ public class UI {
 
 	}
 	
+	/**
+	 * Show message on screen for an amount of time
+	 * @param text
+	 */
 	public void showMessage(String text) {
 		
 		message = text;
 		messageOn = true;
 	}
 	
+	/**
+	 * draw screen depedning on which state
+	 * @param g2
+	 */
 	public void draw(Graphics2D g2) {
 		switch(gp.currState) {
 			case PAUSE:
@@ -126,6 +144,10 @@ public class UI {
 		}
 	}
 
+	/**
+	 * draw pause screen
+	 * @param g2
+	 */
 	private void drawPauseScreen(Graphics2D g2) {
 		//Making the screen darker
 		g2.setColor(new Color(0,0,0,150));
@@ -171,6 +193,10 @@ public class UI {
 		
 	}
 
+	/**
+	 * draw play screen
+	 * @param g2
+	 */
 	private void drawPlayScreen(Graphics2D g2) {
 		
 		g2.setColor(Color.WHITE);
@@ -219,6 +245,10 @@ public class UI {
 		}	
 	}
 
+	/**
+	 * draw lose screen
+	 * @param g2
+	 */
 	private void drawLoseScreen(Graphics2D g2) {
 		
 		// Background Image
@@ -274,6 +304,10 @@ public class UI {
 		}
 	}
 
+	/**
+	 * draw win screen
+	 * @param g2
+	 */
 	private void drawWinScreen(Graphics2D g2) {
 		
 		// Background Image
@@ -329,6 +363,10 @@ public class UI {
 		}
 	}
 
+	/**
+	 * draw title screen
+	 * @param g2
+	 */
 	private void drawTitleScreen(Graphics2D g2){
 		
 		// Background Image
@@ -386,6 +424,10 @@ public class UI {
 		}
 	}
 
+	/**
+	 * draw settings screen
+	 * @param g2
+	 */
 	public void drawSettingsScreen(Graphics2D g2) {
 		// Settings
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
@@ -452,6 +494,10 @@ public class UI {
 		}
 	}
 	
+	/**
+	 * draw credits screen
+	 * @param g2
+	 */
 	public void drawCreditsScreen(Graphics2D g2) {
 		// Credits
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 90));
@@ -473,7 +519,13 @@ public class UI {
 
 	}
 
-	//method for centering text
+	/**
+	 * a method for centering text
+	 * @param text
+	 * @param g2
+	 * @param screenWidth
+	 * @return x coordinate for the text you want to draw on screen
+	 */
 	public int getHorizontalCenter(String text, Graphics2D g2, int screenWidth) {
 		int textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 		int x = screenWidth/2 - textLength/2; // Print message on center of screen

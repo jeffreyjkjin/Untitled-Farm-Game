@@ -11,6 +11,9 @@ import app.GamePanel;
 import app.GamePanel.gameState;
 import app.InputHandler;
 
+/**
+ * Player class manages player's stats, sprites and interactions
+ */
 public class Player extends Entity{
 
     GamePanel gamePanel;
@@ -38,6 +41,9 @@ public class Player extends Entity{
         getPlayerImage();
     }
 
+    /**
+     * setting default values for player
+     */
     public void setDefaultValues() {
         screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
@@ -56,6 +62,9 @@ public class Player extends Entity{
         worldY = gamePanel.mapM.getMap().playerStartY;
     }
 
+    /**
+     * Adding sprites to player
+     */
     public void getPlayerImage() {
         try {
             up1 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenup1.png"));
