@@ -223,6 +223,7 @@ public class Player extends Entity{
                     Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
                     gamePanel.sound.play(3);
                     gamePanel.sound.play(7);
+                    gamePanel.ui.showMessage("OUCH!");
                     break;
             }
         }

@@ -41,8 +41,8 @@ public class MapManager {
      * This method can be modified to add new maps.
      */
     private void loadMapFiles() {
-        mapList[0] = new Map(gamePanel, "/levels/stage1.txt");
-        mapList[1] = new Map(gamePanel, "/levels/stageTest2.txt");
+        mapList[0] = new Map(gamePanel, "/levels/stage2.txt");
+        mapList[1] = new Map(gamePanel, "/levels/stage1.txt");
         
         // add more maps here
     }
