@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.imageio.ImageIO;
+
 import app.GamePanel.gameState;
 import object.OBJ_Heart;
 
@@ -20,6 +22,8 @@ public class UI {
 	int messageCounter = 0;
 	public int commandNum = 0;
 	public boolean fullScreen;
+	
+	BufferedImage titleScreen;
 	
 	OBJ_Heart playerHP[] = new OBJ_Heart[3];
 
@@ -35,6 +39,7 @@ public class UI {
 		try {
 			InputStream input = getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf");
 			pressStart2P = Font.createFont(Font.TRUETYPE_FONT, input);
+			titleScreen = ImageIO.read(getClass().getResourceAsStream("/screens/titleScreen.png"));
 		}
 		catch(FontFormatException e) {
 			e.printStackTrace();
@@ -165,6 +170,7 @@ public class UI {
 	}
 
 	private void drawPlayScreen(Graphics2D g2) {
+		
 		g2.setColor(Color.WHITE);
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20));
 
@@ -314,9 +320,13 @@ public class UI {
 	}
 
 	private void drawTitleScreen(Graphics2D g2){
+		
+		// Background Image
+		g2.drawImage(titleScreen, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		
 		// Title
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
-		g2.setColor(Color.white);
+		g2.setColor(Color.black);
 
 		String title1 = "UNTITLED";
 		String title2 = "FARM GAME";
