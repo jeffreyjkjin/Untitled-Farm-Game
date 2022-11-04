@@ -24,8 +24,7 @@ public class Music extends Audio {
      * Links a GamePanel object to this object so that it can access its other objects.
      * Volume of the music is also loaded from the configuration file.
      * 
-     * @param gp
-     * @see app.GamePanel
+     * @param gp GamePanel object that is used to run the game
      * @see settings.Settings
      */
     public Music(GamePanel gp) {

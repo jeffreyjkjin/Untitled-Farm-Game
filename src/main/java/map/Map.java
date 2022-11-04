@@ -51,7 +51,6 @@ public class Map {
      * 
      * @param gp GamePanel object that is used to run the game
      * @param mapFile The name of the map file
-     * @see app.GamePanel
      */
     protected Map(GamePanel gp, String mapFile) {
         this.gp = gp;
