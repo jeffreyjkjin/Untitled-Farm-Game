@@ -66,37 +66,69 @@ public class Settings {
         }
     }
 
+    /**
+     * @return the saved music volume
+     */
     public int getMusicVolume() {
         return file.getMusicVolume();
     }
 
+    /**
+     * @return the saved sound effect volume
+     */
     public int getSoundVolume() {
         return file.getSoundVolume();
     }
 
+    /**
+     * @return the saved fullscreen status
+     */
     public Boolean getFullScreen() {
         return file.getFullScreen();
     }
 
+    /**
+     * @return the saved high score of the player
+     */
     public int getHighScore() {
         return file.getHighScore();
     }
 
+    /**
+     * Saves the current music volume and writes it to settings.json.
+     * 
+     * @param volume the current music volume
+     */
     public void setMusicVolume(int volume) {
         file.setMusicVolume(volume);
         saveConfigFile();
     }
 
+    /**
+     * Saves the current sound effect volume and writes it to settings.json.
+     * 
+     * @param volume the current sound effect volume
+     */
     public void setSoundVolume(int volume) {
         file.setSoundVolume(volume);
         saveConfigFile();
     }
 
+    /**
+     * Saves the fullscreen status and writes it to settings.json.
+     * 
+     * @param fullScreen the fullscreen status
+     */
     public void setFullScreen(Boolean fullScreen) {
         file.setFullScreen(fullScreen);
         saveConfigFile();
     }
 
+    /**
+     * Saves the player's high score and writes it to settings.json.
+     * 
+     * @param score the player's high score
+     */
     public void setHighScore(int score) {
         file.setHighScore(score);
         saveConfigFile();

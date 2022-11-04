@@ -6,8 +6,10 @@ import java.awt.event.KeyListener;
 import app.GamePanel.gameState;
 
 /**
- * This class handle the input from player's keyboard in order to perform the corresponding action
- * Each input from the keyboard has a different effect depending on the game state
+ * Handles input from the player's keyboard.
+ * Each gameState has different control schemas.
+ * 
+ * @author Jeffrey Jin (jjj9)
  */
 public class InputHandler implements KeyListener {
 
@@ -37,9 +39,15 @@ public class InputHandler implements KeyListener {
     };
     int konamiCount = 0;
 
+    /**
+     * Constructs a new InputHandler object and links this object to a GamePanel object so that it can be used by other objects within it.
+     * 
+     * @param gamePanel GamePanel object that is used to run the game
+     */
     public InputHandler(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-
+        
+        // TODO: move bg music handling to a new gamestate class 
         gamePanel.music.play(0);
         bgMusic = true;
     }
@@ -49,8 +57,10 @@ public class InputHandler implements KeyListener {
     }
 
     /**
-     * Perform the action depending on the key entered and the game state
-     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+     * Perform an action dependings on which key was pressed and the current state of the game.
+     * Inputs on the title, settings, credits, win, lose and pause screens control the menus of the corresponding screen.
+     * Sound effects are played while navigating menu screens and selecting options.
+     * Inputs on the play screen control the players movement and interactions.
      */
     @Override
     public void keyPressed(KeyEvent e) {
@@ -360,8 +370,8 @@ public class InputHandler implements KeyListener {
     }
 
     /** 
-     * Stop performing the action when the key is released
-     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+     * Stop performing the action of the corresponding key when it is released.
+     * Also contains implementation of the Konami Code which can be used during gameplay to activate developer mode.
      */
     @Override
     public void keyReleased(KeyEvent e) {

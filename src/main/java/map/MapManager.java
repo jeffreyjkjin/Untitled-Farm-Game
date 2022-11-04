@@ -27,7 +27,6 @@ public class MapManager {
      * Maps are stored in an array whose size can be raised or lowered to support less or more maps as needed.
      * 
      * @param gamePanel GamePanel object that is used to run the game
-     * @see app.GamePanel
      */
     public MapManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -104,14 +103,24 @@ public class MapManager {
         }
     }
     
+    /**
+     * @return the current map
+     */
     public Map getMap() {
         return mapList[currMap];
     }
 
+    /**
+     * @return the tile map of the current map
+     */
     public int[][] getTileMap() {
         return mapList[currMap].tileMap;
     }
 
+    /**
+     * @param index the index of the object in the object array of the current map
+     * @return the object at the index of the object array of the current map
+     */
     public SuperObject getObject(int index) {
         return mapList[currMap].objects[index];
     }
