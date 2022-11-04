@@ -8,6 +8,9 @@ import app.GamePanel.gameState;
 /**
  * This class handle the input from player's keyboard in order to perform the corresponding action
  * Each input from the keyboard has a different effect depending on the game state
+ * 
+ * @author Jeffrey Jin
+ * @author Long Nguyen
  */
 public class InputHandler implements KeyListener {
 

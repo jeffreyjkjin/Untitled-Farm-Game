@@ -15,6 +15,9 @@ import object.OBJ_Heart;
 
 /**
  * UI manages drawing screens in different states
+ * 
+ * @author Jeffrey Jin
+ * @author Long Nguyen
  */
 public class UI {
 	GamePanel gp;

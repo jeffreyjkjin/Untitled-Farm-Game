@@ -84,6 +84,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
     
+    /**
+     * Setting the game to fullscreen by scaling up all the tiles
+     */
     public void setFullScreen() {
     	// Get Local Screen Device
     	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -98,6 +101,9 @@ public class GamePanel extends JPanel implements Runnable {
         tileSize = scale * originalTileSize;
     }
 
+    /**
+     * Scaling down the tiles in order to return to windowed screen from fullscreen
+     */
     public void setWindowScreen() {
     	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
     	GraphicsDevice gd = ge.getDefaultScreenDevice();
