@@ -27,6 +27,7 @@ public class Player extends Entity{
     public int health = 3;
     public int score = 0;
     public int keyCount = 0;
+    public int freezeCooldown = 0;
     
     
     /**
@@ -44,7 +45,7 @@ public class Player extends Entity{
         screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
         
-        hitbox = new Rectangle(10, 16, 28, 32); //2*10 +28 = 48 (tileSize), 16 +32 = 48
+        hitbox = new Rectangle(12, 12, 24, 24); //2*10 +28 = 48 (tileSize), 16 +32 = 48
         hitboxDefaultX = hitbox.x;
         hitboxDefaultY = hitbox.y;
 
@@ -109,6 +110,15 @@ public class Player extends Entity{
             }
             
             gamePanel.currState = gameState.LOSE;
+        }
+
+        if (freezeCooldown > 0)
+        {
+            if (gamePanel.player.freezeCooldown == 1)
+            {
+                gamePanel.ui.showMessage("Cluck is ready!");
+            }
+            freezeCooldown--;
         }
 
         if (input.up || input.left || input.down || input.right) {
@@ -257,6 +267,7 @@ public class Player extends Entity{
     public void respawnPlayer() {
         worldX = gamePanel.mapM.getMap().playerStartX;
         worldY = gamePanel.mapM.getMap().playerStartY;
+        freezeCooldown = 0;
 
         this.collisionOn = false;
         for (int i = 0; i < gamePanel.mapM.getMap().farmers.length; i++)
@@ -310,5 +321,42 @@ public class Player extends Entity{
                 }
         }
         graphic2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+    }
+
+    /**
+     * An ability that freezes the farmers whenever the H key is pressed
+     * If any farmers are in the freezeArea, they are frozen for 1 second
+     * This ability has a 5 second cooldown
+    */
+    public void freezeFarmers() 
+    {
+        // Get the array of farmers for the current map
+        Farmer[] f = gamePanel.mapM.getMap().farmers;
+        // Create a new rectangle for the freeze area
+        // Get coordinates of the rectangle and width/height
+        int freezeAreaSize = 7; // Can be any ODD number
+        int freezeWidth = gamePanel.tileSize * freezeAreaSize;
+        int freezeHeight = gamePanel.tileSize * freezeAreaSize;
+        int tilesToShiftBy = freezeAreaSize / 2;
+        int freezeX = worldX - tilesToShiftBy * gamePanel.tileSize;
+        int freezeY = worldY - tilesToShiftBy * gamePanel.tileSize;
+        Rectangle freezeArea = new Rectangle(freezeX, freezeY, freezeWidth, freezeHeight);
+        // Set the farmers movement speed to frozen if they are within the freezeArea. Also set a 3 second timer to become unfrozen
+        for (int i = 0; i < f.length; i++)
+        {
+            // Get farmer's hitbox
+            f[i].hitbox.x = f[i].worldX + f[i].hitbox.x;
+            f[i].hitbox.y = f[i].worldY + f[i].hitbox.y;
+            // Determine if farmer is in stun range
+            if (f[i].hitbox.intersects(freezeArea))
+            {
+                f[i].speed = Farmer.frozen;
+                f[i].freezeTimer = 60; // 60 frames per second. Ex. freezeTimer = 60 is a 1 second freeze
+                freezeCooldown = 300; // 60 frames per second. Ex. freezeCooldown = 300 is a 5 second CD
+            }
+            // Reset farmers hitbox
+            f[i].hitbox.x = f[i].hitboxDefaultX;
+			f[i].hitbox.y = f[i].hitboxDefaultY;
+        }
     }
 }

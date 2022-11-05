@@ -22,6 +22,7 @@ public class Farmer extends Entity {
     public int screenX, screenY, startingX, startingY;
     public static int frozen = 0; // This and below are for speed
     public static int normal = 2;
+    protected int freezeTimer = 0;
 
     /**
      *  Constructs the farmer and sets some default values like speed, creating hitbox, and getting images for later
@@ -82,6 +83,17 @@ public class Farmer extends Entity {
      */
     public void update()
     {
+        // If farmer is frozen, do nothing until they are unfrozen
+        if (freezeTimer > 0)
+        {
+            freezeTimer--;
+            return;
+        }
+        else
+        {
+            speed = normal;
+        }
+
         setAction();
         collisionOn = false;
         gamePanel.checker.checkPlayerCollision(this);
@@ -313,6 +325,8 @@ public class Farmer extends Entity {
                 farmers[i].worldX = farmers[i].startingX;
                 farmers[i].worldY = farmers[i].startingY;
                 farmers[i].collisionOn = false;
+                farmers[i].freezeTimer = 0;
+                farmers[i].speed = normal;
             }
         }
     }

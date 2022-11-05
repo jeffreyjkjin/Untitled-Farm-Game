@@ -45,6 +45,9 @@ public class OBJ_Egg extends SuperObject {
 	 * @param gp GamePanel object that is used to run the game
 	 */
 	public void update(GamePanel gp) {
+		
+		// TODO - BUG: Eggs still expire when game is paused
+
 		expireTime -= (double) 1/60;
 		if (expireTime < 0) {
 			gp.mapM.getMap().objects[index] = null;
