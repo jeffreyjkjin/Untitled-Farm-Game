@@ -22,7 +22,7 @@ public class Pathfinding {
     ArrayList<Node> openList = new ArrayList<>(); // For nodes that are open
     public ArrayList<Node> pathList = new ArrayList<>(); // For the most efficient path to be stored in
     Node start, goal, current;
-    boolean goalReached = false;
+    private boolean goalReached = false;
 
     /**
      * Constructs the pathfinding class by linking it to gp and creating Nodes
@@ -39,7 +39,7 @@ public class Pathfinding {
      * Creates the Nodes that will store the tiles of the current map
      * The amount created equals the amount of tiles on the current map
      */
-    public void createNodes()
+    private void createNodes()
     {
         node = new Node[gp.mapM.getMap().maxWorldCol][gp.mapM.getMap().maxWorldRow];
 
@@ -63,7 +63,7 @@ public class Pathfinding {
      * Resets all of the nodes by changing their variables to default states and recalling createNodes()
      * Also clears all potential and final paths that may have been created by other functions
      */
-    public void resetNodes()
+    private void resetNodes()
     {
         int col = 0;
         int row = 0;
@@ -140,7 +140,7 @@ public class Pathfinding {
      * 
      * @param node current node to get the cost of. This node represents a tile on the current map
      */
-    public void getCost(Node node)
+    private void getCost(Node node)
     {
         // gCost
         int xDist = Math.abs(node.col - start.col);
@@ -236,7 +236,7 @@ public class Pathfinding {
      * 
      * @param node current Node to be opened
      */
-    public void openNode(Node node)
+    private void openNode(Node node)
     {
         if(!node.open && !node.checked && !node.blocked)
         {
@@ -249,7 +249,7 @@ public class Pathfinding {
     /**
      * Adds all of the best nodes to the pathList which will be used by Farmer to determine how to move towards Player
      */
-    public void pathTracker()
+    private void pathTracker()
     {
         Node currentNode = goal;
 

@@ -20,9 +20,9 @@ import app.GamePanel;
 public class TileManager {
     
     GamePanel gp;
-    Tile[] tile;
-    ArrayList<String> fileNames = new ArrayList<>();
-    ArrayList<String> collisionStatus = new ArrayList<>();
+    private Tile[] tile;
+    private ArrayList<String> fileNames = new ArrayList<>();
+    private ArrayList<String> collisionStatus = new ArrayList<>();
 
     /**
      * Constructs the tile manager by connecting it to gp, reading in and setting collision status, and gettin tile image
@@ -59,7 +59,7 @@ public class TileManager {
     /**
      * Finds the proper images for the tiles and links them to collision status
      */
-    public void getTileImage()
+    private void getTileImage()
     {
     	for(int i = 0; i < fileNames.size(); i++) {
     		
@@ -89,7 +89,7 @@ public class TileManager {
      * @param imageName the name of the image file that needs to be linked to this tile
      * @param collision collision status of this tile that also needs to be linked
      */
-    public void setup(int index, String imageName, boolean collision) {
+    private void setup(int index, String imageName, boolean collision) {
     	// Create the tiles and link them to their image and collision status
     	try {
     		tile[index] = new Tile();

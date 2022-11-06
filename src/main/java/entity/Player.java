@@ -80,7 +80,7 @@ public class Player extends Entity{
     /**
      * Loads the players sprites.
      */
-    public void getPlayerImage() {
+    private void getPlayerImage() {
         try {
             up1 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenup1.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenup2.png"));
@@ -195,7 +195,7 @@ public class Player extends Entity{
      * 
      * @param index index of the object in the object array that the Player is interating with
      */
-    public void objectInteraction(int index) {
+    private void objectInteraction(int index) {
         if (index != 999) {
             String objectName = gamePanel.mapM.getMap().objects[index].name;
             
@@ -264,7 +264,7 @@ public class Player extends Entity{
      * Sets the Player's current position to start position of the current map.
      * Also sets Player and all Farmers collision status to false.
      */
-    public void respawnPlayer() {
+    private void respawnPlayer() {
         worldX = gamePanel.mapM.getMap().playerStartX;
         worldY = gamePanel.mapM.getMap().playerStartY;
         freezeCooldown = 0;
@@ -330,6 +330,12 @@ public class Player extends Entity{
     */
     public void freezeFarmers() 
     {
+        /*
+         * TODO - decide if this needs changing as a group
+         * Potentially makes the game too easy since you can freeze at most difficult parts
+         * To fix we could either disable it, make the CD longer, or limit it to once per round
+         * Let me know what you think after you play a bit
+        */
         // Get the array of farmers for the current map
         Farmer[] f = gamePanel.mapM.getMap().farmers;
         // Create a new rectangle for the freeze area

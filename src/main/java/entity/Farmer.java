@@ -20,8 +20,8 @@ public class Farmer extends Entity {
     GamePanel gamePanel;
 
     public int screenX, screenY, startingX, startingY;
-    public static int frozen = 0; // This and below are for speed
-    public static int normal = 2;
+    protected final static int frozen = 0; // This and below are for speed
+    protected final static int normal = 2;
     protected int freezeTimer = 0;
 
     /**
@@ -45,7 +45,7 @@ public class Farmer extends Entity {
     /**
      * Reads in the farmers direction-based images and saves them in variables for later uses when farmer is drawn and moving
      */
-    public void getFarmerImage()
+    private void getFarmerImage()
     {
         try 
         {
@@ -67,7 +67,7 @@ public class Farmer extends Entity {
      * This function is called each time the farmer updates (60 times per second)
      * Sets what the farmer will attempt to do which is currently just path towards the player and attempt to catch them
      */
-    public void setAction()
+    private void setAction()
     {
         int goalCol = (gamePanel.player.worldX + gamePanel.player.hitbox.x) / gamePanel.tileSize;
         int goalRow = (gamePanel.player.worldY + gamePanel.player.hitbox.y) / gamePanel.tileSize;
@@ -219,7 +219,7 @@ public class Farmer extends Entity {
      * @param goalCol goal column farmer attempts to reach. Currently the players current column
      * @param goalRow goal row farmer attempts to reach. Currently the players current row
      */
-    public void searchPath(int goalCol, int goalRow)
+    private void searchPath(int goalCol, int goalRow)
     {
         int currCol = (worldX + hitbox.x) / gamePanel.tileSize;
         int currRow = (worldY + hitbox.y) / gamePanel.tileSize;
@@ -316,7 +316,7 @@ public class Farmer extends Entity {
      * 
      * @param farmers array of farmers stored in map
      */
-    public static void respawnFarmers(Farmer[] farmers)
+    protected static void respawnFarmers(Farmer[] farmers)
     {
         for (int i = 0; i < farmers.length; i++)
         {
