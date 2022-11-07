@@ -18,6 +18,8 @@ import pathfinding.Pathfinding;
 import settings.Settings;
 
 /**
+ * Manages and controls all the systems involved with the game.
+ * Other classes should have access to this object so that it can interact with other game systems.
  * 
  * @author Jeffrey Jin (jjj9)
  */
@@ -132,7 +134,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * 
+     * Runs the main game loop. 
+     * Updates all entities and objects and draws game sprites 60 times per second.
+     * Uses delta time method to ensure game speed is consistent no matter what hardware the game is run on.
      */
     @Override
     public void run() {

@@ -15,6 +15,7 @@ import app.GamePanel;
  * This class manages the tiles by setting their images and keeping track of their collision status
  * It also creates the main array of tiles that is used to draw the map and place objects
  * 
+ * @author Andrew Hein (ach17)
  * @author Jeffrey Jin (jjj9)
 */
 public class TileManager {

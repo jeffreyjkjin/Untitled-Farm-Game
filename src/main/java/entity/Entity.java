@@ -6,6 +6,8 @@ import java.awt.Rectangle;
 /**
  * Abstract class Entity is the super class of farmer (enemies) and player
  * This class has some general stats for enemies and player such as X and Y coordinates, speed, hitbox, etc.
+ * 
+ * @author Jeffrey Jin (jjj9)
  */
 public abstract class Entity {
     public int worldX, worldY;
