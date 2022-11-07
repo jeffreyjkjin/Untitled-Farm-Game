@@ -149,7 +149,8 @@ public class InputHandler implements KeyListener {
 
                     // Cluck
                     case KeyEvent.VK_H:
-                        if (!cluck) {
+                        if (!cluck) 
+                        {
                             gamePanel.sound.play(0);
                         }
                         cluck = true;
@@ -403,6 +404,12 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_H:
                         gamePanel.sound.play(1);
                         cluck = false;
+
+                        if (gamePanel.player.freezeCooldown == 0)
+                        {   // Freeze the farmers if ability is not on cooldown and set the new cooldown after
+                            gamePanel.player.freezeFarmers();
+                        }
+
                         break;
 
                     // Pause Menu functions

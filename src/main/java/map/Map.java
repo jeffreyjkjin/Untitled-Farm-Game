@@ -43,7 +43,7 @@ public class Map {
 
     boolean drawPath = false; // FOR TESTING PATHFINDING
     boolean hitboxTest = false; // FOR VISUALIZING HITBOXES
-    boolean showCoords = false;; // FOR SEEING TILE COORDS
+    boolean showCoords = false; // FOR SEEING TILE COORDS
 
     /**
      * Constructs a new Map object and loads the mapFile.

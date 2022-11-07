@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
     public gameState currState = gameState.TITLE;
 
     // Tiles
-    final int originalTileSize = 16;
+    private final int originalTileSize = 16;
     public int scale = 3; 
     public int tileSize = originalTileSize * scale;
 
@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Boolean fullScreen;
 
     // FPS
-    final int FPS = 60;
+    private final int FPS = 60;
 
     // System
     public Settings settings = new Settings();
@@ -77,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
     
-    public void setupGame() {
+    protected void setupGame() {
         mapM.setupMap();
         
         currState = gameState.TITLE;
@@ -94,7 +94,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Stores the size of the users computer screen and sets the game to fullscreen mode.
      * Scaling of the tiles are also increased.
      */
-    public void setFullScreen() {
+    protected void setFullScreen() {
     	// Get Local Screen Device
     	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
     	GraphicsDevice gd = ge.getDefaultScreenDevice();
@@ -112,7 +112,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Sets the game window to windowed mode.
      * Scaling of the tiles are also decreased.
      */
-    public void setWindowScreen() {
+    protected void setWindowScreen() {
     	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
     	GraphicsDevice gd = ge.getDefaultScreenDevice();
 
@@ -128,7 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
     /**
      * Starts the main game loop.
      */
-    public void startGameThread() {
+    protected void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -163,7 +163,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Updates based on the FPS (currently 60, so 60 times per second)
      * Need to call all entities that are animate so that they will determine what to do on each frame
      */
-    public void update() {
+    private void update() {
         switch(currState) {
             case PLAY:
                 player.update();
