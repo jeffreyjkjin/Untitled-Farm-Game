@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import app.GamePanel;
 import app.StateManager.gameState;
 import app.InputHandler;
+import audio.SoundEffects;
 import settings.Settings;
 
 /**
@@ -20,8 +21,10 @@ import settings.Settings;
  */
 public class Player extends Entity{
     Settings settings;
+    SoundEffects sound;
     GamePanel gamePanel;
     InputHandler input;
+
     public int screenX;
     public int screenY;
     
@@ -33,7 +36,7 @@ public class Player extends Entity{
     
     /**
      * Constructs a new Player object and creates its hitbox and area of sight on the game map.
-     * Links Settings singleton to this object.
+     * Links Settings and Sound singleton to this object.
      * Also sets the default values of the player and loads its sprite images.
      * 
      * @param gamePanel GamePanel object that is used to the game
@@ -42,7 +45,9 @@ public class Player extends Entity{
     public Player(GamePanel gamePanel, InputHandler input) {
         this.gamePanel = gamePanel;
         this.input = input;
+
         settings = Settings.getInstance();
+        sound = SoundEffects.getInstance();
 
         screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
@@ -203,7 +208,7 @@ public class Player extends Entity{
             
             switch(objectName) {
                 case "Egg":
-                    gamePanel.sound.play(2);
+                    sound.play(2);
                     if (health >= 3) {
                         score += 100;
                     }
@@ -218,10 +223,10 @@ public class Player extends Entity{
                     keyCount++;
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
                         gamePanel.mapM.getObject(gamePanel.mapM.getMap().gateIndex).update(gamePanel);
-                        gamePanel.sound.play(8);
+                        sound.play(8);
                         gamePanel.uiM.showMessage("DOOR IS OPENED!");
                     }
-                    gamePanel.sound.play(2);
+                    sound.play(2);
                     break;
                 case "Gate":
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
@@ -233,8 +238,8 @@ public class Player extends Entity{
                     gamePanel.mapM.getMap().objects[index] = null;
                     respawnPlayer();
                     Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
-                    gamePanel.sound.play(3);
-                    gamePanel.sound.play(7);
+                    sound.play(3);
+                    sound.play(7);
                     gamePanel.uiM.showMessage("OUCH!");
                     break;
             }
@@ -258,7 +263,7 @@ public class Player extends Entity{
             respawnPlayer();
             Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
 
-            gamePanel.sound.play(3);
+            sound.play(3);
         }
     }
 

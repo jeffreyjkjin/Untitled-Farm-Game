@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import app.GamePanel;
+import audio.Music;
+import audio.SoundEffects;
 
 /**
  * Used to draw the settings screen.
@@ -14,15 +16,21 @@ import app.GamePanel;
  * @see ui.UIManager
  */
 public class SettingsScreen extends UI {
+	Music music;
+	SoundEffects sound;
 
 	/**
 	 * Calls the UI constructor.
 	 * Sets the total number of options to four.
+	 * Links Music and SoundEffects singletons to this class;
 	 * 
 	 * @param gp GamePanel object that is used to run the game
 	 */
 	protected SettingsScreen(GamePanel gp) {
         super(gp);
+
+		music = Music.getInstance();
+		sound = SoundEffects.getInstance();
 
 		totalOptions = 4;
     }
@@ -56,7 +64,7 @@ public class SettingsScreen extends UI {
 		g2.drawString(music, 2*gp.tileSize, gp.tileSize * 5);
 
 		g2.drawRect(gp.tileSize*13, gp.tileSize*4, 240, 48); //draw a rect
-		int volumeWidth = 48* gp.music.getVolumeScale();
+		int volumeWidth = 48* this.music.getVolumeScale();
 		g2.fillRect(gp.tileSize*13, gp.tileSize*4, volumeWidth, 48); //fill part of the rect
 
 		if(selectPosition == 0){
@@ -67,7 +75,7 @@ public class SettingsScreen extends UI {
 		g2.drawString(sound, 2*gp.tileSize, gp.tileSize * 13/2);
 
 		g2.drawRect(gp.tileSize*13, gp.tileSize*11/2, 240, 48); //draw a rect
-		int volumeWidth2 = 48* gp.sound.getVolumeScale();
+		int volumeWidth2 = 48* this.sound.getVolumeScale();
 		g2.fillRect(gp.tileSize*13, gp.tileSize*11/2, volumeWidth2, 48); //fill part of the rect
 
 		if(selectPosition == 1){

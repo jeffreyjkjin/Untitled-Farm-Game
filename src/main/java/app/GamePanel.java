@@ -9,8 +9,6 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;
 
-import audio.SoundEffects;
-import audio.Music;
 import entity.Player;
 import map.MapManager; 
 import pathfinding.Pathfinding;
@@ -39,8 +37,6 @@ public class GamePanel extends JPanel implements Runnable {
     private final int FPS = 60;
 
     // System
-    public Music music = new Music(this);
-    public SoundEffects sound = new SoundEffects(this);
     InputHandler input = new InputHandler(this);
     Thread gameThread;
     public UIManager uiM = new UIManager(this);

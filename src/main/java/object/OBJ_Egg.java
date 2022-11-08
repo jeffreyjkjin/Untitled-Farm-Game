@@ -8,6 +8,7 @@ import java.util.Random;
 
 import app.GamePanel;
 import app.StateManager.gameState;
+import audio.SoundEffects;
 
 /**
  * Egg object restores the player's health by one if their health is not full or gives the player 100 points.
@@ -17,16 +18,17 @@ import app.StateManager.gameState;
  * @see object.SuperObject
 */
 public class OBJ_Egg extends SuperObject {
-	
+	SoundEffects sound;
+
 	Random randGen = new Random();
 	double expireTime;
 
 	/**
 	 * Creates a new egg object and loads its sprite.
+	 * Links Sound singleton to this class;
 	 * Initializes an expireTime and randomly generates a time between 20-50 which is how long the egg will last before despawning.
 	 */
 	public OBJ_Egg() {
-		
 		name = "Egg";
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/egg.png"));
@@ -35,6 +37,8 @@ public class OBJ_Egg extends SuperObject {
 			e.printStackTrace();
 		}
 		collision = true;
+
+		sound = SoundEffects.getInstance();
 
 		expireTime = (double) (20 + randGen.nextInt(30));
 	}
@@ -51,7 +55,7 @@ public class OBJ_Egg extends SuperObject {
 			expireTime -= (double) 1/60;
 			if (expireTime < 0) {
 				gp.mapM.getMap().objects[index] = null;
-				gp.sound.play(6);
+				sound.play(6);
 			}
 		}
 	}

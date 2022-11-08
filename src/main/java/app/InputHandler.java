@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import app.StateManager.gameState;
+import audio.Music;
+import audio.SoundEffects;
 import settings.Settings;
 
 /**
@@ -16,6 +18,8 @@ import settings.Settings;
 public class InputHandler implements KeyListener {
 
     Settings settings;
+    Music music;
+    SoundEffects sound;
     GamePanel gamePanel;
 
     public boolean up, down, left, right;
@@ -38,14 +42,19 @@ public class InputHandler implements KeyListener {
     };
     int konamiCount = 0;
 
+    // TODO: Break up InputHandler into separate classes for each game state
+
     /**
-     * Constructs a new InputHandler object and links this object to a GamePanel object so that it can be used by other objects within it.
+     * Constructs a new InputHandler object and links it to Music, Settings and SoundEffects singletons.
      * 
      * @param gamePanel GamePanel object that is used to run the game
      */
     public InputHandler(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+
+        music = Music.getInstance();
         settings = Settings.getInstance();
+        sound = SoundEffects.getInstance();
     }
 
     @Override
@@ -76,7 +85,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
                         if (!select) {
-                            gamePanel.sound.play(4);
+                            sound.play(4);
                             gamePanel.uiM.moveSelectorUp();;
                         }
                         select = true;
@@ -84,7 +93,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_S:
                     case KeyEvent.VK_DOWN:
                         if (!select) {
-                            gamePanel.sound.play(4);
+                            sound.play(4);
                             gamePanel.uiM.moveSelectorDown();
                         }
                         select = true;
@@ -94,7 +103,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_ENTER:
                         if (!enter) {
                             int position = gamePanel.uiM.getSelectorPosition();
-                            gamePanel.sound.play(5);
+                            sound.play(5);
                             if (position == 0) { // resume
                                 gamePanel.stateM.setCurrentState(gameState.PLAY);
                             }
@@ -137,7 +146,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_H:
                         if (!cluck) 
                         {
-                            gamePanel.sound.play(0);
+                            sound.play(0);
                         }
                         cluck = true;
                         break;
@@ -157,7 +166,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
                         if (!select) {
-                            gamePanel.sound.play(4);
+                            sound.play(4);
                             gamePanel.uiM.moveSelectorUp();
                         }
                         select = true;
@@ -165,7 +174,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_S:
                     case KeyEvent.VK_DOWN:
                         if (!select) {
-                            gamePanel.sound.play(4);
+                            sound.play(4);
                             gamePanel.uiM.moveSelectorDown();
                         }
                         select = true;
@@ -175,7 +184,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_ENTER:
                         if (!enter) {
                             int position = gamePanel.uiM.getSelectorPosition();
-                            gamePanel.sound.play(5);
+                            sound.play(5);
                             if (position == 0){ // Play
                                 gamePanel.mapM.resetMap();
                                 gamePanel.uiM.resetTimer();
@@ -204,7 +213,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
                         if (!select) {
-                            gamePanel.sound.play(4);
+                            sound.play(4);
                             gamePanel.uiM.moveSelectorUp();;
                         }
                         select = true;
@@ -212,7 +221,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_S:
                     case KeyEvent.VK_DOWN:
                         if (!select) {
-                            gamePanel.sound.play(4);
+                            sound.play(4);
                             gamePanel.uiM.moveSelectorDown();
                         }
                         select = true;
@@ -222,7 +231,7 @@ public class InputHandler implements KeyListener {
                     case KeyEvent.VK_ENTER:
                         if (!enter) {
                             int position = gamePanel.uiM.getSelectorPosition();
-                            gamePanel.sound.play(4);
+                            sound.play(4);
                             if (position == 0) { // retry
                                 gamePanel.mapM.resetMap();
                                 gamePanel.uiM.resetTimer();
@@ -247,7 +256,7 @@ public class InputHandler implements KeyListener {
                         case KeyEvent.VK_W:
                         case KeyEvent.VK_UP:
                             if (!select) {
-                                gamePanel.sound.play(4);
+                                sound.play(4);
                                 gamePanel.uiM.moveSelectorUp();
                             }
                             select = true;
@@ -255,7 +264,7 @@ public class InputHandler implements KeyListener {
                         case KeyEvent.VK_S:
                         case KeyEvent.VK_DOWN:
                             if (!select) {
-                                gamePanel.sound.play(4);
+                                sound.play(4);
                                 gamePanel.uiM.moveSelectorDown();
                             }
                             select = true;
@@ -264,38 +273,38 @@ public class InputHandler implements KeyListener {
                         case KeyEvent.VK_A:
                         case KeyEvent.VK_LEFT:
                             if (position == 0){
-                                gamePanel.music.lowerVolume();
-                                gamePanel.music.checkVolume();
-                                settings.setMusicVolume(gamePanel.music.getVolumeScale());
-                                gamePanel.sound.play(4);
+                                music.lowerVolume();
+                                music.checkVolume();
+                                settings.setMusicVolume(music.getVolumeScale());
+                                sound.play(4);
                             }
                             else if (position == 1){
-                                gamePanel.sound.lowerVolume();
-                                gamePanel.sound.checkVolume();
-                                settings.setSoundVolume(gamePanel.sound.getVolumeScale());
-                                gamePanel.sound.play(4);
+                                sound.lowerVolume();
+                                sound.checkVolume();
+                                settings.setSoundVolume(sound.getVolumeScale());
+                                sound.play(4);
                             }
                             break;
                         case KeyEvent.VK_D:
                         case KeyEvent.VK_RIGHT:
                             if (position == 0){
-                                gamePanel.music.increaseVolume();
-                                gamePanel.music.checkVolume();
-                                settings.setMusicVolume(gamePanel.music.getVolumeScale());
-                                gamePanel.sound.play(4);
+                                music.increaseVolume();
+                                music.checkVolume();
+                                settings.setMusicVolume(music.getVolumeScale());
+                                sound.play(4);
                             }
                             else if (position == 1){
-                                gamePanel.sound.increaseVolume();
-                                gamePanel.sound.checkVolume();
-                                settings.setSoundVolume(gamePanel.sound.getVolumeScale());
-                                gamePanel.sound.play(4);
+                                sound.increaseVolume();
+                                sound.checkVolume();
+                                settings.setSoundVolume(sound.getVolumeScale());
+                                sound.play(4);
                             }
                             break;
  
                         // Enter
                         case KeyEvent.VK_ENTER:
                             if (!enter) {
-                                gamePanel.sound.play(5);
+                                sound.play(5);
                                 if (position == 2){ // Full screen
                                     if (!gamePanel.uiM.getFullScreen()){
                                         if (gamePanel.stateM.getPreviousState() != gameState.PLAY) {
@@ -366,7 +375,7 @@ public class InputHandler implements KeyListener {
 
                     // Cluck
                     case KeyEvent.VK_H:
-                        gamePanel.sound.play(1);
+                        sound.play(1);
                         cluck = false;
 
                         if (gamePanel.player.freezeCooldown == 0)
