@@ -12,7 +12,7 @@ import app.GamePanel;
  * @author Jeffrey Jin (jjj9)
  * @see ui.UIManager
  */
-public class PauseScreen extends PlayScreen {
+public class PauseScreen extends UI {
 	
 	/**
 	 * Calls the UI constructor;
@@ -34,8 +34,6 @@ public class PauseScreen extends PlayScreen {
 	 * @param g2 the main graphics object that is used to draw the UI onto the screen
 	 */
 	public void draw(Graphics2D g2) {
-        super.draw(g2);
-
 		//Making the screen darker
 		g2.setColor(new Color(0,0,0,150));
 		g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);

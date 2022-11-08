@@ -47,6 +47,10 @@ public class UIManager {
      * @param g2 main graphics object used by gamePanel to draw the maps sprites and tiles
      */
     public void draw(Graphics2D g2) {
+        if (gp.stateM.getCurrentState() == gameState.PAUSE) {
+            ui[0].draw(g2);
+            ui[1].draw(g2);
+        }
         ui[gp.stateM.getCurrentState().getValue()].draw(g2);;
     }
 

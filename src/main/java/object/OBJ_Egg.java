@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.util.Random;
 
 import app.GamePanel;
+import app.StateManager.gameState;
 
 /**
  * Egg object restores the player's health by one if their health is not full or gives the player 100 points.
@@ -46,12 +47,12 @@ public class OBJ_Egg extends SuperObject {
 	 */
 	public void update(GamePanel gp) {
 		
-		// TODO - BUG: Eggs still expire when game is paused
-
-		expireTime -= (double) 1/60;
-		if (expireTime < 0) {
-			gp.mapM.getMap().objects[index] = null;
-			gp.sound.play(6);
+		if (gp.stateM.getCurrentState() == gameState.PLAY) {
+			expireTime -= (double) 1/60;
+			if (expireTime < 0) {
+				gp.mapM.getMap().objects[index] = null;
+				gp.sound.play(6);
+			}
 		}
 	}
 
