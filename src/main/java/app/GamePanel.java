@@ -13,9 +13,10 @@ import audio.SoundEffects;
 import audio.Music;
 import entity.Player;
 import map.MapManager; 
-import tile.TileManager;
 import pathfinding.Pathfinding;
 import settings.Settings;
+import tile.TileManager;
+import ui.UIManager;
 
 /**
  * Manages and controls all the systems involved with the game.
@@ -24,19 +25,6 @@ import settings.Settings;
  * @author Jeffrey Jin (jjj9)
  */
 public class GamePanel extends JPanel implements Runnable {
-    // Game States
-    public enum gameState {
-        PLAY,
-        PAUSE,
-        WIN,
-        LOSE,
-        TITLE,
-        SETTINGS,
-        CREDITS
-    }
-    
-    public gameState currState = gameState.TITLE;
-
     // Tiles
     private final int originalTileSize = 16;
     public int scale = 3; 
@@ -47,7 +35,6 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 12;
     public int screenWidth = tileSize * maxScreenCol; // 960 pix.
     public int screenHeight = tileSize * maxScreenRow; // 576 pix.
-    public Boolean fullScreen;
 
     // FPS
     private final int FPS = 60;
@@ -58,7 +45,8 @@ public class GamePanel extends JPanel implements Runnable {
     public SoundEffects sound = new SoundEffects(this);
     InputHandler input = new InputHandler(this);
     Thread gameThread;
-    public UI ui = new UI(this);
+    public UIManager uiM = new UIManager(this);
+    public StateManager stateM = new StateManager(this);
     
     // Maps
     public TileManager tileM = new TileManager(this);
@@ -80,9 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
     protected void setupGame() {
         mapM.setupMap();
         
-        currState = gameState.TITLE;
-
-        if (ui.fullScreen) {
+        if (uiM.getFullScreen()) {
             setFullScreen();
         }
         else {
@@ -164,21 +150,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Need to call all entities that are animate so that they will determine what to do on each frame
      */
     private void update() {
-        switch(currState) {
-            case PLAY:
-                player.update();
-
-                for (int i = 0; i < mapM.getMap().farmers.length; i++)
-                {
-                    if (mapM.getMap().farmers[i] != null)
-                    {
-                        mapM.getMap().farmers[i].update();
-                    }
-                }
-                break;
-            default:
-                break;
-        }
+        stateM.update();
     }
     
     /**
@@ -186,31 +158,12 @@ public class GamePanel extends JPanel implements Runnable {
      * 
      * @param graphic graphics object
      */
-    public void paintComponent(Graphics graphic) {
+    protected void paintComponent(Graphics graphic) {
         super.paintComponent(graphic);
 
         Graphics2D graphic2 = (Graphics2D) graphic;
         
-        switch(currState) {
-            case PAUSE:
-            case PLAY:
-                // Map
-                mapM.draw(graphic2);
-                
-                // Player
-                player.draw(graphic2);            
-                
-                // UI
-                ui.draw(graphic2);
-                break;
-            case CREDITS:
-            case TITLE:
-            case LOSE:
-            case SETTINGS:
-            case WIN:
-                ui.draw(graphic2);
-                break;
-        }
+        stateM.draw(graphic2);
 
         graphic2.dispose();
     }

@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import app.GamePanel;
-import app.GamePanel.gameState;
+import app.StateManager.gameState;
 import app.InputHandler;
 
 /**
@@ -109,14 +109,14 @@ public class Player extends Entity{
                 gamePanel.settings.saveConfigFile();
             }
             
-            gamePanel.currState = gameState.LOSE;
+            gamePanel.stateM.setCurrentState(gameState.LOSE);
         }
 
         if (freezeCooldown > 0)
         {
             if (gamePanel.player.freezeCooldown == 1)
             {
-                gamePanel.ui.showMessage("Cluck is ready!");
+                gamePanel.uiM.showMessage("Cluck is ready!");
             }
             freezeCooldown--;
         }
@@ -146,7 +146,7 @@ public class Player extends Entity{
             objectInteraction(objIndex);
 
             // Check for collision with enemy whie moving
-            if (gamePanel.currState == gameState.PLAY) {
+            if (gamePanel.stateM.getCurrentState() == gameState.PLAY) {
                 int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
                 farmerInteraction(farmerIndex);
             }
@@ -183,7 +183,7 @@ public class Player extends Entity{
         else
         {
             // Check for collision with enemy while standing still
-            if (gamePanel.currState == gameState.PLAY) {
+            if (gamePanel.stateM.getCurrentState() == gameState.PLAY) {
                 int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
                 farmerInteraction(farmerIndex);
             }
@@ -209,7 +209,7 @@ public class Player extends Entity{
                         health++;
                     }
                     gamePanel.mapM.getMap().objects[index] = null;
-                    gamePanel.ui.showMessage("MY EGG!");
+                    gamePanel.uiM.showMessage("MY EGG!");
                     break;
                 case "Key":
                     gamePanel.mapM.getMap().objects[index] = null;
@@ -217,7 +217,7 @@ public class Player extends Entity{
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
                         gamePanel.mapM.getObject(gamePanel.mapM.getMap().gateIndex).update(gamePanel);
                         gamePanel.sound.play(8);
-                        gamePanel.ui.showMessage("DOOR IS OPENED!");
+                        gamePanel.uiM.showMessage("DOOR IS OPENED!");
                     }
                     gamePanel.sound.play(2);
                     break;
@@ -233,7 +233,7 @@ public class Player extends Entity{
                     Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
                     gamePanel.sound.play(3);
                     gamePanel.sound.play(7);
-                    gamePanel.ui.showMessage("OUCH!");
+                    gamePanel.uiM.showMessage("OUCH!");
                     break;
             }
         }
@@ -251,7 +251,7 @@ public class Player extends Entity{
         if (index != 999)
         {
             health--;
-            gamePanel.ui.showMessage("You were caught!");
+            gamePanel.uiM.showMessage("You were caught!");
 
             respawnPlayer();
             Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);

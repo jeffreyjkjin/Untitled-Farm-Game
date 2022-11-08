@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import app.GamePanel;
 
-import app.GamePanel.gameState;
+import app.StateManager.gameState;
 
 import object.SuperObject;
 
@@ -91,7 +91,7 @@ public class MapManager {
                 gamePanel.settings.saveConfigFile();
             }
 
-            gamePanel.currState = gameState.WIN;
+            gamePanel.stateM.setCurrentState(gameState.WIN);
         }
         else { // On non-final levels, increment what level you are on and set up the new map
             currMap++;
