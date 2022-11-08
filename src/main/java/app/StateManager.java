@@ -43,9 +43,12 @@ public class StateManager {
 
     GamePanel gp;
 
+    boolean bgMusic1, bgMusic2;
+
     /**
      * Constructs a new StateManager object and links the GamePanel object to this class.
      * Sets the current game state to title.
+     * Plays the default background track.
      * 
      * @param gp GamePanel object that is used to run the game
      */
@@ -53,19 +56,41 @@ public class StateManager {
         this.gp = gp;
 
         currState = gameState.TITLE;
+        gp.music.play(0);
+        bgMusic1 = true;
     }
 
     /**
      * Sets the current state to the new state.
      * Saves the previous state.
      * Resets the position of the selector.
+     * Changes music depending on the game state.
      * 
      * @param state the new state the user will be entering
      */
     public void setCurrentState(gameState state) {
         prevState = currState;
         currState = state;
-        
+
+        if (state == gameState.WIN) { // when user reaches win state
+            if (bgMusic1) {
+                gp.music.stop();
+                bgMusic1 = false;
+            }
+            gp.music.play(1);
+            bgMusic2 = true;
+        }
+        else { // when user leaves win screen or switches from state to state
+            if (bgMusic2) {
+                gp.music.stop();
+                bgMusic2 = false;
+            }
+            if (!bgMusic1) {
+                gp.music.play(0);
+                bgMusic1 = true;
+            }
+        }
+
         gp.uiM.resetSelectorPosition();
     }
 

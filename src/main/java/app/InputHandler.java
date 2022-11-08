@@ -21,8 +21,6 @@ public class InputHandler implements KeyListener {
     public boolean cluck;
     public boolean paused;
 
-    public boolean bgMusic;
-
     int[] konamiCode = {
         KeyEvent.VK_UP, 
         KeyEvent.VK_UP, 
@@ -46,9 +44,6 @@ public class InputHandler implements KeyListener {
     public InputHandler(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         
-        // TODO: move bg music handling to a new gamestate class 
-        gamePanel.music.play(0);
-        bgMusic = true;
     }
 
     @Override
