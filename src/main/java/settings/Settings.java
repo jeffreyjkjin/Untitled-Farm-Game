@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Contains the logic to read and write data from settings.json configuration file.
  * Data stored in the ConfigFile object can be accessed and modified using several setters and getters.
- * Should be created in the GamePanel object so that the data in config file can be accessed or modified by GamePanel and the other objects within it.
  * 
  * @author Jeffrey Jin (jjj9)
  * @see settings.ConfigFile
@@ -47,6 +46,9 @@ public class Settings {
         }
     }
 
+    /**
+     * @return singleton instance of Settings
+     */
     public static Settings getInstance() {
         if (settingsInstance == null) {
             settingsInstance = new Settings();
