@@ -15,7 +15,7 @@ public abstract class UI {
     int selectPosition = 0;
     int totalOptions;
 
-    public UI(GamePanel gp) {
+    protected UI(GamePanel gp) {
         this.gp = gp;
         try {
             InputStream input = getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf");
