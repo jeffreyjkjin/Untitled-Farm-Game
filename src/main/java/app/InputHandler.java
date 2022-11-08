@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import app.StateManager.gameState;
+import settings.Settings;
 
 /**
  * Handles input from the player's keyboard.
@@ -14,6 +15,7 @@ import app.StateManager.gameState;
  */
 public class InputHandler implements KeyListener {
 
+    Settings settings;
     GamePanel gamePanel;
 
     public boolean up, down, left, right;
@@ -43,7 +45,7 @@ public class InputHandler implements KeyListener {
      */
     public InputHandler(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        
+        settings = Settings.getInstance();
     }
 
     @Override
@@ -264,13 +266,13 @@ public class InputHandler implements KeyListener {
                             if (position == 0){
                                 gamePanel.music.lowerVolume();
                                 gamePanel.music.checkVolume();
-                                gamePanel.settings.setMusicVolume(gamePanel.music.getVolumeScale());
+                                settings.setMusicVolume(gamePanel.music.getVolumeScale());
                                 gamePanel.sound.play(4);
                             }
                             else if (position == 1){
                                 gamePanel.sound.lowerVolume();
                                 gamePanel.sound.checkVolume();
-                                gamePanel.settings.setSoundVolume(gamePanel.sound.getVolumeScale());
+                                settings.setSoundVolume(gamePanel.sound.getVolumeScale());
                                 gamePanel.sound.play(4);
                             }
                             break;
@@ -279,13 +281,13 @@ public class InputHandler implements KeyListener {
                             if (position == 0){
                                 gamePanel.music.increaseVolume();
                                 gamePanel.music.checkVolume();
-                                gamePanel.settings.setMusicVolume(gamePanel.music.getVolumeScale());
+                                settings.setMusicVolume(gamePanel.music.getVolumeScale());
                                 gamePanel.sound.play(4);
                             }
                             else if (position == 1){
                                 gamePanel.sound.increaseVolume();
                                 gamePanel.sound.checkVolume();
-                                gamePanel.settings.setSoundVolume(gamePanel.sound.getVolumeScale());
+                                settings.setSoundVolume(gamePanel.sound.getVolumeScale());
                                 gamePanel.sound.play(4);
                             }
                             break;
@@ -309,8 +311,8 @@ public class InputHandler implements KeyListener {
                                     }
                                 }
                                 else if (position == 3) { // Reset high score
-                                    gamePanel.settings.setHighScore(0);
-                                    gamePanel.settings.saveConfigFile();
+                                    settings.setHighScore(0);
+                                    settings.saveConfigFile();
                                 }
                                 else if (position == 4) { // Return
                                     gameState prevState = gamePanel.stateM.getPreviousState();

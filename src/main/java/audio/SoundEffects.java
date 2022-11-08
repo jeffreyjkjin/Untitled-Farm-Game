@@ -18,13 +18,13 @@ public class SoundEffects extends Audio {
     /**
      * Instantiates a new SoundEffects object and saves sound effect files to a URL array.
      * This audio array can be resized as more sound effects are added.
-     * Links a GamePanel object to this object so that it can access its other objects.
      * Volume of the sound effects are also loaded from the configuration file.
      * 
      * @param gp GamePanel object that is used to run the game
      * @see settings.Settings
      */
     public SoundEffects(GamePanel gp) {
+        super();
         this.gp = gp;
 
         audioURL = new URL[10]; // 10 sound effects, increase as needed
@@ -38,7 +38,7 @@ public class SoundEffects extends Audio {
         audioURL[7] = getClass().getResource("/sounds/trap.wav");
         audioURL[8] = getClass().getResource("/sounds/unlockgate.wav");
 
-        volumeScale = gp.settings.getSoundVolume();
+        volumeScale = settings.getSoundVolume();
     }
 
     /**

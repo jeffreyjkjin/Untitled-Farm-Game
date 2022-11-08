@@ -14,7 +14,6 @@ import audio.Music;
 import entity.Player;
 import map.MapManager; 
 import pathfinding.Pathfinding;
-import settings.Settings;
 import tile.TileManager;
 import ui.UIManager;
 
@@ -40,7 +39,6 @@ public class GamePanel extends JPanel implements Runnable {
     private final int FPS = 60;
 
     // System
-    public Settings settings = new Settings();
     public Music music = new Music(this);
     public SoundEffects sound = new SoundEffects(this);
     InputHandler input = new InputHandler(this);

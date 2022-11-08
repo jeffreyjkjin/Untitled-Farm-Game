@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import app.GamePanel;
 import app.StateManager.gameState;
+import settings.Settings;
 
 /**
  * Manages the user interface depending on the current state of the game.
@@ -14,13 +15,14 @@ import app.StateManager.gameState;
  * @see ui.UI
  */
 public class UIManager {
+    Settings settings;
     GamePanel gp;
     UI ui[];
 
     boolean fullScreen;
 
     /**
-     * Constructs a UIManager object and links the GamePanel object to this class.
+     * Constructs a UIManager object and links the Settings singleton to this class.
      * Createds a UI array and fills it with each game screen.
      * Reads the fullscreen setting from the configuration file.
      * 
@@ -28,6 +30,7 @@ public class UIManager {
      */
     public UIManager(GamePanel gp) {
         this.gp = gp;
+        settings = Settings.getInstance();
 
         ui = new UI[7];
         ui[0] = new PlayScreen(gp);
@@ -38,7 +41,7 @@ public class UIManager {
         ui[5] = new SettingsScreen(gp);
         ui[6] = new CreditsScreen(gp);
 
-        fullScreen = this.gp.settings.getFullScreen();
+        fullScreen = settings.getFullScreen();
     }
 
     /**
@@ -98,8 +101,8 @@ public class UIManager {
     public void setFullScreen(boolean fullScreen) {
         this.fullScreen = fullScreen;
 
-        gp.settings.setFullScreen(fullScreen);
-        gp.settings.saveConfigFile();
+        settings.setFullScreen(fullScreen);
+        settings.saveConfigFile();
     }
 
     /**

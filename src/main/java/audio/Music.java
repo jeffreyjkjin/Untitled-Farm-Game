@@ -21,20 +21,20 @@ public class Music extends Audio {
     /**
      * Constructs a new Music object and saves the music files to a URL array.
      * This audio array can be resized as more music tracks are needed.
-     * Links a GamePanel object to this object so that it can access its other objects.
      * Volume of the music is also loaded from the configuration file.
      * 
      * @param gp GamePanel object that is used to run the game
      * @see settings.Settings
      */
     public Music(GamePanel gp) {
+        super();
         this.gp = gp;
 
         audioURL = new URL[2]; // 2 music tracks, increase as needed
         audioURL[0] = getClass().getResource("/music/bgmusic1.wav");
         audioURL[1] = getClass().getResource("/music/bgmusic2.wav");
 
-        volumeScale = gp.settings.getMusicVolume();
+        volumeScale = settings.getMusicVolume();
     }
 
     /**

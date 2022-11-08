@@ -3,10 +3,9 @@ package map;
 import java.awt.Graphics2D;
 
 import app.GamePanel;
-
 import app.StateManager.gameState;
-
 import object.SuperObject;
+import settings.Settings; 
 
 /**
  * Stores each map for the game and manages progression between them.
@@ -17,19 +16,22 @@ import object.SuperObject;
  * @see map.Map
  */
 public class MapManager {
+    Settings settings;
     GamePanel gamePanel;
     Map mapList[];
     int currMap;
 
     /**
      * Constructs a new MapManager object and loads map files.
-     * Links gamePanel to this object so that it can be used by its methods.
+     * Links Settings singleton to this class.
      * Maps are stored in an array whose size can be raised or lowered to support less or more maps as needed.
      * 
      * @param gamePanel GamePanel object that is used to run the game
      */
     public MapManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+        settings = Settings.getInstance();
+
         mapList = new Map[2]; // 2 maps, can increase/decrease as needed;
         currMap = 0;
 
@@ -86,9 +88,9 @@ public class MapManager {
         gamePanel.player.score += 1000;
         // If final level is beaten, get players score and set as high score if it is new best
         if (currMap == mapList.length-1) {
-            if (gamePanel.player.score > gamePanel.settings.getHighScore()) {
-                gamePanel.settings.setHighScore(gamePanel.player.score);
-                gamePanel.settings.saveConfigFile();
+            if (gamePanel.player.score > settings.getHighScore()) {
+                settings.setHighScore(gamePanel.player.score);
+                settings.saveConfigFile();
             }
 
             gamePanel.stateM.setCurrentState(gameState.WIN);

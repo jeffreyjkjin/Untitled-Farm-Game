@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import app.GamePanel;
 import app.StateManager.gameState;
 import app.InputHandler;
+import settings.Settings;
 
 /**
  * Manages the player's stats, sprites and interactions.
@@ -18,7 +19,7 @@ import app.InputHandler;
  * @author Jeffrey Jin (jjj9)
  */
 public class Player extends Entity{
-
+    Settings settings;
     GamePanel gamePanel;
     InputHandler input;
     public int screenX;
@@ -32,7 +33,7 @@ public class Player extends Entity{
     
     /**
      * Constructs a new Player object and creates its hitbox and area of sight on the game map.
-     * Links GamePanel and InputHandler to this object so that their attributes and methods can be used.
+     * Links Settings singleton to this object.
      * Also sets the default values of the player and loads its sprite images.
      * 
      * @param gamePanel GamePanel object that is used to the game
@@ -41,6 +42,7 @@ public class Player extends Entity{
     public Player(GamePanel gamePanel, InputHandler input) {
         this.gamePanel = gamePanel;
         this.input = input;
+        settings = Settings.getInstance();
 
         screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
@@ -104,9 +106,9 @@ public class Player extends Entity{
      */
     public void update() {
         if (health == 0) {
-            if (gamePanel.player.score > gamePanel.settings.getHighScore()) {
-                gamePanel.settings.setHighScore(gamePanel.player.score);
-                gamePanel.settings.saveConfigFile();
+            if (gamePanel.player.score > settings.getHighScore()) {
+                settings.setHighScore(gamePanel.player.score);
+                settings.saveConfigFile();
             }
             
             gamePanel.stateM.setCurrentState(gameState.LOSE);

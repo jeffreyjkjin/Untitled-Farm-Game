@@ -67,7 +67,7 @@ public class TitleScreen extends UI {
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 15));
 
 		String highScore = "HIGH SCORE";
-		String savedHighScore = String.valueOf(gp.settings.getHighScore());
+		String savedHighScore = String.valueOf(settings.getHighScore());
 
 		g2.drawString(highScore, getHorizontalCenter(highScore, g2, gp.screenWidth/4), gp.tileSize * 5);
 		g2.drawString(savedHighScore, getHorizontalCenter(savedHighScore, g2, gp.screenWidth/4), (int)(gp.tileSize * 5.5));

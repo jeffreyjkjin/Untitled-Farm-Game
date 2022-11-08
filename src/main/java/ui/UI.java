@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.IOException;
 
 import app.GamePanel;
+import settings.Settings;
 
 /**
  * Contains the base attributes and methods for each game screen corresponding to each game state. 
@@ -16,6 +17,7 @@ import app.GamePanel;
  * @see ui.UIManager
  */
 public abstract class UI {
+    Settings settings;
     GamePanel gp;
     Font pressStart2P;
 
@@ -23,13 +25,15 @@ public abstract class UI {
     int totalOptions;
 
     /**
-     * Creates a UI object and links the GamePanel object to this class.
+     * Creates a UI object and links the Settings singleton to this class.
      * Loads the font for the game.
      * 
      * @param gp GamePanel object that is used to run the game
      */
     protected UI(GamePanel gp) {
         this.gp = gp;
+        settings = Settings.getInstance();
+
         try {
             InputStream input = getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf");
             pressStart2P = Font.createFont(Font.TRUETYPE_FONT, input);

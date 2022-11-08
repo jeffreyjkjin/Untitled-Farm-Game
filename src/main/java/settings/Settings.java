@@ -18,7 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @see settings.ConfigFile
  */
 public class Settings {
-    
+    private static Settings settingsInstance = null;
+
     ObjectMapper mapper;
     ConfigFile file;
 
@@ -27,7 +28,7 @@ public class Settings {
      * Saves the data from the config file to a ConfigFile object.
      * If settings.json is not found, a new config file will be instantiated and set to the default values.
      */
-    public Settings() {
+    private Settings() {
         mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 
@@ -46,6 +47,13 @@ public class Settings {
         }
     }
 
+    public static Settings getInstance() {
+        if (settingsInstance == null) {
+            settingsInstance = new Settings();
+        }
+
+        return settingsInstance;
+    }
     
     /**
      * Instantiates a new ConfigFile objects with default values.

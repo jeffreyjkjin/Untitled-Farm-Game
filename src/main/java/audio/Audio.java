@@ -8,6 +8,7 @@ import javax.sound.sampled.FloatControl;
 import java.net.URL;
 
 import app.GamePanel;
+import settings.Settings;
 
 /**
  * An abstract object that manages the playback of audio files.
@@ -20,12 +21,20 @@ import app.GamePanel;
  * @see audio.Sounds
  */
 public abstract class Audio {
+    Settings settings;
     GamePanel gp;    
     Clip clip;
     URL audioURL[];
     FloatControl fc;
     int volumeScale = 3;
     float volume;
+
+    /**
+     * Creates a new Audio object and links Settings singleton to this class.
+     */
+    protected Audio() {
+        settings = Settings.getInstance();
+    }
 
     /**
      * Sets the current file to the i'th audio file in the URl array.
