@@ -2,30 +2,26 @@ package audio;
 
 import java.net.URL;
 
-import app.GamePanel;
-
 /**
  * Controls and manages sound effects for the game.
  * Sound effects are accessed by indexing an array which contains the URLs of the sound files.
- * Should be instantianted from GamePanel so that other objects can access its sound effects.
  * 
  * @author Long Nguyen (dln3)
  * @author Jeffrey Jin (jjj9)
  * @see audio.Audio
  */
 public class SoundEffects extends Audio {
+    private static SoundEffects soundInstance = null;
 
     /**
      * Instantiates a new SoundEffects object and saves sound effect files to a URL array.
      * This audio array can be resized as more sound effects are added.
      * Volume of the sound effects are also loaded from the configuration file.
      * 
-     * @param gp GamePanel object that is used to run the game
      * @see settings.Settings
      */
-    public SoundEffects(GamePanel gp) {
+    private SoundEffects() {
         super();
-        this.gp = gp;
 
         audioURL = new URL[10]; // 10 sound effects, increase as needed
         audioURL[0] = getClass().getResource("/sounds/cluck1.wav");
@@ -39,6 +35,17 @@ public class SoundEffects extends Audio {
         audioURL[8] = getClass().getResource("/sounds/unlockgate.wav");
 
         volumeScale = settings.getSoundVolume();
+    }
+
+    /**
+     * @return singleton instance of SoundEffects
+     */
+    public static SoundEffects getInstance() {
+        if (soundInstance == null) {
+            soundInstance = new SoundEffects();
+        }
+
+        return soundInstance;
     }
 
     /**

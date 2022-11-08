@@ -7,7 +7,6 @@ import javax.sound.sampled.FloatControl;
 
 import java.net.URL;
 
-import app.GamePanel;
 import settings.Settings;
 
 /**
@@ -22,7 +21,6 @@ import settings.Settings;
  */
 public abstract class Audio {
     Settings settings;
-    GamePanel gp;    
     Clip clip;
     URL audioURL[];
     FloatControl fc;
@@ -110,4 +108,5 @@ public abstract class Audio {
     public int getVolumeScale() {
         return volumeScale;
     }
+
 }

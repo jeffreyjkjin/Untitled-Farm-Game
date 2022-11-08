@@ -4,37 +4,43 @@ import java.net.URL;
 
 import javax.sound.sampled.Clip;
 
-import app.GamePanel;
-
 /**
  * Manages and controls music tracks used by this game.
  * Music files can be accessed by indexing an array which contains the URLs of the files.
- * Should be instantiated in GamePanel so that other objects can access its music.
  * 
  * @author Long Nguyen (dln3)
  * @author Jeffrey Jin (jjj9)
  * @see audio.Audio
  */
 public class Music extends Audio {
-
+    private static Music musicInstance = null;
     
     /**
      * Constructs a new Music object and saves the music files to a URL array.
      * This audio array can be resized as more music tracks are needed.
      * Volume of the music is also loaded from the configuration file.
      * 
-     * @param gp GamePanel object that is used to run the game
      * @see settings.Settings
      */
-    public Music(GamePanel gp) {
+    private Music() {
         super();
-        this.gp = gp;
 
         audioURL = new URL[2]; // 2 music tracks, increase as needed
         audioURL[0] = getClass().getResource("/music/bgmusic1.wav");
         audioURL[1] = getClass().getResource("/music/bgmusic2.wav");
 
         volumeScale = settings.getMusicVolume();
+    }
+
+    /**
+     * @return singleton instance of Music
+     */
+    public static Music getInstance() {
+        if (musicInstance == null) {
+            musicInstance = new Music();
+        }
+
+        return musicInstance;
     }
 
     /**
