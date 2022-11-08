@@ -8,6 +8,13 @@ import java.io.IOException;
 
 import app.GamePanel;
 
+/**
+ * Contains the base attributes and methods for each game screen corresponding to each game state. 
+ * New user interfaces can be created by extending this class.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @see ui.UIManager
+ */
 public abstract class UI {
     GamePanel gp;
     Font pressStart2P;
@@ -15,6 +22,12 @@ public abstract class UI {
     int selectPosition = 0;
     int totalOptions;
 
+    /**
+     * Creates a UI object and links the GamePanel object to this class.
+     * Loads the font for the game.
+     * 
+     * @param gp GamePanel object that is used to run the game
+     */
     protected UI(GamePanel gp) {
         this.gp = gp;
         try {
@@ -43,6 +56,10 @@ public abstract class UI {
 		return x;
 	}
     
+    /**
+     * Moves the selector up on the screen.
+     * Prevents the user from moving the selector off the screen by resetting the selector to point to the last item.
+     */
     public void moveSelectorUp() {
         selectPosition--;
         if (selectPosition < 0) {
@@ -50,6 +67,10 @@ public abstract class UI {
         }
     }
     
+    /**
+     * Increases the selector position.
+     * Prevents the user from moving the selector off the screen by resetting the selector to point to the first item.
+     */
     public void moveSelectorDown() {
         selectPosition++;
         if (selectPosition > totalOptions) {
@@ -57,10 +78,17 @@ public abstract class UI {
         }
     }
     
+    /**
+     * @return selector position
+     */
     public int getSelectorPosition() {
         return selectPosition;
     }
     
+    /**
+     * Sets selector position back to zero.
+     * Shouldbe used everytime the game state is changed.
+     */
     public void resetSelectorPosition() {
         selectPosition = 0;
     }

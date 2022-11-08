@@ -6,8 +6,20 @@ import java.awt.Graphics2D;
 
 import app.GamePanel;
 
+/**
+ * Used to draw the credits screen.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @author Long Nguyen (dln3)
+ * @see ui.UIManager
+ */
 public class CreditsScreen extends UI {
 
+    /**
+	 * Calls UI constructor.
+	 * 
+     * @param gp GamePanel object that is used to run the game
+     */
     protected CreditsScreen(GamePanel gp) {
         super(gp);
     }
@@ -38,6 +50,4 @@ public class CreditsScreen extends UI {
 		g2.drawString(name4, getHorizontalCenter(name4, g2, gp.screenWidth), gp.tileSize * 20/2);
 
 	}
-
-
 }

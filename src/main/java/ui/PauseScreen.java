@@ -6,8 +6,20 @@ import java.awt.Graphics2D;
 
 import app.GamePanel;
 
+/**
+ * Used to draw the pause screen.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @see ui.UIManager
+ */
 public class PauseScreen extends PlayScreen {
 	
+	/**
+	 * Calls the UI constructor;
+	 * Sets the total number of options to three.
+	 * 
+	 * @param gp GamePanel object that is used to run the game
+	 */
 	protected PauseScreen(GamePanel gp) {
         super(gp);
 

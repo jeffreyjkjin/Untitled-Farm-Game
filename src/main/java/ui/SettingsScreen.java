@@ -6,8 +6,21 @@ import java.awt.Graphics2D;
 
 import app.GamePanel;
 
+/**
+ * Used to draw the settings screen.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @author Long Nguyen (dln3)
+ * @see ui.UIManager
+ */
 public class SettingsScreen extends UI {
 
+	/**
+	 * Calls the UI constructor.
+	 * Sets the total number of options to four.
+	 * 
+	 * @param gp GamePanel object that is used to run the game
+	 */
 	protected SettingsScreen(GamePanel gp) {
         super(gp);
 
@@ -86,5 +99,4 @@ public class SettingsScreen extends UI {
 			g2.drawString(">", gp.tileSize, gp.tileSize * 22/2); //drawing > before the button
 		}
 	}
-
 }

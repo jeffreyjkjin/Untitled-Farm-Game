@@ -9,9 +9,21 @@ import javax.imageio.ImageIO;
 
 import app.GamePanel;
 
+/**
+ * Used to draw the game over screen.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @see ui.UIManager
+ */
 public class LoseScreen extends UI {
     BufferedImage bgImage;
 
+    /**
+	 * Calls the UI constructor.
+	 * Loads the background image.
+	 * 
+     * @param gp GamePanel object that is used to run the game
+     */
     protected LoseScreen(GamePanel gp) {
         super(gp);
 
@@ -87,5 +99,4 @@ public class LoseScreen extends UI {
 			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}
 	}
-
 }

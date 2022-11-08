@@ -8,6 +8,14 @@ import app.GamePanel;
 import app.StateManager.gameState;
 import object.OBJ_Heart;
 
+/**
+ * Used to draw the user interface during gameplay onto the screen.
+ * Contains methods to update different elements of the UI.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @author Seughwan Kim
+ * @see ui.UIManager
+ */
 public class PlayScreen extends UI {
 	OBJ_Heart playerHP[] = new OBJ_Heart[3];
     double playTime = 0;
@@ -16,6 +24,12 @@ public class PlayScreen extends UI {
 	boolean messageOn = false;
 	String message = "";
 
+    /**
+	 * Calls the UI constructor.
+	 * Loads heart sprites into the player health array.
+	 * 
+     * @param gp GamePanel object that is used to run the game
+     */
     protected PlayScreen(GamePanel gp) {
         super(gp);
 
@@ -49,7 +63,6 @@ public class PlayScreen extends UI {
 	 * @param text the message that is to be displayed
 	 */
 	public void showMessage(String text) {
-		
 		message = text;
 		messageOn = true;
 	}
@@ -145,5 +158,4 @@ public class PlayScreen extends UI {
 			}
 		}	
 	}
-
 }

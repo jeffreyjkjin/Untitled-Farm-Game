@@ -9,9 +9,22 @@ import javax.imageio.ImageIO;
 
 import app.GamePanel;
 
+/**
+ * Used to draw the win screen.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @see ui.UIManager
+ */
 public class WinScreen extends UI {
     BufferedImage bgImage;
 
+    /**
+	 * Calls the UI constructor.
+	 * Sets the total number of options to two.
+	 * Loads the background image.
+	 * 
+     * @param gpGamePanel object that is used to run the game
+     */
     protected WinScreen(GamePanel gp) {
         super(gp);
 
@@ -87,5 +100,4 @@ public class WinScreen extends UI {
 			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}
 	}
-
 }

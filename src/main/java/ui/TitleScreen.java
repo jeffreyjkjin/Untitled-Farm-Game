@@ -9,9 +9,23 @@ import javax.imageio.ImageIO;
 
 import app.GamePanel;
 
+/**
+ * Used to draw the title screen.
+ * 
+ * @author Jeffrey Jin (jjj9)
+ * @author Long Nguyen (dln3)
+ * @see ui.UIManager
+ */
 public class TitleScreen extends UI {
     BufferedImage bgImage;
 
+    /**
+	 * Calls the UI constructor.
+	 * Sets the total number of options to three.
+	 * Loads the background image.
+	 * 
+     * @param gp GamePanel object that is used to run the game
+     */
     protected TitleScreen(GamePanel gp) {
         super(gp);
 
@@ -90,5 +104,4 @@ public class TitleScreen extends UI {
 			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}
 	}
-
 }
