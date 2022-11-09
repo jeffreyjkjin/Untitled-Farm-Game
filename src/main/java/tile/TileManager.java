@@ -19,6 +19,7 @@ import app.GamePanel;
  * @author Jeffrey Jin (jjj9)
 */
 public class TileManager {
+    private static TileManager tileInstance = null;
     
     GamePanel gp;
     private Tile[] tile;
@@ -26,14 +27,11 @@ public class TileManager {
     private ArrayList<String> collisionStatus = new ArrayList<>();
 
     /**
-     * Constructs the tile manager by connecting it to gp, reading in and setting collision status, and gettin tile image
-     * 
-     * @param gp the main GamePanel used to build the game
+     * Constructs the tile manager.
+     * Reading in and setting collision status, and getting tile image.
      */
-    public TileManager(GamePanel gp)
+    private TileManager()
     {
-        this.gp = gp;
-        
         // Read TileData from files
         InputStream is = getClass().getResourceAsStream("/tiles/tileData.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -55,6 +53,17 @@ public class TileManager {
         // Initialize the tile array based on the file
         tile = new Tile[fileNames.size()];
         getTileImage();
+    }
+
+    /**
+     * @return singleton instance of TileManager
+     */
+    public static TileManager getInstance() {
+        if (tileInstance == null) {
+            tileInstance = new TileManager();
+        }
+
+        return tileInstance;
     }
 
     /**
