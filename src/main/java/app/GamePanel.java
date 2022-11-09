@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import entity.Player;
 import map.MapManager; 
 import pathfinding.Pathfinding;
-import tile.TileManager;
 import ui.UIManager;
 
 /**
@@ -43,7 +42,6 @@ public class GamePanel extends JPanel implements Runnable {
     public StateManager stateM = new StateManager(this);
     
     // Maps
-    public TileManager tileM = new TileManager(this);
     public MapManager mapM = new MapManager(this);
     
     // Entity & Object

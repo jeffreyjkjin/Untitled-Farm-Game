@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.lang.Math;
 
 import app.GamePanel;
+import tile.TileManager;
 
 /** 
  * Creates and sets Nodes to represent the tiles of the map player and farmers are on
@@ -16,7 +17,7 @@ import app.GamePanel;
  * @author Andrew Hein (ach17)
 */
 public class Pathfinding {
-    
+    TileManager tileM;
     GamePanel gp;
     Node[][] node;
     ArrayList<Node> openList = new ArrayList<>(); // For nodes that are open
@@ -25,13 +26,14 @@ public class Pathfinding {
     private boolean goalReached = false;
 
     /**
-     * Constructs the pathfinding class by linking it to gp and creating Nodes
+     * Constructs the pathfinding class by linking it to gp and TileManager singleton and creating Nodes
      * 
      * @param gp GamePanel which is the main way the game is run
      */
     public Pathfinding(GamePanel gp)
     {
         this.gp = gp;
+        tileM = TileManager.getInstance();
         createNodes();
     }
 
@@ -117,7 +119,7 @@ public class Pathfinding {
         {
             int tileNum = gp.mapM.getMap().tileMap[row][col];
             // Check tiles for collision. If yes, change blocked bool to true
-            if (gp.tileM.checkTileCollision(tileNum))
+            if (tileM.checkTileCollision(tileNum))
             {
                 node[col][row].blocked = true;
             }

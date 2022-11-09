@@ -13,6 +13,7 @@ import app.GamePanel;
 import entity.Farmer;
 import object.ObjectManager;
 import object.SuperObject;
+import tile.TileManager;
 
 /**
  * Reads and stores the level data for one map file.
@@ -31,6 +32,7 @@ import object.SuperObject;
  */
 public class Map {
     GamePanel gp;
+    TileManager tileM;
     Random randGen = new Random();
 
     public int[][] tileMap, objMap;
@@ -47,7 +49,7 @@ public class Map {
 
     /**
      * Constructs a new Map object and loads the mapFile.
-     * Links gp to this class so that it can be used in this classes methods.
+     * Links gp and TileManager singleton to this class.
      * Loads mapFile; saves data to classes attributes.
      * 
      * @param gp GamePanel object that is used to run the game
@@ -55,6 +57,7 @@ public class Map {
      */
     protected Map(GamePanel gp, String mapFile) {
         this.gp = gp;
+        tileM = TileManager.getInstance();
 
         loadMap(mapFile);
     }
@@ -159,7 +162,7 @@ public class Map {
             worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
             worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
             worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
-                graphic2.drawImage(gp.tileM.getTileImage(tileNum), screenX, screenY, gp.tileSize, gp.tileSize, null);
+                graphic2.drawImage(tileM.getTileImage(tileNum), screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
 
             col++;

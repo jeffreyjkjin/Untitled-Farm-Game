@@ -2,6 +2,7 @@ package app;
 
 import entity.Entity;
 import entity.Farmer;
+import tile.TileManager;
 
 /**
  * This class is used to check collisions between entities and objects
@@ -10,11 +11,17 @@ import entity.Farmer;
  * @author Andrew Hein (ach17)
  */
 public class CollisionChecker {
-    
+    TileManager tileM;
     GamePanel gp;
 
+    /**
+	 * Constructs a new CollisionChecker object and links it to a TileManager singleton.
+	 * 
+     * @param gp
+     */
     public CollisionChecker(GamePanel gp) {
         this.gp = gp;
+		tileM = TileManager.getInstance();
     }
 	
     /**
@@ -60,7 +67,7 @@ public class CollisionChecker {
 				break;
 		}
 
-		if(gp.tileM.checkTileCollision(tilenum1) || gp.tileM.checkTileCollision(tilenum2)){
+		if(tileM.checkTileCollision(tilenum1) || tileM.checkTileCollision(tilenum2)){
 			entity.collisionOn = true;
 		}
 
