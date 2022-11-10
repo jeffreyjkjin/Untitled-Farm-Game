@@ -86,13 +86,8 @@ public class MapManager {
     public void nextMap() {
         // + 1000 score for making it to the next level
         gamePanel.player.score += 1000;
-        // If final level is beaten, get players score and set as high score if it is new best
+        // If final level is beaten
         if (currMap == mapList.length-1) {
-            if (gamePanel.player.score > settings.getHighScore()) {
-                settings.setHighScore(gamePanel.player.score);
-                settings.saveConfigFile();
-            }
-
             gamePanel.stateM.setCurrentState(gameState.WIN);
         }
         else { // On non-final levels, increment what level you are on and set up the new map

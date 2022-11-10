@@ -3,6 +3,7 @@ package app;
 import java.awt.Graphics2D;
 
 import audio.Music;
+import settings.Settings;
 
 /**
  * Manages and controls the differing game states of our game.
@@ -43,12 +44,13 @@ public class StateManager {
     gameState currState, prevState;
 
     Music music;
+    Settings settings;
     GamePanel gp;
 
     boolean bgMusic1, bgMusic2;
 
     /**
-     * Constructs a new StateManager object and links the Music singleton to this class.
+     * Constructs a new StateManager object and links the Music and Settings singletons to this class.
      * Sets the current game state to title.
      * Plays the default background track.
      * 
@@ -57,6 +59,7 @@ public class StateManager {
     public StateManager(GamePanel gp) {
         this.gp = gp;
         music = Music.getInstance();
+        settings = Settings.getInstance();
 
         currState = gameState.TITLE;
         music.play(0);
@@ -74,24 +77,36 @@ public class StateManager {
     public void setCurrentState(gameState state) {
         prevState = currState;
         currState = state;
-
-        if (state == gameState.WIN) { // when user reaches win state
-            if (bgMusic1) {
-                music.stop();
-                bgMusic1 = false;
-            }
-            music.play(1);
-            bgMusic2 = true;
-        }
-        else { // when user leaves win screen or switches from state to state
-            if (bgMusic2) {
-                music.stop();
-                bgMusic2 = false;
-            }
-            if (!bgMusic1) {
-                music.play(0);
-                bgMusic1 = true;
-            }
+        
+        switch(state) {
+            case WIN:
+                if (bgMusic1) {
+                    music.stop();
+                    bgMusic1 = false;
+                }
+                music.play(1);
+                bgMusic2 = true;
+            case LOSE:
+                if (gp.player.score > settings.getHighScore()) {
+                    settings.setHighScore(gp.player.score);
+                }
+                break;
+            case PLAY:
+            case PAUSE:
+            case SETTINGS:
+                break;
+            default:
+                gp.mapM.resetMap();
+                gp.uiM.resetPlayScreen();
+                gp.player.setDefaultValues();
+                if (bgMusic2) {
+                    music.stop();
+                    bgMusic2 = false;
+                }
+                if (!bgMusic1) {
+                    music.play(0);
+                    bgMusic1 = true;
+                }                       
         }
 
         gp.uiM.resetSelectorPosition();

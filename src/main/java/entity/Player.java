@@ -111,11 +111,6 @@ public class Player extends Entity{
      */
     public void update() {
         if (health == 0) {
-            if (gamePanel.player.score > settings.getHighScore()) {
-                settings.setHighScore(gamePanel.player.score);
-                settings.saveConfigFile();
-            }
-            
             gamePanel.stateM.setCurrentState(gameState.LOSE);
         }
 
@@ -211,12 +206,13 @@ public class Player extends Entity{
                     sound.play(2);
                     if (health >= 3) {
                         score += 100;
+                        gamePanel.uiM.showMessage("+100 POINTS");
                     }
                     else {
                         health++;
+                        gamePanel.uiM.showMessage("+1 HP");
                     }
                     gamePanel.mapM.getMap().objects[index] = null;
-                    gamePanel.uiM.showMessage("MY EGG!");
                     break;
                 case "Key":
                     gamePanel.mapM.getMap().objects[index] = null;
@@ -224,7 +220,17 @@ public class Player extends Entity{
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
                         gamePanel.mapM.getObject(gamePanel.mapM.getMap().gateIndex).update(gamePanel);
                         sound.play(8);
-                        gamePanel.uiM.showMessage("DOOR IS OPENED!");
+                        gamePanel.uiM.showMessage("GATE IS OPENED");
+                    }
+                    else {
+                        int keysLeft = gamePanel.mapM.getMap().keyNum - keyCount;
+                        if (keysLeft != 1) {
+                            gamePanel.uiM.showMessage("NEED " + keysLeft + " MORE KEYS");
+                        }
+                        else {
+                            gamePanel.uiM.showMessage("NEED " + keysLeft + " MORE KEY");
+                        }
+
                     }
                     sound.play(2);
                     break;
@@ -240,7 +246,7 @@ public class Player extends Entity{
                     Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
                     sound.play(3);
                     sound.play(7);
-                    gamePanel.uiM.showMessage("OUCH!");
+                    gamePanel.uiM.showMessage("-1 HP");
                     break;
             }
         }
@@ -258,7 +264,7 @@ public class Player extends Entity{
         if (index != 999)
         {
             health--;
-            gamePanel.uiM.showMessage("You were caught!");
+            gamePanel.uiM.showMessage("-1 HP");
 
             respawnPlayer();
             Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);

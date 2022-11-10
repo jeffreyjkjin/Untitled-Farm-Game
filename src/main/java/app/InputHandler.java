@@ -77,6 +77,7 @@ public class InputHandler implements KeyListener {
                     // Unpause
                     case KeyEvent.VK_ESCAPE:
                     if (!paused) {
+                        sound.play(5);
                         gamePanel.stateM.setCurrentState(gameState.PLAY);
                     }
                     paused = true;
@@ -154,6 +155,7 @@ public class InputHandler implements KeyListener {
                     // Pause
                     case KeyEvent.VK_ESCAPE:
                         if (!paused) {
+                            sound.play(5);
                             gamePanel.stateM.setCurrentState(gameState.PAUSE);
                         }
                         paused = true;
@@ -186,9 +188,6 @@ public class InputHandler implements KeyListener {
                             int position = gamePanel.uiM.getSelectorPosition();
                             sound.play(5);
                             if (position == 0){ // Play
-                                gamePanel.mapM.resetMap();
-                                gamePanel.uiM.resetTimer();
-                                gamePanel.player.setDefaultValues();
                                 gamePanel.stateM.setCurrentState(gameState.PLAY);
                             }
                             else if (position == 1) { // Settings 
@@ -233,9 +232,6 @@ public class InputHandler implements KeyListener {
                             int position = gamePanel.uiM.getSelectorPosition();
                             sound.play(4);
                             if (position == 0) { // retry
-                                gamePanel.mapM.resetMap();
-                                gamePanel.uiM.resetTimer();
-                                gamePanel.player.setDefaultValues();
                                 gamePanel.stateM.setCurrentState(gameState.PLAY);
                             }
                             else if (position == 1) { // Main Menu
@@ -306,14 +302,15 @@ public class InputHandler implements KeyListener {
                             if (!enter) {
                                 sound.play(5);
                                 if (position == 2){ // Full screen
+                                    // Prevent player from toggling full screen during gameplay
                                     if (!gamePanel.uiM.getFullScreen()){
-                                        if (gamePanel.stateM.getPreviousState() != gameState.PLAY) {
+                                        if (gamePanel.stateM.getPreviousState() != gameState.PAUSE) {
                                             gamePanel.uiM.setFullScreen(true);
                                             gamePanel.setFullScreen();
                                         }
                                     }
                                     else if (gamePanel.uiM.getFullScreen()){
-                                        if (gamePanel.stateM.getPreviousState() != gameState.PLAY) {
+                                        if (gamePanel.stateM.getPreviousState() != gameState.PAUSE) {
                                             gamePanel.uiM.setFullScreen(false);
                                             gamePanel.setWindowScreen();
                                         }
