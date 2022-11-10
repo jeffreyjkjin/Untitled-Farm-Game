@@ -71,6 +71,7 @@ public class StateManager {
      * Saves the previous state.
      * Resets the position of the selector.
      * Changes music depending on the game state.
+     * Also changes the current input handler.
      * 
      * @param state the new state the user will be entering
      */
@@ -78,6 +79,8 @@ public class StateManager {
         prevState = currState;
         currState = state;
         
+        gp.inputM.changeInput(state);
+
         switch(state) {
             case WIN:
                 if (bgMusic1) {
@@ -133,6 +136,8 @@ public class StateManager {
         gameState temp = currState;
         currState = prevState;
         prevState = temp;
+
+        gp.inputM.changeInput(currState);
     }
 
     /**

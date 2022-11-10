@@ -10,6 +10,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 
 import entity.Player;
+import input.InputManager;
 import map.MapManager; 
 import pathfinding.Pathfinding;
 import ui.UIManager;
@@ -36,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
     private final int FPS = 60;
 
     // System
-    InputHandler input = new InputHandler(this);
+    InputManager inputM = new InputManager(this);
     Thread gameThread;
     public UIManager uiM = new UIManager(this);
     public StateManager stateM = new StateManager(this);
@@ -46,17 +47,24 @@ public class GamePanel extends JPanel implements Runnable {
     
     // Entity & Object
     public CollisionChecker checker = new CollisionChecker(this);
-    public Player player = new Player(this, input);
+    public Player player = new Player(this, inputM.getPlayInput());
     public Pathfinding pathFinder = new Pathfinding(this);
 
+    /**
+     * Creates new GamePanel object and sets default attributes.
+     */
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
-        this.addKeyListener(input);
+        this.addKeyListener(inputM.getCurrentInput());
         this.setFocusable(true);
     }
     
+    /**
+     * Loads the game map.
+     * Also sets fullscreen or window mode depending on what was saved in the settings file.
+     */
     protected void setupGame() {
         mapM.setupMap();
         
@@ -72,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Stores the size of the users computer screen and sets the game to fullscreen mode.
      * Scaling of the tiles are also increased.
      */
-    protected void setFullScreen() {
+    public void setFullScreen() {
     	// Get Local Screen Device
     	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
     	GraphicsDevice gd = ge.getDefaultScreenDevice();
@@ -90,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Sets the game window to windowed mode.
      * Scaling of the tiles are also decreased.
      */
-    protected void setWindowScreen() {
+    public void setWindowScreen() {
     	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
     	GraphicsDevice gd = ge.getDefaultScreenDevice();
 

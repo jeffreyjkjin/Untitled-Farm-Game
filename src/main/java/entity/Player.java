@@ -1,16 +1,16 @@
 package entity;
 
-import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 import app.GamePanel;
 import app.StateManager.gameState;
-import app.InputHandler;
 import audio.SoundEffects;
+import input.InputHandler;
 import settings.Settings;
 
 /**
@@ -114,13 +114,16 @@ public class Player extends Entity{
             gamePanel.stateM.setCurrentState(gameState.LOSE);
         }
 
-        if (freezeCooldown > 0)
-        {
-            if (gamePanel.player.freezeCooldown == 1)
+        if (gamePanel.stateM.getCurrentState() == gameState.PLAY) {
+            if (freezeCooldown > 0)
             {
-                gamePanel.uiM.showMessage("Cluck is ready!");
+                if (gamePanel.player.freezeCooldown == 1)
+                {
+                    gamePanel.uiM.showMessage("CLUCK RECHARGED");
+                    sound.play(0);
+                }
+                freezeCooldown--;
             }
-            freezeCooldown--;
         }
 
         if (input.up || input.left || input.down || input.right) {
