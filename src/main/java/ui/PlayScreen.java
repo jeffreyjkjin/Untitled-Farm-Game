@@ -74,6 +74,14 @@ public class PlayScreen extends UI {
 		playTime = 0;
 	}
 
+	/**
+	 * Turns off messages and deletes the saved messsage.
+	 */
+	public void resetMessage() {
+		message = "";
+		messageOn = false;
+	}
+
     /**
 	 * Creates a timer that displays minutes and seconds.
 	 * 
@@ -147,8 +155,8 @@ public class PlayScreen extends UI {
 		// Message
 		if (messageOn) {
 			
-			g2.setFont(g2.getFont().deriveFont(30F));
-			g2.drawString(message, gp.player.screenX-20, gp.player.screenY - 24);
+			g2.setFont(g2.getFont().deriveFont(15F));
+			g2.drawString(message, getHorizontalCenter(message, g2, (gp.tileSize * 3)) + gp.player.screenX - gp.tileSize, gp.player.screenY - gp.tileSize/2);
 			
 			messageCounter += (double)1/60;
 			
