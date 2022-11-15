@@ -63,6 +63,9 @@ public class PlayScreen extends UI {
 	 * @param text the message that is to be displayed
 	 */
 	public void showMessage(String text) {
+		if (messageOn) {
+			messageCounter = 0;
+		}
 		message = text;
 		messageOn = true;
 	}

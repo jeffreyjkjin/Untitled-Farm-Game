@@ -75,6 +75,14 @@ public class WinScreen extends UI {
 		g2.drawString(yourScore, getHorizontalCenter(yourScore, g2, gp.screenWidth/2) + gp.screenWidth/2, gp.tileSize * 5);
 		g2.drawString(playerScore, getHorizontalCenter(playerScore, g2, gp.screenWidth/2) + gp.screenWidth/2, (int)(gp.tileSize * 5.5));
 
+		// Show message if player's current high score is higher than the saved score
+		if (settings.getHighScore() == gp.player.score) {
+			g2.setColor(Color.RED);
+			String newHighScore = "NEW HIGH SCORE!";
+			g2.drawString(newHighScore, getHorizontalCenter(newHighScore, g2, gp.screenWidth/2), gp.tileSize * 6);
+			g2.setColor(Color.WHITE);
+		}
+
 		// Menu
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
 
