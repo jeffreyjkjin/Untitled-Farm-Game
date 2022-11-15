@@ -54,7 +54,7 @@ public class TitleScreen extends UI {
 		g2.drawImage(bgImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
 		
 		// Title
-		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
 		g2.setColor(Color.black);
 
 		String title1 = "UNTITLED";

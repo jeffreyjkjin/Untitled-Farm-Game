@@ -88,7 +88,7 @@ public class SettingsInput extends InputHandler {
                 if (!enter) {
                     sound.play(5);
                     if (position == 2){ // Full screen
-s                        if (!gp.uiM.getFullScreen()){
+                        if (!gp.uiM.getFullScreen()){
                             gp.uiM.setFullScreen(true);
                             gp.setFullScreen();
                         }

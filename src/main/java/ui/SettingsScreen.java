@@ -44,7 +44,7 @@ public class SettingsScreen extends UI {
 	 */
 	public void draw(Graphics2D g2) {
 		// Settings
-		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
 		g2.setColor(Color.white);
 		
 		String settings = "SETTINGS";

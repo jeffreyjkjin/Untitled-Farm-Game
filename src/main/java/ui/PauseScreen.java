@@ -38,7 +38,7 @@ public class PauseScreen extends UI {
 		g2.setColor(new Color(0,0,0,150));
 		g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
 
-		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 80F));
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
 		g2.setColor(Color.white);
 
 		String text = "PAUSED";

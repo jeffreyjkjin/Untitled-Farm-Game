@@ -51,7 +51,7 @@ public class LoseScreen extends UI {
 		g2.drawImage(bgImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
 		
 		// Game Over
-		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 60));
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
 		g2.setColor(Color.white);
 		
 		String gameOver = "GAME OVER!";
