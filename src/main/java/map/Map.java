@@ -254,7 +254,7 @@ public class Map {
 
         while (col < maxWorldCol && row < maxWorldRow) {
             if (objMap[row][col] != 0) {
-                if (objects[i] == null && objMap[row][col] != 99) {
+                if (objMap[row][col] != 99 && objects[i] == null) {
                     objects[i] = ObjectManager.createObject(objMap[row][col]);
 
                     // eggs on the map will only appear 50% of the time  
