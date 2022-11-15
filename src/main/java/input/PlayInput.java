@@ -114,15 +114,14 @@ public class PlayInput extends InputHandler {
 
             // Cluck
             case KeyEvent.VK_H:
-                sound.play(1);
                 cluck = false;
-
+                
                 if (gp.player.freezeCooldown == 0)
                 {   // Freeze the farmers if ability is not on cooldown and set the new cooldown after
+                    sound.play(1);
                     gp.player.freezeFarmers();
-                }
-
-                break;
+                    }
+                    break;
 
             // Pause Menu functions
             case KeyEvent.VK_ESCAPE:

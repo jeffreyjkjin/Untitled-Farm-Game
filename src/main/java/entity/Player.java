@@ -3,9 +3,12 @@ package entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import java.util.Random; 
 
 import app.GamePanel;
 import app.StateManager.gameState;
@@ -24,6 +27,8 @@ public class Player extends Entity{
     SoundEffects sound;
     GamePanel gamePanel;
     InputHandler input;
+
+    Random randGen = new Random();
 
     public int screenX;
     public int screenY;
@@ -223,7 +228,7 @@ public class Player extends Entity{
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
                         gamePanel.mapM.getObject(gamePanel.mapM.getMap().gateIndex).update(gamePanel);
                         sound.play(8);
-                        gamePanel.uiM.showMessage("GATE IS OPENED");
+                        gamePanel.uiM.showMessage("GATE OPENED");
                     }
                     else {
                         int keysLeft = gamePanel.mapM.getMap().keyNum - keyCount;
@@ -373,7 +378,7 @@ public class Player extends Entity{
             if (f[i].hitbox.intersects(freezeArea))
             {
                 f[i].speed = Farmer.frozen;
-                f[i].freezeTimer = 60; // 60 frames per second. Ex. freezeTimer = 60 is a 1 second freeze
+                f[i].freezeTimer = 60 + randGen.nextInt(240); // freezes farmer for 60-300 frames (1-5 seconds)
                 freezeCooldown = 300; // 60 frames per second. Ex. freezeCooldown = 300 is a 5 second CD
             }
             // Reset farmers hitbox

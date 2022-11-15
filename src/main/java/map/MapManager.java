@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import app.GamePanel;
 import app.StateManager.gameState;
+import audio.SoundEffects;
 import object.SuperObject;
 import settings.Settings; 
 
@@ -17,13 +18,14 @@ import settings.Settings;
  */
 public class MapManager {
     Settings settings;
+    SoundEffects sound;
     GamePanel gamePanel;
     Map mapList[];
     int currMap;
 
     /**
      * Constructs a new MapManager object and loads map files.
-     * Links Settings singleton to this class.
+     * Links Settings and SoundEffects singletons to this class.
      * Maps are stored in an array whose size can be raised or lowered to support less or more maps as needed.
      * 
      * @param gamePanel GamePanel object that is used to run the game
@@ -31,6 +33,7 @@ public class MapManager {
     public MapManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         settings = Settings.getInstance();
+        sound = SoundEffects.getInstance();
 
         mapList = new Map[2]; // 2 maps, can increase/decrease as needed;
         currMap = 0;
@@ -86,6 +89,8 @@ public class MapManager {
     public void nextMap() {
         // + 1000 score for making it to the next level
         gamePanel.player.score += 1000;
+        gamePanel.uiM.showMessage("+1000 POINTS");
+        sound.play(2);
         // If final level is beaten
         if (currMap == mapList.length-1) {
             gamePanel.stateM.setCurrentState(gameState.WIN);
