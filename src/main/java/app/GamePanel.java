@@ -13,6 +13,7 @@ import entity.Player;
 import input.InputManager;
 import map.MapManager; 
 import pathfinding.Pathfinding;
+import settings.Settings;
 import ui.UIManager;
 
 /**
@@ -37,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
     private final int FPS = 60;
 
     // System
+    Settings settings = Settings.getInstance();
     InputManager inputM = new InputManager(this);
     Thread gameThread;
     public UIManager uiM = new UIManager(this);
@@ -66,14 +68,14 @@ public class GamePanel extends JPanel implements Runnable {
      * Also sets fullscreen or window mode depending on what was saved in the settings file.
      */
     protected void setupGame() {
-        mapM.setupMap();
-        
-        if (uiM.getFullScreen()) {
+        if (settings.getFullScreen()) {
             setFullScreen();
         }
         else {
             setWindowScreen();
         }
+
+        mapM.setupMap();
     }
     
     /**
@@ -92,6 +94,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         scale = 4;
         tileSize = scale * originalTileSize;
+
+        uiM.resetPlayScreen();
+        mapM.resetMap();
+        player.setDefaultValues();
     }
 
     /**
@@ -109,6 +115,10 @@ public class GamePanel extends JPanel implements Runnable {
         screenHeight = tileSize * maxScreenRow; // 576 pix.
         
         gd.setFullScreenWindow(null);
+
+        uiM.resetPlayScreen();
+        mapM.resetMap();
+        player.setDefaultValues();
     }
 
     /**

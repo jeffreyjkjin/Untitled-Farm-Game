@@ -88,18 +88,13 @@ public class SettingsInput extends InputHandler {
                 if (!enter) {
                     sound.play(5);
                     if (position == 2){ // Full screen
-                        // Prevent player from toggling full screen during gameplay
-                        if (!gp.uiM.getFullScreen()){
-                            if (gp.stateM.getPreviousState() != gameState.PAUSE) {
-                                gp.uiM.setFullScreen(true);
-                                gp.setFullScreen();
-                            }
+s                        if (!gp.uiM.getFullScreen()){
+                            gp.uiM.setFullScreen(true);
+                            gp.setFullScreen();
                         }
                         else if (gp.uiM.getFullScreen()){
-                            if (gp.stateM.getPreviousState() != gameState.PAUSE) {
-                                gp.uiM.setFullScreen(false);
-                                gp.setWindowScreen();
-                            }
+                            gp.uiM.setFullScreen(false);
+                            gp.setWindowScreen();
                         }
                     }
                     else if (position == 3) { // Reset high score
