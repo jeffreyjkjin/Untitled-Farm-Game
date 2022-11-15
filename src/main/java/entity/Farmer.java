@@ -18,6 +18,10 @@ import java.lang.Math;
 public class Farmer extends Entity {
 
     GamePanel gamePanel;
+    
+    BufferedImage fall[] = new BufferedImage[10];
+    int fallCounter = 0;
+    int fallSpritePosition = 0;
 
     public int screenX, screenY, startingX, startingY;
     protected final static int frozen = 0; // This and below are for speed
@@ -32,6 +36,7 @@ public class Farmer extends Entity {
     public Farmer(GamePanel gp)
     {
         this.gamePanel = gp;
+
 
         speed = normal;
         hitboxDefaultX = 10;
@@ -57,6 +62,19 @@ public class Farmer extends Entity {
             left2 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerleft2.png"));
             right1 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerright1.png"));
             right2 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerright2.png"));
+
+            fall[0] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall1.png"));
+            fall[1] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall2.png"));
+            fall[2] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall3.png"));
+            fall[3] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall4.png"));
+            fall[4] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall5.png"));
+            fall[5] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall6.png"));
+            fall[6] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall7.png"));
+            fall[7] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall8.png"));
+            fall[8] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall9.png"));
+            fall[9] = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerfall10.png"));
+
+
         } catch(IOException e) 
         {
             e.printStackTrace();
@@ -92,6 +110,8 @@ public class Farmer extends Entity {
         else
         {
             speed = normal;
+            fallCounter = 0;
+            fallSpritePosition = 0;
         }
 
         setAction();
@@ -169,40 +189,56 @@ public class Farmer extends Entity {
 
         screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
         screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
-        
-        switch (direction) {
-            case "up":
-                if (spriteNum == 1) {
-                    image = up1;
-                }
-                else {
-                    image = up2;
-                }
-                break;
-            case "left":
-                if (spriteNum == 1) {
-                    image = left1;
-                }
-                else {
-                    image = left2;
-                }
-                break;
-            case "down":
-                if (spriteNum == 1) {
-                    image = down1;
-                }
-                else {
-                    image = down2;
-                }
-                break;
-            case "right":
-                if (spriteNum == 1) {
-                    image = right1;
-                }
-                else {
-                    image = right2;
-                }
+
+        // Draw farmer normally if they are not frozen
+        if (freezeTimer == 0) {
+            switch (direction) {
+                case "up":
+                    if (spriteNum == 1) {
+                        image = up1;
+                    }
+                    else {
+                        image = up2;
+                    }
+                    break;
+                case "left":
+                    if (spriteNum == 1) {
+                        image = left1;
+                    }
+                    else {
+                        image = left2;
+                    }
+                    break;
+                case "down":
+                    if (spriteNum == 1) {
+                        image = down1;
+                    }
+                    else {
+                        image = down2;
+                    }
+                    break;
+                case "right":
+                    if (spriteNum == 1) {
+                        image = right1;
+                    }
+                    else {
+                        image = right2;
+                    }
+            }
         }
+        else {
+            // If farmer is frozen, play falling animation for farmer
+            fallCounter++;
+            if (fallCounter < 60) {
+                // Farmer falling sprites are stored in an array
+                // Every 6 frames, change the sprite of the farmer falling by incrementing fallPos which sets image to a different falling sprite
+                if (fallCounter % 6 == 0) {
+                    fallSpritePosition++;
+                }
+            }
+            image = fall[fallSpritePosition];
+        }
+
         if (worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.player.screenX &&
         worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.player.screenX &&
         worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.player.screenY &&
