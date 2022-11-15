@@ -107,14 +107,11 @@ public class UIManager {
 
     /**
      * Resets the player's timer and messages on the PlayScreen.
-     * Only runs if the player is in the game state play; otherwise does nothing.
      */
     public void resetPlayScreen() {
-        if (gp.stateM.getCurrentState() == gameState.PLAY) {
-            PlayScreen playScreen = (PlayScreen) ui[gp.stateM.getCurrentState().getValue()];
-            playScreen.resetTimer();
-            playScreen.resetMessage();
-        }
+        PlayScreen playScreen = (PlayScreen) ui[0];
+        playScreen.resetTimer();
+        playScreen.resetMessage();
     }
 
     /**
