@@ -79,6 +79,8 @@ public class Player extends Entity{
         score = 0;
         keyCount = 0;
         direction = "down";
+
+        freezeCooldown = 0;
     }
 
     /**
@@ -343,12 +345,12 @@ public class Player extends Entity{
         }
         graphic2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
-
+    
     /**
      * An ability that freezes the farmers whenever the H key is pressed
      * If any farmers are in the freezeArea, they are frozen for 1 second
      * This ability has a 5 second cooldown
-    */
+     */
     public void freezeFarmers() 
     {
         // Get the array of farmers for the current map
@@ -373,7 +375,6 @@ public class Player extends Entity{
             {
                 f[i].speed = Farmer.frozen;
                 f[i].freezeTimer = 60 + randGen.nextInt(240); // freezes farmer for 60-300 frames (1-5 seconds)
-                freezeCooldown = 300; // 60 frames per second. Ex. freezeCooldown = 300 is a 5 second CD
             }
             // Reset farmers hitbox
             f[i].hitbox.x = f[i].hitboxDefaultX;
