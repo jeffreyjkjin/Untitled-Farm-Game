@@ -63,6 +63,7 @@ public class TitleScreen extends UI {
 
     /**
 	 * Draws the title screen for the player with a menu.
+	 * Animates a farmer and a chicken sprite walking to the right while also scrolling through the background image.
 	 * Menu contains buttons for playing the game, heading to the settings menu, showing the credits and closing the game.
 	 * A selector icon is used to show the user what they have currently selected.
 	 * Also displays the player's highest score.
@@ -112,11 +113,17 @@ public class TitleScreen extends UI {
 		
 		// Title
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
-		g2.setColor(Color.WHITE);
-
+		
 		String title1 = "UNTITLED";
 		String title2 = "FARM GAME";
+		
+		// Drop shadow behind title
+		g2.setColor(Color.BLACK);
+		g2.drawString(title1, getHorizontalCenter(title1, g2, gp.screenWidth) + (5/2) * gp.scale, gp.tileSize * 2 + (5/2) * gp.scale);
+		g2.drawString(title2, getHorizontalCenter(title2, g2, gp.screenWidth) + (5/2) * gp.scale, gp.tileSize * 4 + (5/2) * gp.scale);
 
+		// Actual title
+		g2.setColor(Color.WHITE);
 		g2.drawString(title1, getHorizontalCenter(title1, g2, gp.screenWidth), gp.tileSize * 2);
 		g2.drawString(title2, getHorizontalCenter(title2, g2, gp.screenWidth), gp.tileSize * 4);
 
