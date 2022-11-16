@@ -54,57 +54,63 @@ public class SettingsScreen extends UI {
 		String music = "MUSIC VOLUME";
 		String sound = "SOUND VOLUME";
 		String fullscreen = "FULL SCREEN";
+		String on = "ON";
+		String off = "OFF";
 		String resetScore = "RESET HIGH SCORE";
 		String back = "RETURN";
 
 		// Menu
-		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
+		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 10 * gp.scale));
 
 		// Music Volume
-		g2.drawString(music, 2*gp.tileSize, gp.tileSize * 5);
+		// g2.drawString(music, 2*gp.tileSize, gp.tileSize * 5);
+		g2.drawString(music, getHorizontalCenter(music, g2, gp.screenWidth/2), gp.tileSize * 5);
 
-		g2.drawRect(gp.tileSize*13, gp.tileSize*4, 240, 48); //draw a rect
+		g2.drawRect((gp.screenWidth/2 - 240)/2 + gp.screenWidth/2, gp.tileSize*4, 240, 48); //draw a rect
 		int volumeWidth = 48* this.music.getVolumeScale();
-		g2.fillRect(gp.tileSize*13, gp.tileSize*4, volumeWidth, 48); //fill part of the rect
+		g2.fillRect((gp.screenWidth/2 - 240)/2 + gp.screenWidth/2, gp.tileSize*4, volumeWidth, 48); //fill part of the rect
 
 		if(selectPosition == 0){
-			g2.drawString(">", gp.tileSize, gp.tileSize * 5); //drawing > before the button
+			g2.drawString(">", getHorizontalCenter(music, g2, gp.screenWidth/2) - gp.tileSize, gp.tileSize * 5); //drawing > before the button
 		}
 
 		// Sound Effect Volume
-		g2.drawString(sound, 2*gp.tileSize, gp.tileSize * 13/2);
+		g2.drawString(sound, getHorizontalCenter(music, g2, gp.screenWidth/2), gp.tileSize * 13/2);
 
-		g2.drawRect(gp.tileSize*13, gp.tileSize*11/2, 240, 48); //draw a rect
+		g2.drawRect((gp.screenWidth/2 - 240)/2 + gp.screenWidth/2, gp.tileSize*11/2, 240, 48); //draw a rect
 		int volumeWidth2 = 48* this.sound.getVolumeScale();
-		g2.fillRect(gp.tileSize*13, gp.tileSize*11/2, volumeWidth2, 48); //fill part of the rect
+		g2.fillRect((gp.screenWidth/2 - 240)/2 + gp.screenWidth/2, gp.tileSize*11/2, volumeWidth2, 48); //fill part of the rect
 
 		if(selectPosition == 1){
-			g2.drawString(">", gp.tileSize, gp.tileSize * 13/2); //drawing > before the button
+			g2.drawString(">", getHorizontalCenter(music, g2, gp.screenWidth/2) - gp.tileSize, gp.tileSize * 13/2); //drawing > before the button
 		}
 
 		// Fullscreen
-		g2.drawString(fullscreen, 2*gp.tileSize, gp.tileSize * 16/2);
+		g2.drawString(fullscreen, getHorizontalCenter(music, g2, gp.screenWidth/2), gp.tileSize * 16/2);
+		
 		if(selectPosition == 2){
-			g2.drawString(">", gp.tileSize, gp.tileSize * 16/2); //drawing > before the button
+			g2.drawString(">", getHorizontalCenter(music, g2, gp.screenWidth/2) - gp.tileSize, gp.tileSize * 16/2); //drawing > before the button
 		}
 
 		if(!gp.uiM.getFullScreen()){
-			g2.drawString("OFF",gp.tileSize*12, gp.tileSize*16/2);
+			g2.drawString(off, getHorizontalCenter(off, g2, gp.screenWidth/2) + gp.screenWidth/2, gp.tileSize*16/2);
 		}
 		else {
-			g2.drawString("ON",gp.tileSize*12, gp.tileSize*16/2);
+			g2.drawString(on, getHorizontalCenter(on, g2, gp.screenWidth/2) + gp.screenWidth/2, gp.tileSize*16/2);
 		}
 
 		// Reset High Score
-		g2.drawString(resetScore, 2*gp.tileSize, gp.tileSize * 19/2);
+		g2.drawString(resetScore, getHorizontalCenter(music, g2, gp.screenWidth/2), gp.tileSize * 19/2);
+
 		if(selectPosition == 3){
-			g2.drawString(">", gp.tileSize, gp.tileSize * 19/2); //drawing > before the button
+			g2.drawString(">", getHorizontalCenter(music, g2, gp.screenWidth/2) - gp.tileSize, gp.tileSize * 19/2); //drawing > before the button
 		}
 
 		// Return
-		g2.drawString(back, 2*gp.tileSize, gp.tileSize * 22/2);
+		g2.drawString(back, getHorizontalCenter(music, g2, gp.screenWidth/2), gp.tileSize * 22/2);
+		
 		if(selectPosition == 4){
-			g2.drawString(">", gp.tileSize, gp.tileSize * 22/2); //drawing > before the button
+			g2.drawString(">", getHorizontalCenter(music, g2, gp.screenWidth/2) - gp.tileSize, gp.tileSize * 22/2); //drawing > before the button
 		}
 	}
 }

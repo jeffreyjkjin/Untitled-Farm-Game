@@ -351,17 +351,11 @@ public class Player extends Entity{
     */
     public void freezeFarmers() 
     {
-        /*
-         * TODO - decide if this needs changing as a group
-         * Potentially makes the game too easy since you can freeze at most difficult parts
-         * To fix we could either disable it, make the CD longer, or limit it to once per round
-         * Let me know what you think after you play a bit
-        */
         // Get the array of farmers for the current map
         Farmer[] f = gamePanel.mapM.getMap().farmers;
         // Create a new rectangle for the freeze area
         // Get coordinates of the rectangle and width/height
-        int freezeAreaSize = 7; // Can be any ODD number
+        int freezeAreaSize = 5; // Can be any ODD number
         int freezeWidth = gamePanel.tileSize * freezeAreaSize;
         int freezeHeight = gamePanel.tileSize * freezeAreaSize;
         int tilesToShiftBy = freezeAreaSize / 2;
