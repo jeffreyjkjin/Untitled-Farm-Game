@@ -148,21 +148,13 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
 
             if (delta >= 1) {
-                update();
+                stateM.update();
                 repaint();
                 delta--;
             }
         }
     }
 
-    /**
-     * Updates based on the FPS (currently 60, so 60 times per second)
-     * Need to call all entities that are animate so that they will determine what to do on each frame
-     */
-    private void update() {
-        stateM.update();
-    }
-    
     /**
      * Draws the games sprites onto the screen depending on the games current state.
      * 

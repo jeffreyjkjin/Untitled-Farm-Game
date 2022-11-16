@@ -35,14 +35,14 @@ public class PauseScreen extends UI {
 	 */
 	public void draw(Graphics2D g2) {
 		//Making the screen darker
-		g2.setColor(new Color(0,0,0,150));
+		g2.setColor(new Color(0,0,0, 100));
 		g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
 
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
 		g2.setColor(Color.white);
 
 		String text = "PAUSED";
-		g2.drawString(text, getHorizontalCenter(text, g2, gp.screenWidth), gp.tileSize * 4);
+		g2.drawString(text, getHorizontalCenter(text, g2, gp.screenWidth), gp.tileSize * 3);
 
 		// Menu
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 40));
