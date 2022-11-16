@@ -17,7 +17,13 @@ import app.GamePanel;
  * @see ui.UIManager
  */
 public class TitleScreen extends UI {
-    BufferedImage bgImage;
+    BufferedImage bgImage[] = new BufferedImage[40];
+	BufferedImage currentBGImage;
+	int bgPosition = 0, bgCount = 0;
+
+	BufferedImage chicken1, chicken2, chicken3, chickenImage;
+	BufferedImage farmer1, farmer2, farmer3, farmer4, farmerImage;
+	int spriteCount = 0;
 
     /**
 	 * Calls the UI constructor.
@@ -32,12 +38,27 @@ public class TitleScreen extends UI {
 		totalOptions = 3;
 
         try {
-            bgImage = ImageIO.read(getClass().getResourceAsStream("/screens/titleScreen.png"));
+			chicken1 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenright1.png"));
+			chicken2 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenrightstill.png"));
+			chicken3 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenright2.png"));
+
+			farmer1 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerright1.png"));
+			farmer2 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerrightstill1.png"));
+			farmer3 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerright2.png"));
+			farmer4 = ImageIO.read(getClass().getResourceAsStream("/farmer/farmerrightstill2.png"));
+
+			for (int i = 0; i < 40; i++) {
+				bgImage[i] = ImageIO.read(getClass().getResourceAsStream("/titlebg/" + i + ".png"));
+			}
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
+		currentBGImage = bgImage[0];
+
+		chickenImage = chicken1;
+		farmerImage = farmer1;
     }
 
     /**
@@ -51,11 +72,47 @@ public class TitleScreen extends UI {
 	public void draw(Graphics2D g2){
 		
 		// Background Image
-		g2.drawImage(bgImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		g2.drawImage(currentBGImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		// Changes the background image every 30 frames or 1/2 seconds
+		if (bgCount == 30) {
+			bgPosition++;
+			if (bgPosition >= 40) {
+				bgPosition = 0;
+			}
+			currentBGImage = bgImage[bgPosition];
+			bgCount = 0;
+		}
+		bgCount++;
+
+		// Farmer and Chicken sprites 
+		int spriteSize = gp.tileSize * gp.scale;
+
+		g2.drawImage(chickenImage, (gp.screenWidth/4 + gp.screenWidth/2) - spriteSize/2, (gp.screenHeight - spriteSize)/2 + 3 * gp.tileSize, spriteSize, spriteSize, null);
+		g2.drawImage(farmerImage, gp.screenWidth/4 - spriteSize/2, (gp.screenHeight - spriteSize)/2 + 3 * gp.tileSize, spriteSize, spriteSize, null);
+		// Changes the sprite for the chicken and farmer every 30 frames or 1/2 second.
+		switch(spriteCount) {
+			case 30:
+				chickenImage = chicken1;
+				farmerImage = farmer1;
+				break;
+			case 60:
+				chickenImage = chicken2;
+				farmerImage = farmer2;
+				break;
+			case 90:
+				chickenImage = chicken3;
+				farmerImage = farmer3;
+				break;
+			case 120:
+				chickenImage = chicken2;
+				farmerImage = farmer4;
+				spriteCount = 0;
+		}
+		spriteCount++;
 		
 		// Title
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
-		g2.setColor(Color.black);
+		g2.setColor(Color.WHITE);
 
 		String title1 = "UNTITLED";
 		String title2 = "FARM GAME";
