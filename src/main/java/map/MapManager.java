@@ -35,7 +35,7 @@ public class MapManager {
         settings = Settings.getInstance();
         sound = SoundEffects.getInstance();
 
-        mapList = new Map[3]; // 3 maps, can increase/decrease as needed;
+        mapList = new Map[4]; // 3 maps, can increase/decrease as needed;
         currMap = 0;
 
         loadMapFiles();
@@ -49,10 +49,12 @@ public class MapManager {
         // mapList[0] = new Map(gamePanel, "/levels/barn.txt");
         // mapList[1] = new Map(gamePanel, "/levels/farm.txt");
         // mapList[2] = new Map(gamePanel, "/levels/fishing.txt");
+    	// mapList[3] = new Map(gamePanel, "/levels/forest.txt");
         
-        mapList[0] = new Map(gamePanel, "/levels/fishing.txt");
+        mapList[0] = new Map(gamePanel, "/levels/forest.txt");
         mapList[1] = new Map(gamePanel, "/levels/barn.txt");
         mapList[2] = new Map(gamePanel, "/levels/farm.txt");
+        mapList[3] = new Map(gamePanel, "/levels/fishing.txt");
 
         // add more maps here
     }
