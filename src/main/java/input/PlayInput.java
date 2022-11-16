@@ -120,6 +120,8 @@ public class PlayInput extends InputHandler {
                 {   // Freeze the farmers if ability is not on cooldown and set the new cooldown after
                     sound.play(1);
                     gp.player.freezeFarmers();
+                    // Sets cluck cooldown to 300 frames or 5 seconds
+                    gp.player.freezeCooldown = 300;
                     }
                     break;
 

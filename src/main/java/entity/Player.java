@@ -79,6 +79,8 @@ public class Player extends Entity{
         score = 0;
         keyCount = 0;
         direction = "down";
+
+        freezeCooldown = 0;
     }
 
     /**
@@ -343,20 +345,20 @@ public class Player extends Entity{
         }
         graphic2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
-
+    
     /**
      * An ability that freezes the farmers whenever the H key is pressed
      * If any farmers are in the freezeArea, they are frozen for 1 second
      * This ability has a 5 second cooldown
-    */
+     */
     public void freezeFarmers() 
     {
         /*
-         * TODO - decide if this needs changing as a group
+        * TODO - decide if this needs changing as a group
          * Potentially makes the game too easy since you can freeze at most difficult parts
          * To fix we could either disable it, make the CD longer, or limit it to once per round
          * Let me know what you think after you play a bit
-        */
+         */
         // Get the array of farmers for the current map
         Farmer[] f = gamePanel.mapM.getMap().farmers;
         // Create a new rectangle for the freeze area
@@ -379,7 +381,6 @@ public class Player extends Entity{
             {
                 f[i].speed = Farmer.frozen;
                 f[i].freezeTimer = 60 + randGen.nextInt(240); // freezes farmer for 60-300 frames (1-5 seconds)
-                freezeCooldown = 300; // 60 frames per second. Ex. freezeCooldown = 300 is a 5 second CD
             }
             // Reset farmers hitbox
             f[i].hitbox.x = f[i].hitboxDefaultX;
