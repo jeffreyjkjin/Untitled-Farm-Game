@@ -3,6 +3,10 @@ package ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import app.GamePanel;
 import audio.Music;
@@ -19,10 +23,14 @@ public class SettingsScreen extends UI {
 	Music music;
 	SoundEffects sound;
 
+	BufferedImage bgImage1, bgImage2, bgImage3, bgImage4, currentBGImage;
+	int bgCount = 0;
+
 	/**
 	 * Calls the UI constructor.
 	 * Sets the total number of options to four.
-	 * Links Music and SoundEffects singletons to this class;
+	 * Links Music and SoundEffects singletons to this class.
+	 * Also loads background images.
 	 * 
 	 * @param gp GamePanel object that is used to run the game
 	 */
@@ -33,16 +41,50 @@ public class SettingsScreen extends UI {
 		sound = SoundEffects.getInstance();
 
 		totalOptions = 4;
+
+		try {
+			bgImage1 = ImageIO.read(getClass().getResourceAsStream("/settingsbg/1.png"));
+			bgImage2 = ImageIO.read(getClass().getResourceAsStream("/settingsbg/2.png"));
+			bgImage3 = ImageIO.read(getClass().getResourceAsStream("/settingsbg/3.png"));
+			bgImage4 = ImageIO.read(getClass().getResourceAsStream("/settingsbg/4.png"));
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		currentBGImage = bgImage1;
     }
     
     /**
 	 * Draws the settings menu for the player.
+	 * Also animates background images.
 	 * Menu contains options to change the music and sound effect volumes, toggle fullscreen mode, resetting the highest score and returning to the main menu.
 	 * A selector icon is used to show the user what they have currently selected.
 	 * 
 	 * @param g2 the main graphics object that is used to draw the UI to the screen
 	 */
 	public void draw(Graphics2D g2) {
+		// Background image
+		g2.drawImage(currentBGImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		
+		// Change background every 30 frames or 1/2 seconds
+		switch(bgCount) {
+			case 30:
+				currentBGImage = bgImage1;
+				break;
+			case 60:
+				currentBGImage = bgImage2;
+				break;
+			case 90:
+				currentBGImage = bgImage3;
+				break;
+			case 120:
+				currentBGImage = bgImage4;
+				bgCount = 0;
+				break;
+		}
+		bgCount++;
+		
 		// Settings
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
 		g2.setColor(Color.white);
