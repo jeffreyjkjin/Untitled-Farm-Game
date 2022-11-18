@@ -12,6 +12,7 @@ public class SettingsTest {
         Settings settings = Settings.getInstance();
         Random randGen = new Random();
 
+        // Randomly generate values to write and read from the config file
         int musicVolume = randGen.nextInt(6);
         int soundVolume = randGen.nextInt(6);
         Boolean fullScreen = randGen.nextBoolean();
