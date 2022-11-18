@@ -26,7 +26,7 @@ public class OBJ_Egg extends SuperObject {
 	/**
 	 * Creates a new egg object and loads its sprite.
 	 * Links Sound singleton to this class;
-	 * Initializes an expireTime and randomly generates a time between 20-50 which is how long the egg will last before despawning.
+	 * Initializes an expireTime and randomly generates a time between 30-90 which is how long the egg will last before despawning.
 	 */
 	public OBJ_Egg() {
 		name = "Egg";
@@ -40,7 +40,7 @@ public class OBJ_Egg extends SuperObject {
 
 		sound = SoundEffects.getInstance();
 
-		expireTime = (double) (20 + randGen.nextInt(30));
+		expireTime = (double) (30 + randGen.nextInt(60));
 	}
 
 	/**

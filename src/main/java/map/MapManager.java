@@ -46,14 +46,9 @@ public class MapManager {
      * This method can be modified to add new maps.
      */
     private void loadMapFiles() {
-        // mapList[0] = new Map(gamePanel, "/levels/barn.txt");
-        // mapList[1] = new Map(gamePanel, "/levels/farm.txt");
-        // mapList[2] = new Map(gamePanel, "/levels/fishing.txt");
-    	// mapList[3] = new Map(gamePanel, "/levels/forest.txt");
-        
-        mapList[0] = new Map(gamePanel, "/levels/forest.txt");
-        mapList[1] = new Map(gamePanel, "/levels/barn.txt");
-        mapList[2] = new Map(gamePanel, "/levels/farm.txt");
+        mapList[0] = new Map(gamePanel, "/levels/barn.txt");
+        mapList[1] = new Map(gamePanel, "/levels/farm.txt");
+        mapList[2] = new Map(gamePanel, "/levels/forest.txt");
         mapList[3] = new Map(gamePanel, "/levels/fishing.txt");
 
         // add more maps here
