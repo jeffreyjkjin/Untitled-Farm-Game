@@ -382,3 +382,7 @@ true
 true
 192.png
 true
+193.png
+true
+194.png
+true
