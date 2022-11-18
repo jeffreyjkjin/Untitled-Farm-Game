@@ -1,19 +1,21 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import app.GamePanel;
 import entity.Farmer;
 import entity.Player;
 import input.InputHandler;
 
-class PlayerTest {
-	
+
+class PlayerTest  {
 
 
-	@Test
+	@Test 
 	void testSetDefaultValues() {
 		
 		//given
@@ -64,14 +66,6 @@ class PlayerTest {
 		p.farmerInteraction(0);
 		
 		//then
-		assertEquals(p.health, 2);
-		
+		assertEquals(2, p.health);
 	}
-
-
-	@Test
-	void testFreezeFarmers() {
-		fail("Not yet implemented");
-	}
-
 }

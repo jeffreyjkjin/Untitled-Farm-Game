@@ -187,6 +187,9 @@ public class CollisionChecker {
 				farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
 				farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
 			}
+			// Reset entities hitbox in case no farmers exist on the map
+			entity.hitbox.x = entity.hitboxDefaultX;
+			entity.hitbox.y = entity.hitboxDefaultY;
 		}
 
 		return index;
