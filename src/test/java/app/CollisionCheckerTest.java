@@ -1,52 +1,158 @@
 package app;
 
 import static org.junit.Assert.*;
-import org.junit.Test;
 
-import entity.Entity;
+import java.awt.Rectangle;
+
+import org.junit.Test;
+import org.junit.Before;
+
+import entity.*;
 import tile.Tile;
 
+import javax.swing.JFrame;
+
+import app.GamePanel;
+import app.StateManager.gameState;
+import input.PlayInput;
+import object.SuperObject;
+
 public class CollisionCheckerTest {
-    private Entity entity;
-    private GamePanel gp;
+    App app;
+    GamePanelHelper gp;
+    Player player;
+    CollisionChecker colcheck;
     
+    public class GamePanelHelper extends GamePanel {
+        public void setupGamePanel() {
+            mapM.setupMap();
+            setWindowScreen();
+            startGameThread();
+        }
+    }
+    
+    public class App {
+	
+        public JFrame window;
+        public GamePanelHelper gp;
+        
+        public App() {
+            window = new JFrame();
+            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            window.setResizable(false);
+            window.setTitle("Untitled Farm Game");
+    
+            gp = new GamePanelHelper();
+            window.add(gp);
+    
+            window.pack();
+    
+            window.setLocationRelativeTo(null);
+            window.setVisible(true);
+            
+            gp.setupGamePanel();
+    
+            System.out.println("Hello World!");
+        }
+    }
+
+    @Before
+    public void setupTests() {
+        // Creates an instance of the game
+        app = new App();
+        gp = app.gp;
+        colcheck = new CollisionChecker(gp);
+
+        gp.stateM.setCurrentState(gameState.PLAY);
+        player = gp.player;
+        player.setDefaultValues();
+
+        player.hitbox = new Rectangle(0,0,48,48); //set player's hitbox to be the whole tile
+
+    }
+
     @Test
-    public void ShouldTurnCollisionOn(){
-        CollisionChecker2 colcheck = new CollisionChecker2(gp);
-        entity = new EntityMock();
-        //when
-        colcheck.checkTileCollision(entity, true, false);
+    public void CheckTileCollisionEqualsTrue() {
+
+        //when (the tile above spawn in barn map is solid)
+        player.direction = "up";
+        colcheck.checkTileCollision(player);
 
         //then
-        assertTrue(entity.collisionOn);
+        assertTrue(player.collisionOn);
+        
+    }
+
+    @Test
+    public void CheckTileCollisionEqualsFalse() {
+        //the tiles in these 3 direction are not solid
+        player.direction = "left";
+        colcheck.checkTileCollision(player);
+        boolean leftcol = player.collisionOn;
+
+        player.direction = "right";
+        colcheck.checkTileCollision(player);
+        boolean rightcol = player.collisionOn;
+
+        player.direction = "down";
+        colcheck.checkTileCollision(player);
+        boolean downcol = player.collisionOn;
+
+        //then
+        assertFalse(rightcol||leftcol||downcol);
+        
+    }
+    
+    @Test
+    public void playerCollideWithKey() {
+        SuperObject[] objects = gp.mapM.getMap().objects;
+
+        // Searches for first key on the map and sets players location to it
+        for (int i = 0; i < objects.length; i++) {
+            if (objects[i] != null && objects[i].name == "Key") {
+                player.worldX = objects[i].worldX;
+                player.worldY = objects[i].worldY;
+                break;
+            }
+        }
+
+        int i = colcheck.checkObjectCollision(player, true);
+        //confirms that it collides with the object and returns and int
+        assertNotEquals(999, i);
+        
+    }
+
+    @Test
+    public void playerCollideWithEgg() {
+        SuperObject[] objects = gp.mapM.getMap().objects;
+
+        // Searches for first key on the map and sets players location to it
+        for (int i = 0; i < objects.length; i++) {
+            if (objects[i] != null && objects[i].name == "Egg") {
+                player.worldX = objects[i].worldX;
+                player.worldY = objects[i].worldY;
+                break;
+            }
+        }
+
+        int i = colcheck.checkObjectCollision(player, true);
+        //confirms that it collides with the object and returns and int
+        assertNotEquals(999, i);
+        
+    }
+
+    @Test
+    public void playerCollideWithFarmer() {
+        Farmer farmer = gp.mapM.getMap().farmers[0];
+        Farmer[] farmers = gp.mapM.getMap().farmers;
+
+        player.worldX = farmer.worldX;
+        player.worldY = farmer.worldY;
+
+        int i = colcheck.checkEntityCollision(player, farmers);
+        //confirms that it collides with the farmer and returns and int
+        assertNotEquals(999, i);
         
     }
 }
 
-class CollisionChecker2 extends CollisionChecker{
-    public CollisionChecker2(GamePanel gp){
-        super(gp);
-    }
-
-    public void checkTileCollision(Entity entity, boolean bool1, boolean bool2){
-        TileMock tile1 = new TileMock();
-        tile1.collision = bool1;
-        TileMock tile2 = new TileMock();
-        tile2.collision = bool2;
-        if(tile1.collision || tile2.collision){
-			entity.collisionOn = true;
-		}
-    }
-}
-
-class TileMock extends Tile{
-    public boolean collision = false;
-
-    public TileMock(){}
-}
-
-class EntityMock extends Entity{
-    public EntityMock(){
-        collisionOn = false;
-    }
-}
