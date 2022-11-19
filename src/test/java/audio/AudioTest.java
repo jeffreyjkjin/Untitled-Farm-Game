@@ -1,87 +1,59 @@
 package audio;
 
 import static org.junit.Assert.*;
+
+import org.junit.Before;
 import org.junit.Test;
 
 public class AudioTest {
 
-    @Test
-    public void LowerVolumeTest(){
-        Audio audio = new Audio2();
-
-        //when
-        audio.lowerVolume();
-
-        //then
-        assertEquals(audio.volumeScale,2);
-    }
-
-    @Test
-    public void IncreaseVolumeTest(){
-        Audio audio = new Audio2();
-
-        //when
-        audio.increaseVolume();
-
-        //then
-        assertEquals(audio.volumeScale,4);
-    }
-
-    @Test
-    public void ShouldBe0(){
-        Audio audio = new Audio2();
-        audio.volumeScale = 0;
-
-        //when
-        audio.lowerVolume();
-
-        //then
-        assertEquals(audio.volumeScale,0);
-    }
-
-    @Test
-    public void ShouldBe5(){
-        Audio audio = new Audio2();
-        audio.volumeScale = 5;
-
-        //when
-        audio.increaseVolume();
-
-        //then
-        assertEquals(audio.volumeScale,5);
-    }
-
-    @Test
-    public void EqualsVolumeScale(){
-        Audio audio = new Audio2();
-        
-        //when
-        int result = audio.getVolumeScale();
-
-        //then
-        assertEquals(result, 3);
-    }
-
-}
-
-class Audio2 extends Audio{
-    public Audio2(){
-        super();
-    }
-
-    public void lowerVolume() {
-        if (volumeScale > 0) {
-            volumeScale--;
+    class AudioHelper extends Audio{
+        public AudioHelper() {
+            super();
         }
     }
+    
+    AudioHelper audio;
 
-    public void increaseVolume() {
-        if (volumeScale < 5) {
-            volumeScale++;
+    @Before
+    public void setupTests() {
+        audio = new AudioHelper();
+    }
+
+    @Test
+    public void decreaseVolumeScaleOnce() {
+        audio.lowerVolume();
+
+        assertEquals(2, audio.volumeScale);
+    }
+
+    @Test
+    public void increaseVolumeScaleOnce() {
+        audio.increaseVolume();
+
+        assertEquals(4, audio.volumeScale);
+    }
+
+    @Test
+    public void decreaseVolumeScaleManyTimes(){
+        //when
+        for (int i = 0; i < 10; i++) {
+            audio.lowerVolume();
         }
+
+        //then
+        assertEquals(0, audio.volumeScale);
     }
 
-    public int getVolumeScale() {
-        return volumeScale;
+    @Test
+    public void increaseVolumeScaleManyTimes(){
+        //when
+        for (int i = 0; i < 10; i++) {
+            audio.increaseVolume();
+        }
+
+        //then
+        assertEquals(5, audio.volumeScale);
     }
+
 }
