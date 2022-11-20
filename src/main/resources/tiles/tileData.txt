@@ -1,3 +1,5 @@
+000.png
+false
 001.png
 false
 002.png
@@ -29,7 +31,7 @@ false
 015.png
 false
 016.png
-false
+true
 017.png
 true
 018.png
@@ -175,7 +177,7 @@ true
 088.png
 true
 089.png
-true
+false
 090.png
 false
 091.png
@@ -193,7 +195,7 @@ false
 097.png
 false
 098.png
-false
+true
 099.png
 true
 100.png
@@ -223,7 +225,7 @@ true
 112.png
 true
 113.png
-true
+false
 114.png
 false
 115.png
@@ -241,7 +243,7 @@ false
 121.png
 false
 122.png
-false
+true
 123.png
 true
 124.png
@@ -281,9 +283,9 @@ true
 141.png
 true
 142.png
-true
-143.png
 false
+143.png
+true
 144.png
 true
 145.png
@@ -305,7 +307,7 @@ true
 153.png
 true
 154.png
-true
+false
 155.png
 false
 156.png
@@ -317,7 +319,7 @@ false
 159.png
 false
 160.png
-false
+true
 161.png
 true
 162.png
@@ -333,7 +335,7 @@ true
 167.png
 true
 168.png
-true
+false
 169.png
 false
 170.png
@@ -355,7 +357,7 @@ false
 178.png
 false
 179.png
-false
+true
 180.png
 true
 181.png
@@ -383,6 +385,4 @@ true
 192.png
 true
 193.png
-true
-194.png
 true
