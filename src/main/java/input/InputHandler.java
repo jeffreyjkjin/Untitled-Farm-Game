@@ -62,8 +62,12 @@ public abstract class InputHandler implements KeyListener {
             // Movement
             case KeyEvent.VK_W:
             case KeyEvent.VK_UP:
+            case KeyEvent.VK_A:
+            case KeyEvent.VK_LEFT:
             case KeyEvent.VK_S:
             case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_D:
+            case KeyEvent.VK_RIGHT:
                 up = false;
                 left = false;
                 down = false;
