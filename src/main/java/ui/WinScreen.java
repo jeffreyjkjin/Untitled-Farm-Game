@@ -16,7 +16,12 @@ import app.GamePanel;
  * @see ui.UIManager
  */
 public class WinScreen extends UI {
-    BufferedImage bgImage;
+    BufferedImage bgImage[] = new BufferedImage[64];
+	BufferedImage currentBGImage;
+	int bgPosition = 0, bgCount = 0;
+
+	BufferedImage chicken1, chicken2, chicken3, chicken4, chickenImage;
+	int spriteCount = 0;
 
     /**
 	 * Calls the UI constructor.
@@ -31,11 +36,21 @@ public class WinScreen extends UI {
 		totalOptions = 2;
 
         try {
-            bgImage = ImageIO.read(getClass().getResourceAsStream("/screens/winScreen.png"));
+			for (int i = 0; i < 64; i++) {
+				bgImage[i] = ImageIO.read(getClass().getResourceAsStream("/winbg/" + i + ".png"));
+			}
+
+			chicken1 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenup1.png"));
+			chicken2 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenupstill1.png"));
+			chicken3 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenup2.png"));
+			chicken4 = ImageIO.read(getClass().getResourceAsStream("/chicken/chickenupstill2.png"));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+
+		chickenImage = chicken1;
+		currentBGImage = bgImage[0];
     }
     
 	/**
@@ -49,8 +64,40 @@ public class WinScreen extends UI {
 	public void draw(Graphics2D g2) {
 		
 		// Background Image
-		g2.drawImage(bgImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
-		
+		g2.drawImage(currentBGImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		// Changes the background image every 15 frames or 1/4 seconds
+		if (bgCount == 15) {
+			bgPosition++;
+			if (bgPosition >= 64) {
+				bgPosition = 0;
+			}
+			currentBGImage = bgImage[bgPosition];
+			bgCount = 0;
+		}
+		bgCount++;
+
+
+		// Chicken sprites 
+		int spriteSize = gp.tileSize * gp.scale;
+
+		g2.drawImage(chickenImage, (gp.screenWidth - spriteSize)/2, (gp.screenHeight- spriteSize)/2, spriteSize, spriteSize, null);
+		// Changes the sprite for the chicken every 15 frames or 1/4 second.
+		switch(spriteCount) {
+			case 15:
+				chickenImage = chicken1;
+				break;
+			case 30:
+				chickenImage = chicken2;
+				break;
+			case 45:
+				chickenImage = chicken3;
+				break;
+			case 60:
+				chickenImage = chicken4;
+				spriteCount = 0;
+		}
+		spriteCount++;
+
 		// Game Over
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
 		g2.setColor(Color.white);
