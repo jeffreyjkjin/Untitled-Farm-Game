@@ -2,87 +2,56 @@ package ui;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.junit.Before;
 
 import app.GamePanel;
 
 public class UITest {
-    private GamePanel gp;
-
-    @Test
-    public void ShouldBe2Mover(){
-        UI uitest = new UI2(gp);
-        uitest.selectPosition = 0;
-
-        //when
-        uitest.moveSelectorUp();
-
-        //then
-        assertEquals(uitest.selectPosition, 2);
-    }
-
-    @Test
-    public void ShouldBe0Mover(){
-        UI uitest = new UI2(gp);
-        uitest.selectPosition = 2;
-
-        //when
-        uitest.moveSelectorDown();
-
-        //then
-        assertEquals(uitest.selectPosition, 0);
-    }
-
-    @Test
-    public void ShouldBe1Getter(){
-        UI uitest = new UI2(gp);
-        uitest.selectPosition = 1;
-
-        //when
-        uitest.getSelectorPosition();
-
-        //then
-        assertEquals(uitest.selectPosition, 1);
-    }
-
-    @Test
-    public void ShouldBe0Resetter(){
-        UI uitest = new UI2(gp);
-        uitest.selectPosition = 1;
-
-        //when
-        uitest.resetSelectorPosition();;
-
-        //then
-        assertEquals(uitest.selectPosition, 0);
-    }
-}
-
-class UI2 extends UI{ 
-    public UI2(GamePanel gp) {
-        super(gp);
-
-        totalOptions = 2;
-    }
-
-    public void moveSelectorUp() {
-        selectPosition--;
-        if (selectPosition < 0) {
-            selectPosition = totalOptions;
+    public class UIHelper extends UI {
+        public UIHelper(GamePanel gp) {
+            super(gp);
+            totalOptions = 5;
         }
     }
 
-    public void moveSelectorDown() {
-        selectPosition++;
-        if (selectPosition > totalOptions) {
-            selectPosition = 0;
+    UIHelper ui;
+    GamePanel gp;
+
+    @Before
+    public void setupTests() {
+        ui = new UIHelper(gp);
+    }
+
+    @Test
+    public void moveSelectorUpOnce() {
+        ui.moveSelectorUp();
+
+        assertEquals(5, ui.getSelectorPosition());
+    }
+
+    @Test
+    public void moveSelectorDownOnce() {
+        ui.moveSelectorDown();
+
+        assertEquals(1, ui.getSelectorPosition());
+    }
+
+    @Test
+    public void moveSelectorUpManyTimes() {
+        for (int i = 0; i < 10; i++) {
+            ui.moveSelectorUp();
         }
+
+        assertEquals(2, ui.getSelectorPosition());
     }
 
-    public int getSelectorPosition() {
-        return selectPosition;
+    @Test
+    public void moveSelectorDownManyTimes() {
+        for (int i = 0; i < 10; i++) {
+            ui.moveSelectorDown();
+        }
+
+        assertEquals(4, ui.getSelectorPosition());
     }
 
-    public void resetSelectorPosition() {
-        selectPosition = 0;
-    }
 }
