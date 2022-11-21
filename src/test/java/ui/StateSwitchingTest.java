@@ -1,13 +1,13 @@
 package ui;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.awt.event.KeyEvent;
 
-import org.junit.jupiter.api.Test;
 
 import app.GamePanel;
 import app.StateManager;
@@ -15,10 +15,10 @@ import app.StateManager.gameState;
 import map.MapManager;
 import object.OBJ_Gate;
 
-class StateSwitchingTest {
+public class StateSwitchingTest {
 
 	@Test
-	void startWithTitle() {
+	public void startWithTitle() {
 		GamePanel gp = new GamePanel();
 		
 		assertEquals(gp.stateM.getCurrentState(), gameState.TITLE);
@@ -26,7 +26,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void TitletoPlay() {
+	public void TitletoPlay() {
 		//when
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.TITLE);
@@ -45,7 +45,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void TitletoSetting() {
+	public void TitletoSetting() {
 
 		//when
 		GamePanel gp = new GamePanel();
@@ -66,7 +66,7 @@ class StateSwitchingTest {
 
 	
 	@Test
-	void TitletoCredit() {
+	public void TitletoCredit() {
 		//when
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.TITLE);
@@ -85,7 +85,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void PlaytoPause() {
+	public void PlaytoPause() {
 		//when
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.PLAY);
@@ -102,7 +102,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void PlaytoWin() {
+	public void PlaytoWin() {
 		//given
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.PLAY);
@@ -120,7 +120,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void PlaytoLose() {
+	public void PlaytoLose() {
 		//given
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.PLAY);
@@ -136,7 +136,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void PausetoPlay() { 
+	public void PausetoPlay() { 
 		//when
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.PAUSE);
@@ -153,7 +153,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void PausetoSetting() {
+	public void PausetoSetting() {
 		//when
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.PAUSE);
@@ -173,7 +173,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void PausetoTitle() {
+	public void PausetoTitle() {
 		//when
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.PAUSE);
@@ -193,7 +193,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void WintoTitle() {
+	public void WintoTitle() {
 		
 		//when
 		GamePanel gp = new GamePanel();
@@ -214,7 +214,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void WintoPlay() {
+	public void WintoPlay() {
 		//when
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.WIN);
@@ -234,7 +234,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void LosetoTitle() { 
+	public void LosetoTitle() { 
 		//when
 		GamePanel gp = new GamePanel();
 		gp.stateM.setCurrentState(gameState.LOSE);
@@ -254,7 +254,7 @@ class StateSwitchingTest {
 	}
 	
 	@Test
-	void LosetoPlay() { 
+	public void LosetoPlay() { 
 		
 		//when
 		GamePanel gp = new GamePanel();
