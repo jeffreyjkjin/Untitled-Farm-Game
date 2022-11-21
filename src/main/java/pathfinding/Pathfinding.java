@@ -104,6 +104,12 @@ public class Pathfinding {
      */
     public void setNodes(int startCol, int startRow, int goalCol, int goalRow)
     {
+        // Goal is out of the map, so do nothing
+        if (goalCol > gp.mapM.getMap().maxWorldCol || goalCol < 0 || goalRow > gp.mapM.getMap().maxWorldRow || goalRow < 0)
+        {
+            return;
+        }
+
         resetNodes();
         // Variables to store where we are on the map and in the algorithm for later
         start = node[startCol][startRow];
