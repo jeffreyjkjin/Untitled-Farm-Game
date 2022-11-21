@@ -98,6 +98,7 @@ public class SettingsInput extends InputHandler {
                         }
                     }
                     else if (position == 3) { // Reset high score
+                        sound.play(10);
                         settings.setHighScore(0);
                         settings.saveConfigFile();
                     }

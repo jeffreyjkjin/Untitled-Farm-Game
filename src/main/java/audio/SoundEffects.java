@@ -23,7 +23,7 @@ public class SoundEffects extends Audio {
     private SoundEffects() {
         super();
 
-        audioURL = new URL[10]; // 10 sound effects, increase as needed
+        audioURL = new URL[11]; // 11 sound effects, increase as needed
         audioURL[0] = getClass().getResource("/sounds/cluck1.wav");
         audioURL[1] = getClass().getResource("/sounds/cluck2.wav");
         audioURL[2] = getClass().getResource("/sounds/pickup.wav");
@@ -33,6 +33,8 @@ public class SoundEffects extends Audio {
         audioURL[6] = getClass().getResource("/sounds/eggcracking.wav");
         audioURL[7] = getClass().getResource("/sounds/trap.wav");
         audioURL[8] = getClass().getResource("/sounds/unlockgate.wav");
+        audioURL[9] = getClass().getResource("/sounds/konamicode.wav");
+        audioURL[10] = getClass().getResource("/sounds/resetscore.wav");
 
         volumeScale = settings.getSoundVolume();
     }

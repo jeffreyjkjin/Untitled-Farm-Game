@@ -147,6 +147,7 @@ public class PlayInput extends InputHandler {
                 konamiCount = 0;
                 konamiActivate = true;
                 gp.player.health += 99;
+                sound.play(9);
                 gp.uiM.showMessage("+99 HP");
             }
         }
