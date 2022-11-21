@@ -20,8 +20,8 @@ public class MapManager {
     Settings settings;
     SoundEffects sound;
     GamePanel gamePanel;
-    Map mapList[];
-    int currMap;
+    public Map mapList[];
+    public int currMap;
 
     /**
      * Constructs a new MapManager object and loads map files.

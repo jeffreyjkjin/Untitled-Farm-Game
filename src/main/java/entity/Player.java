@@ -207,7 +207,7 @@ public class Player extends Entity{
      * 
      * @param index index of the object in the object array that the Player is interating with
      */
-    private void objectInteraction(int index) {
+    public void objectInteraction(int index) {
         if (index != 999) {
             String objectName = gamePanel.mapM.getMap().objects[index].name;
             
