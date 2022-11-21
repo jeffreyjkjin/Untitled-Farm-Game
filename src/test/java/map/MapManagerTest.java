@@ -76,7 +76,7 @@ public class MapManagerTest {
         }
 
         assertEquals(gameState.WIN, gp.stateM.getCurrentState());
-        assertEquals(4000, gp.player.score);
+        assertEquals(6000, gp.player.score);
     }
 
     @Test
