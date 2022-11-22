@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // System
     Settings settings = Settings.getInstance();
-    InputManager inputM = new InputManager(this);
+    public InputManager inputM = new InputManager(this);
     Thread gameThread;
     public UIManager uiM = new UIManager(this);
     public StateManager stateM = new StateManager(this);

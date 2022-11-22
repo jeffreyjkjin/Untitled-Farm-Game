@@ -80,7 +80,8 @@ public class CollisionCheckerTest {
 
         //then
         assertTrue(player.collisionOn);
-        
+
+        System.exit(0);        
     }
 
     @Test
@@ -100,6 +101,8 @@ public class CollisionCheckerTest {
 
         //then
         assertFalse(rightcol||leftcol||downcol);
+
+        System.exit(0);
         
     }
     
@@ -119,6 +122,8 @@ public class CollisionCheckerTest {
         int i = colcheck.checkObjectCollision(player, true);
         //confirms that it collides with the object and returns and int
         assertNotEquals(999, i);
+
+        System.exit(0);
         
     }
 
@@ -138,7 +143,8 @@ public class CollisionCheckerTest {
         int i = colcheck.checkObjectCollision(player, true);
         //confirms that it collides with the object and returns and int
         assertNotEquals(999, i);
-        
+
+        System.exit(0);        
     }
 
     @Test
@@ -153,6 +159,7 @@ public class CollisionCheckerTest {
         //confirms that it collides with the farmer and returns and int
         assertNotEquals(999, i);
         
+        System.exit(0);
     }
 }
 

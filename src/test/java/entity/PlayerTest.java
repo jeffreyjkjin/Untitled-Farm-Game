@@ -269,4 +269,29 @@ public class PlayerTest {
         assertEquals(2, player.health);
         assertEquals(gp.mapM.getMap().playerStartX, player.worldX);
     }
+
+    @Test
+    public void playerFreezesFarmerWhileInRange() {
+        Farmer farmer = gp.mapM.getMap().farmers[0];
+
+        player.worldX = farmer.worldX;
+        player.worldY = farmer.worldY - 48;
+
+        player.freezeFarmers();
+
+        assertTrue(farmer.freezeTimer >= 60);
+    }
+
+    @Test
+    public void playerFreezesFarmerWhileNotInRange() {
+        Farmer farmer = gp.mapM.getMap().farmers[0];
+
+        // Set player to be more than 5 tiles away from farmer
+        player.worldX = farmer.worldX;
+        player.worldY = farmer.worldY - 241;
+
+        player.freezeFarmers();
+
+        assertTrue(farmer.freezeTimer == 0);
+    }
 }
