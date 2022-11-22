@@ -126,4 +126,21 @@ public class UIManager {
             playScreen.showMessage(message);
         }
     }
+
+    /**
+     * If player enters win or lose screen, show new high score message if player's score is higher than the saved score.
+     * 
+     * @param showHighScore boolean value for whether if player's score is a new high score
+     */
+    public void showNewHighScore(boolean showHighScore) {
+        gameState currState = gp.stateM.getCurrentState();
+        if (currState == gameState.WIN) {
+            WinScreen winScreen = (WinScreen) ui[currState.getValue()];
+            winScreen.showNewHighScore(showHighScore);
+        }
+        else if (currState == gameState.LOSE) {
+            LoseScreen loseScreen = (LoseScreen) ui[currState.getValue()];
+            loseScreen.showNewHighScore(showHighScore);
+        }
+    }
 }

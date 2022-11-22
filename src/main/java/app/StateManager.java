@@ -90,9 +90,15 @@ public class StateManager {
                 music.play(1);
                 bgMusic2 = true;
             case LOSE:
+                boolean showHighScore;
                 if (gp.player.score > settings.getHighScore()) {
                     settings.setHighScore(gp.player.score);
+                    showHighScore = true;
                 }
+                else {
+                    showHighScore = false;
+                }
+                gp.uiM.showNewHighScore(showHighScore);
                 break;
             case PLAY:
             case PAUSE:
