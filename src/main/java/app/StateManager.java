@@ -122,6 +122,30 @@ public class StateManager {
     }
 
     /**
+     * Resets the game's map, player and ui to default values.
+     * Changes game state and input to play.
+     */
+    public void retryGame() {
+        gp.mapM.resetMap();
+        gp.uiM.resetPlayScreen();
+        gp.player.setDefaultValues();
+        
+        prevState = currState;
+        currState = gameState.PLAY;
+
+        gp.inputM.changeInput(currState);
+
+        if (bgMusic2) {
+            music.stop();
+            bgMusic2 = false;
+        }
+        if (!bgMusic1) {
+            music.play(0);
+            bgMusic1 = true;
+        }                       
+    }
+
+    /**
      * @return the user's current game state
      */
     public gameState getCurrentState() {
