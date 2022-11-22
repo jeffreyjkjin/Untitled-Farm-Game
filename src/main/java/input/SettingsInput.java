@@ -86,15 +86,20 @@ public class SettingsInput extends InputHandler {
             // Enter
             case KeyEvent.VK_ENTER:
                 if (!enter) {
-                    sound.play(5);
                     if (position == 2){ // Full screen
-                        if (!gp.uiM.getFullScreen()){
-                            gp.uiM.setFullScreen(true);
-                            gp.setFullScreen();
+                        if (gp.stateM.getPreviousState() == gameState.PAUSE) {
+                            sound.play(11);
                         }
-                        else if (gp.uiM.getFullScreen()){
-                            gp.uiM.setFullScreen(false);
-                            gp.setWindowScreen();
+                        else {
+                            sound.play(5);
+                            if (!gp.uiM.getFullScreen()){
+                                gp.uiM.setFullScreen(true);
+                                gp.setFullScreen();
+                            }
+                            else if (gp.uiM.getFullScreen()){
+                                gp.uiM.setFullScreen(false);
+                                gp.setWindowScreen();
+                            }
                         }
                     }
                     else if (position == 3) { // Reset high score
