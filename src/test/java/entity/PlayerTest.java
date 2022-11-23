@@ -187,7 +187,7 @@ public class PlayerTest {
         player.update();
         player.input.down = false;
 
-        assertEquals(2, player.health);
+        assertEquals(health, player.health);
         assertEquals(score, player.score);
     }
 
