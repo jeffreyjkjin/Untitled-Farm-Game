@@ -20,3 +20,10 @@ To test our game, navigate to the source directory of the game in the terminal. 
 mvn test
 ```
 in order to run the games JUnit tests.
+
+## Javadocs
+To generate Javadocs documents, enter the base directory of the game in the terminal. Then, enter
+```
+mvn javadoc:javadoc
+```
+to create the Javadocs site. The `index.html` file is located in `${base}/target/site/apidocs`.
