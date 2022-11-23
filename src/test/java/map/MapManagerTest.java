@@ -62,21 +62,25 @@ public class MapManagerTest {
 
     @Test
     public void movePlayerToNextLevel() {
+        int score = gp.player.score + 1000;
+        
         mapM.nextMap();
 
-        assertEquals(1000, gp.player.score);
+        assertEquals(score, gp.player.score);
         assertEquals("2", mapM.getMap().levelName);
     }
 
     @Test
     public void playerFinishesLastLevel() {
+        int score = gp.player.score + 6000;
+        
         // Move player through every map
         for (int i = 0; i < 6; i++) {
             mapM.nextMap();
         }
 
         assertEquals(gameState.WIN, gp.stateM.getCurrentState());
-        assertEquals(6000, gp.player.score);
+        assertEquals(score, gp.player.score);
     }
 
     @Test
