@@ -10,9 +10,7 @@ import java.awt.event.KeyEvent;
 
 
 import app.GamePanel;
-import app.StateManager;
 import app.StateManager.gameState;
-import map.MapManager;
 import object.OBJ_Gate;
 
 public class StateSwitchingTest {

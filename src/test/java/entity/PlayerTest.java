@@ -65,18 +65,22 @@ public class PlayerTest {
         // Set player spawn point on barn level
         player.worldX = 15 * gp.tileSize;
         player.worldY = 12 * gp.tileSize;
+        
+        // Set default values
+        player.score = 0;
+        player.health = 3;
     }
 
     @Test
     public void playerHPGoesToZero() {
-        gp.player.health = 0;
-        gp.player.update();
+        player.health = 0;
+        player.update();
         
         assertEquals(gameState.LOSE, gp.stateM.getCurrentState());
     }
     
     @Test
-    public void playerMovementUp() {
+    public void playerMovementDown() {
         int y = player.worldY;
         int timer = 0;
         
@@ -87,7 +91,7 @@ public class PlayerTest {
             player.update();
         }
         player.input.down = false;
-        assertEquals(y + 20, player.worldY);
+        assertTrue(y < player.worldY);
     }
     
     @Test
@@ -102,11 +106,11 @@ public class PlayerTest {
             player.update();
         }
         player.input.left = false;
-        assertEquals(x - 20, player.worldX);
+        assertTrue(x > player.worldX);
     }
 
     @Test
-    public void playerMovementDown() {
+    public void playerMovementUp() {
         int y = player.worldY;
         int timer = 0;
         
@@ -117,7 +121,7 @@ public class PlayerTest {
             player.update();
         }
         player.input.up = false;
-        assertEquals(y - 20, player.worldY);
+        assertTrue(y > player.worldY);
     }
 
     @Test
@@ -132,12 +136,14 @@ public class PlayerTest {
             player.update();
         }
         player.input.right = false;
-        assertEquals(x + 20, player.worldX);
+        assertTrue(x < player.worldX);
 
     }
 
     @Test
     public void playerCollectsEggWithFullHP() {
+        int score = player.score + 100;
+        
         SuperObject[] objects = gp.mapM.getMap().objects;
 
         // Searches for first egg that spawns on the map and sets players location to it
@@ -155,11 +161,13 @@ public class PlayerTest {
         player.input.down = false;
 
         assertEquals(3, player.health);
-        assertEquals(100, player.score);
+        assertEquals(score, player.score);
     }
 
     @Test
     public void playerCollectsEggWithoutFullHP() {
+        int score = player.score;
+        
         SuperObject[] objects = gp.mapM.getMap().objects;
 
         // Searches for first egg that spawns on the map and sets players location to it
@@ -172,18 +180,21 @@ public class PlayerTest {
         }
 
         player.health = 1;
+        int health = player.health + 1;
 
         // Moves player down for one frame to trigger egg pickup
         player.input.down = true;
         player.update();
         player.input.down = false;
 
-        assertEquals(2, player.health);
-        assertEquals(0, player.score);
+        assertEquals(health, player.health);
+        assertEquals(score, player.score);
     }
 
     @Test
     public void playerCollectsKey() {
+        int keyCount = player.keyCount + 1;
+        
         SuperObject[] objects = gp.mapM.getMap().objects;
 
         // Searches for first key on the map and sets players location to it
@@ -200,12 +211,14 @@ public class PlayerTest {
         player.update();
         player.input.down = false;
 
-        assertEquals(1, player.keyCount);
+        assertEquals(keyCount, player.keyCount);
         
     }
 
     @Test
     public void playerStepsOnTrapWithFullHP() {
+        int health = player.health - 1;
+        
         SuperObject[] objects = gp.mapM.getMap().objects;
 
         // Searches for first trap on the map and sets players location to it
@@ -222,12 +235,14 @@ public class PlayerTest {
         player.update();
         player.input.down = false;
 
-        assertEquals(2, player.health);
+        assertEquals(health, player.health);
         assertEquals(gp.mapM.getMap().playerStartX, player.worldX);
     }
 
     @Test
     public void playerEntersGateWithRequiredKeys() {
+        int score = player.score + 1000;
+        
         SuperObject[] objects = gp.mapM.getMap().objects;
         int gateIndex = gp.mapM.getMap().gateIndex;
 
@@ -245,13 +260,15 @@ public class PlayerTest {
         }
         player.input.down = false;
 
-        assertEquals(1000, player.score);
+        assertEquals(score, player.score);
         assertEquals(gp.mapM.getMap().playerStartX, player.worldX);
         assertEquals(gp.mapM.getMap().playerStartY, player.worldY);
     }
 
     @Test
     public void playerTouchesFarmerWithFullHP() {
+        int health = player.health - 1;
+        
         Farmer farmer = gp.mapM.getMap().farmers[0];
 
         player.worldX = farmer.worldX;
@@ -266,7 +283,7 @@ public class PlayerTest {
         }
         player.input.down = false;
 
-        assertEquals(2, player.health);
+        assertEquals(health, player.health);
         assertEquals(gp.mapM.getMap().playerStartX, player.worldX);
     }
 

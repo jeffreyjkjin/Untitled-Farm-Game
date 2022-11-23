@@ -55,7 +55,9 @@ public class WinLoseInput extends InputHandler {
                     int position = gp.uiM.getSelectorPosition();
                     sound.play(4);
                     if (position == 0) { // retry
-                        gp.stateM.setCurrentState(gameState.PLAY);
+                        gp.stateM.retryGame();
+
+                        System.out.println(gp.stateM.getCurrentState());
                     }
                     else if (position == 1) { // Main Menu
                         gp.stateM.setCurrentState(gameState.TITLE);

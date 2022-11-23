@@ -23,6 +23,8 @@ public class WinScreen extends UI {
 	BufferedImage chicken1, chicken2, chicken3, chicken4, chickenImage;
 	int spriteCount = 0;
 
+	boolean showHighScore = false;
+
     /**
 	 * Calls the UI constructor.
 	 * Sets the total number of options to two.
@@ -123,7 +125,7 @@ public class WinScreen extends UI {
 		g2.drawString(playerScore, getHorizontalCenter(playerScore, g2, gp.screenWidth/2) + gp.screenWidth/2, (int)(gp.tileSize * 5.5));
 
 		// Show message if player's current high score is higher than the saved score
-		if (settings.getHighScore() == gp.player.score) {
+		if (showHighScore) {
 			g2.setColor(Color.RED);
 			String newHighScore = "NEW HIGH SCORE!";
 			g2.drawString(newHighScore, getHorizontalCenter(newHighScore, g2, gp.screenWidth/2), gp.tileSize * 6);
@@ -154,5 +156,14 @@ public class WinScreen extends UI {
 		if(selectPosition == 2) {
 			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}
+	}
+
+	/**
+	 * Shows new high score message if a new high score is achieved
+	 * 
+	 * @param showHighScore boolean value for whether if player's score is a new high score
+	 */
+	protected void showNewHighScore(boolean showHighScore) {
+		this.showHighScore = showHighScore;
 	}
 }

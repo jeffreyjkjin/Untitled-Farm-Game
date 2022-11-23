@@ -16,7 +16,9 @@ import app.GamePanel;
  * @see ui.UIManager
  */
 public class LoseScreen extends UI {
-    BufferedImage bgImage;
+    BufferedImage bgImage, chicken;
+
+	boolean showHighScore = false;
 
     /**
 	 * Calls the UI constructor.
@@ -30,7 +32,8 @@ public class LoseScreen extends UI {
 		totalOptions = 2;
 
         try {
-            bgImage = ImageIO.read(getClass().getResourceAsStream("/screens/loseScreen.png"));
+            bgImage = ImageIO.read(getClass().getResourceAsStream("/losebg/losebg.png"));
+			chicken = ImageIO.read(getClass().getResourceAsStream("/losebg/chicken.png"));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -49,6 +52,11 @@ public class LoseScreen extends UI {
 		
 		// Background Image
 		g2.drawImage(bgImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
+
+		int chickenWidth = 200 * gp.scale;
+		int chickenHeight = 120 * gp.scale;
+
+		g2.drawImage(chicken, (gp.screenWidth - chickenWidth)/2, (gp.screenHeight - chickenHeight)/2 - 36 * gp.scale, chickenWidth, chickenHeight, null);
 		
 		// Game Over
 		g2.setFont(pressStart2P.deriveFont(Font.PLAIN, 20 * gp.scale));
@@ -77,7 +85,7 @@ public class LoseScreen extends UI {
 		g2.drawString(playerScore, getHorizontalCenter(playerScore, g2, gp.screenWidth/2) + gp.screenWidth/2, (int)(gp.tileSize * 5.5));
 
 		// Show message if player's current high score is higher than the saved score
-		if (settings.getHighScore() == gp.player.score) {
+		if (showHighScore) {
 			g2.setColor(Color.RED);
 			String newHighScore = "NEW HIGH SCORE!";
 			g2.drawString(newHighScore, getHorizontalCenter(newHighScore, g2, gp.screenWidth/2), gp.tileSize * 6);
@@ -108,5 +116,14 @@ public class LoseScreen extends UI {
 		if(selectPosition == 2) {
 			g2.drawString(">",getHorizontalCenter(quit, g2, gp.screenWidth) - gp.tileSize, gp.tileSize * 11);
 		}
+	}
+
+	/**
+	 * Shows new high score message if a new high score is achieved
+	 * 
+	 * @param showHighScore boolean value for whether if player's score is a new high score
+	 */
+	public void showNewHighScore(boolean showHighScore) {
+		this.showHighScore = showHighScore;
 	}
 }

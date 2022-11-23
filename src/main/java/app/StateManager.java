@@ -90,9 +90,15 @@ public class StateManager {
                 music.play(1);
                 bgMusic2 = true;
             case LOSE:
+                boolean showHighScore;
                 if (gp.player.score > settings.getHighScore()) {
                     settings.setHighScore(gp.player.score);
+                    showHighScore = true;
                 }
+                else {
+                    showHighScore = false;
+                }
+                gp.uiM.showNewHighScore(showHighScore);
                 break;
             case PLAY:
             case PAUSE:
@@ -113,6 +119,30 @@ public class StateManager {
         }
 
         gp.uiM.resetSelectorPosition();
+    }
+
+    /**
+     * Resets the game's map, player and ui to default values.
+     * Changes game state and input to play.
+     */
+    public void retryGame() {
+        gp.mapM.resetMap();
+        gp.uiM.resetPlayScreen();
+        gp.player.setDefaultValues();
+        
+        prevState = currState;
+        currState = gameState.PLAY;
+
+        gp.inputM.changeInput(currState);
+
+        if (bgMusic2) {
+            music.stop();
+            bgMusic2 = false;
+        }
+        if (!bgMusic1) {
+            music.play(0);
+            bgMusic1 = true;
+        }                       
     }
 
     /**

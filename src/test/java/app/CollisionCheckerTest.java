@@ -8,13 +8,10 @@ import org.junit.Test;
 import org.junit.Before;
 
 import entity.*;
-import tile.Tile;
 
 import javax.swing.JFrame;
 
-import app.GamePanel;
 import app.StateManager.gameState;
-import input.PlayInput;
 import object.SuperObject;
 
 public class CollisionCheckerTest {
