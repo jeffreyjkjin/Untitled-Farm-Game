@@ -35,7 +35,7 @@ public class MapManager {
         settings = Settings.getInstance();
         sound = SoundEffects.getInstance();
 
-        mapList = new Map[6]; // 3 maps, can increase/decrease as needed;
+        mapList = new Map[6]; // 6 maps, can increase/decrease as needed;
         currMap = 0;
 
         loadMapFiles();

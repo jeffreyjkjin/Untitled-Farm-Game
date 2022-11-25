@@ -169,4 +169,11 @@ public class PlayScreen extends UI {
 			}
 		}	
 	}
+
+	/**
+	 * @return the player's play time in seconds
+	 */
+	public int getPlayTime() {
+		return (int) playTime;
+	}
 }

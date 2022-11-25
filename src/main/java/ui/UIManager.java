@@ -143,4 +143,13 @@ public class UIManager {
             loseScreen.showNewHighScore(showHighScore);
         }
     }
+
+    /**
+     * @return the player's play time from the play screen
+     */
+    public int getPlayTime() {
+        PlayScreen playScreen = (PlayScreen) ui[0];
+
+        return playScreen.getPlayTime();
+    }
 }
