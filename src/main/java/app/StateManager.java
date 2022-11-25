@@ -89,7 +89,23 @@ public class StateManager {
                 }
                 music.play(1);
                 bgMusic2 = true;
+
+                // Calculate score based on play time
+                int playTime = gp.uiM.getPlayTime();
+
+                double scoreMultiplier;
+
+                if (playTime <= 600) { // if play time is under 10 minutes, give score mulitiplier
+                    scoreMultiplier = (double) 2 - ((double) playTime/600);
+                }
+                else {
+                    scoreMultiplier = 1;
+                }
+                
+                gp.player.score *= scoreMultiplier;
+                
             case LOSE:
+
                 boolean showHighScore;
                 if (gp.player.score > settings.getHighScore()) {
                     settings.setHighScore(gp.player.score);
