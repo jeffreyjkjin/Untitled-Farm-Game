@@ -244,26 +244,18 @@ public class Player extends Entity{
      */
     public void objectInteraction(int index) {
         if (index != 999) {
-            String objectName = gamePanel.mapM.getMap().objects[index].name;
-            
-            switch(objectName) {
-                case "Egg":
-                    gamePanel.mapM.getMap().objects[index].update(gamePanel);
-                    gamePanel.mapM.getMap().objects[index] = null;
-                    break;
-                case "Key":
-                    gamePanel.mapM.getMap().objects[index].update(gamePanel);
-                    gamePanel.mapM.getMap().objects[index] = null;
-                    break;
-                case "Gate":
-                    if (keyCount == gamePanel.mapM.getMap().keyNum) {
-                        gamePanel.mapM.getObject(index).update(gamePanel);
-                    }
-                    break;
-                case "Trap":
-                    gamePanel.mapM.getMap().objects[index].update(gamePanel);
-                    gamePanel.mapM.getMap().objects[index] = null;
-                    break;
+            // If the object is a gate and the player has the required number of keys,
+            // let the player advance to the next level
+            if (gamePanel.mapM.getMap().objects[index].name == "Gate") {
+                if (keyCount == gamePanel.mapM.getMap().keyNum) {
+                    gamePanel.mapM.getObject(index).update(gamePanel);
+                }
+            }
+            // Otherwise, the object is a "consumable" like a key, egg or trap
+            // Object gets deleted after interaction with player is complete 
+            else {
+                gamePanel.mapM.getMap().objects[index].update(gamePanel);
+                gamePanel.mapM.getMap().objects[index] = null; 
             }
         }
     }
