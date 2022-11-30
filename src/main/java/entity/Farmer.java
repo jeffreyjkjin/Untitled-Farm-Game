@@ -141,15 +141,15 @@ public class Farmer extends Entity {
 
         // Set up variables to determine the distance this farmer and the player are apart
         // Using Pythagorean theorem
-        double midPX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
-        double midPY = gamePanel.player.worldY + gamePanel.player.hitbox.y + (gamePanel.player.hitbox.height / 2);
-        double midFX = this.worldX + this.hitbox.x + (this.hitbox.width / 2);
-        double midFY = this.worldY + this.hitbox.y + (this.hitbox.height / 2);
+        double playerMiddleX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
+        double playerMiddleY = gamePanel.player.worldY + gamePanel.player.hitbox.y + (gamePanel.player.hitbox.height / 2);
+        double farmerMiddleX = this.worldX + this.hitbox.x + (this.hitbox.width / 2);
+        double farmerMiddleY = this.worldY + this.hitbox.y + (this.hitbox.height / 2);
 
-        double ac = Math.abs(midPY - midFY);
-        double cb = Math.abs(midPX - midFX);
+        double edgeY = Math.abs(playerMiddleY - farmerMiddleY);
+        double edgeX = Math.abs(playerMiddleX - farmerMiddleX);
 
-        double distanceApart = Math.hypot(ac, cb);
+        double distanceApart = Math.hypot(edgeY, edgeX);
         // This is the only reliable fix I could come up with. Play around with this number to see what feels best
         // Can realistically change this number to 32 and nobody but the developers would notice a bug
         // It would just introduce a scenario where the farmers can not catch you if you stand still in a certain way
