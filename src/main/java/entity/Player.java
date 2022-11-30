@@ -248,36 +248,12 @@ public class Player extends Entity{
             
             switch(objectName) {
                 case "Egg":
-                    sound.play(2);
-                    if (health >= 3) {
-                        score += 100;
-                        gamePanel.uiM.showMessage("+100 POINTS");
-                    }
-                    else {
-                        health++;
-                        gamePanel.uiM.showMessage("+1 HP");
-                    }
+                    gamePanel.mapM.getMap().objects[index].update(gamePanel);
                     gamePanel.mapM.getMap().objects[index] = null;
                     break;
                 case "Key":
+                    gamePanel.mapM.getMap().objects[index].update(gamePanel);
                     gamePanel.mapM.getMap().objects[index] = null;
-                    keyCount++;
-                    if (keyCount == gamePanel.mapM.getMap().keyNum) {
-                        gamePanel.mapM.getObject(gamePanel.mapM.getMap().gateIndex).update(gamePanel);
-                        sound.play(8);
-                        gamePanel.uiM.showMessage("GATE OPENED");
-                    }
-                    else {
-                        int keysLeft = gamePanel.mapM.getMap().keyNum - keyCount;
-                        if (keysLeft != 1) {
-                            gamePanel.uiM.showMessage("NEED " + keysLeft + " MORE KEYS");
-                        }
-                        else {
-                            gamePanel.uiM.showMessage("NEED " + keysLeft + " MORE KEY");
-                        }
-
-                    }
-                    sound.play(2);
                     break;
                 case "Gate":
                     if (keyCount == gamePanel.mapM.getMap().keyNum) {
@@ -285,13 +261,8 @@ public class Player extends Entity{
                     }
                     break;
                 case "Trap":
-                    health--;
+                    gamePanel.mapM.getMap().objects[index].update(gamePanel);
                     gamePanel.mapM.getMap().objects[index] = null;
-                    respawnPlayer();
-                    Farmer.respawnFarmers(gamePanel.mapM.getMap().farmers);
-                    sound.play(3);
-                    sound.play(7);
-                    gamePanel.uiM.showMessage("-1 HP");
                     break;
             }
         }

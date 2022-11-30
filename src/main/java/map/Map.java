@@ -11,6 +11,7 @@ import java.util.Random;
 
 import app.GamePanel;
 import entity.Farmer;
+import object.OBJ_Egg;
 import object.ObjectManager;
 import object.SuperObject;
 import tile.TileManager;
@@ -276,7 +277,8 @@ public class Map {
 
                 // updates timer in egg object
                 if (objects[i].name == "Egg") {
-                    objects[i].update(gp);
+                    OBJ_Egg egg = (OBJ_Egg) objects[i];
+                    egg.updateEggTimer(gp);
                 }
             }
         }

@@ -44,13 +44,30 @@ public class OBJ_Egg extends SuperObject {
 	}
 
 	/**
-	 * Updates expireTime every second. 
-	 * After the timer hits zero, the egg will despawn from the map and play a sound to indicate that.
+	 * If player's health is above 3, update their score by 100.
+	 * Else, increase their health by 1 health point.
 	 * 
 	 * @param gp GamePanel object that is used to run the game
 	 */
 	public void update(GamePanel gp) {
-		
+		sound.play(2);
+		if (gp.player.health >= 3) {
+			gp.player.score += 100;
+			gp.uiM.showMessage("+100 POINTS");
+		}
+		else {
+			gp.player.health++;
+			gp.uiM.showMessage("+1 HP");
+		}
+	}
+
+	/**
+	 * Updates expireTime every second.
+	 * After the timer hits zero, the egg will despawn from the map and play a sound to indicate that.
+	 * 
+	 * @param gp GamePanel object that is used to the game 
+	 */
+	public void updateEggTimer(GamePanel gp) {
 		if (gp.stateM.getCurrentState() == gameState.PLAY) {
 			expireTime -= (double) 1/60;
 			if (expireTime < 0) {

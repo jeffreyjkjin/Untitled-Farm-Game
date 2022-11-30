@@ -254,7 +254,7 @@ public class Farmer extends Entity {
      * 
      * @param farmers array of farmers stored in map
      */
-    protected static void respawnFarmers(Farmer[] farmers)
+    public static void respawnFarmers(Farmer[] farmers)
     {
         for (int i = 0; i < farmers.length; i++)
         {
