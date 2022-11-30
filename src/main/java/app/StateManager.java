@@ -93,7 +93,7 @@ public class StateManager {
                 // Calculate score based on play time
                 int score = calculateScore();
                 
-                gp.player.score *= score;
+                gp.player.score = score;
                 
             case LOSE:
 
@@ -215,17 +215,20 @@ public class StateManager {
      */
     
     public int calculateScore() {
-    	double score;
+    	int score = gp.player.score;
+    	double scoreMultiplier;
     	
     	int playTime = gp.uiM.getPlayTime();
 
         if (playTime <= 600) { // if play time is under 10 minutes, give score 
-            score = (double) 2 - ((double) playTime/600);
+            scoreMultiplier = (double) 2 - ((double) playTime/600);
         }
         else {
-            score = 1;
+            scoreMultiplier = 1;
         }
     	
-    	return (int)score;
+        score *= scoreMultiplier;
+        
+    	return score;
     }
 }
