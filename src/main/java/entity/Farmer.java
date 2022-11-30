@@ -138,26 +138,9 @@ public class Farmer extends Entity {
                     break;
             }
         }
-
-        // Set up variables to determine the distance this farmer and the player are apart
-        // Using Pythagorean theorem
-        double playerMiddleX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
-        double playerMiddleY = gamePanel.player.worldY + gamePanel.player.hitbox.y + (gamePanel.player.hitbox.height / 2);
-        double farmerMiddleX = this.worldX + this.hitbox.x + (this.hitbox.width / 2);
-        double farmerMiddleY = this.worldY + this.hitbox.y + (this.hitbox.height / 2);
-
-        double edgeY = Math.abs(playerMiddleY - farmerMiddleY);
-        double edgeX = Math.abs(playerMiddleX - farmerMiddleX);
-
-        double distanceApart = Math.hypot(edgeY, edgeX);
-        // This is the only reliable fix I could come up with. Play around with this number to see what feels best
-        // Can realistically change this number to 32 and nobody but the developers would notice a bug
-        // It would just introduce a scenario where the farmers can not catch you if you stand still in a certain way
-        // 45 Feels a bit annoying tbh so probably 32 for the final game
-        if (distanceApart <= 45)
-        {
-            gamePanel.player.farmerInteraction(0);
-        }
+         
+        // interactPlayer if the distance between farmer & player becomes under 45
+        interactPlayer(45);
 
         gamePanel.checker.checkTileCollision(this);
         // gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
@@ -174,6 +157,26 @@ public class Farmer extends Entity {
                 spriteNum = 1;
             }
             spriteCounter = 0;
+        }
+    }
+    /**
+     * Check distance between player & farmer and make interaction if it's under the given value
+     */
+    public void interactPlayer(int hitDistance) {
+    	
+    	double playerMiddleX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
+        double playerMiddleY = gamePanel.player.worldY + gamePanel.player.hitbox.y + (gamePanel.player.hitbox.height / 2);
+        double farmerMiddleX = this.worldX + this.hitbox.x + (this.hitbox.width / 2);
+        double farmerMiddleY = this.worldY + this.hitbox.y + (this.hitbox.height / 2);
+
+        double edgeY = Math.abs(playerMiddleY - farmerMiddleY);
+        double edgeX = Math.abs(playerMiddleX - farmerMiddleX);
+
+        double distanceApart = Math.hypot(edgeY, edgeX);
+        
+        if (distanceApart <= hitDistance)
+        {
+            gamePanel.player.farmerInteraction(0);
         }
     }
 
