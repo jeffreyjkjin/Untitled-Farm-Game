@@ -90,7 +90,7 @@ public class Farmer extends Entity {
         int goalCol = (gamePanel.player.worldX + gamePanel.player.hitbox.x) / gamePanel.tileSize;
         int goalRow = (gamePanel.player.worldY + gamePanel.player.hitbox.y) / gamePanel.tileSize;
             
-        searchPath(goalCol, goalRow);
+        gamePanel.pathFinder.searchPath(goalCol, goalRow, this);
     }
 
     /**
@@ -245,104 +245,6 @@ public class Farmer extends Entity {
         worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY)
         {
             graphic2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
-        }
-    }
-
-    /**
-     * Uses the pathfinding class to find the most efficient path to the player
-     * Once path is found, sets the appropriate direction farmer needs to go to avoid collisions based on next tile in path
-     * 
-     * @param goalCol goal column farmer attempts to reach. Currently the players current column
-     * @param goalRow goal row farmer attempts to reach. Currently the players current row
-     */
-    private void searchPath(int goalCol, int goalRow)
-    {
-        int currCol = (worldX + hitbox.x) / gamePanel.tileSize;
-        int currRow = (worldY + hitbox.y) / gamePanel.tileSize;
-        gamePanel.pathFinder.setNodes(currCol, currRow, goalCol, goalRow);
-        boolean goalReached = gamePanel.pathFinder.search();
-
-        if (goalReached)
-        {
-            // Next worldX and Y
-            int nextX = gamePanel.pathFinder.pathList.get(0).col * gamePanel.tileSize;
-            int nextY = gamePanel.pathFinder.pathList.get(0).row * gamePanel.tileSize;
-            // Entity's hitbox
-            int farmerLeftX = worldX + hitbox.x;
-            int farmerRightX = worldX + hitbox.x + hitbox.width;
-            int farmerTopY = worldY + hitbox.y;
-            int farmerBotY = worldY + hitbox.y + hitbox.height;
-            // Find which direction to go next
-            if (farmerTopY > nextY && farmerLeftX >= nextX && farmerRightX < nextX + gamePanel.tileSize)
-            {
-                direction = "up";
-            }
-            else if (farmerTopY < nextY && farmerLeftX >= nextX && farmerRightX < nextX + gamePanel.tileSize)
-            {
-                direction = "down";
-            }
-            else if (farmerTopY >= nextY && farmerBotY < nextY + gamePanel.tileSize)
-            {
-                // Can go left or right so have to figure out which
-                if (farmerLeftX > nextX)
-                {
-                    direction = "left";
-                }
-                if (farmerLeftX < nextX)
-                {
-                    direction = "right";
-                }
-
-            }
-            else if (farmerTopY > nextY && farmerLeftX > nextX)
-            {
-                // Can go up or left, have to figoure out which
-                direction = "up";
-
-                gamePanel.checker.checkTileCollision(this);
-
-                if (collisionOn)
-                {
-                    direction = "left";
-                }
-            }
-            else if(farmerTopY > nextY && farmerLeftX < nextX)
-            {
-                // Can go up or right
-                direction = "up";
-
-                gamePanel.checker.checkTileCollision(this);
-
-                if (collisionOn)
-                {
-                    direction = "right";
-                }
-            }
-            else if (farmerTopY < nextY && farmerLeftX > nextX)
-            {
-                // down or left
-                direction = "down";
-
-                gamePanel.checker.checkTileCollision(this);
-
-                if (collisionOn)
-                {
-                    direction = "left";
-                }
-
-            }
-            else if (farmerTopY < nextY && farmerLeftX < nextX)
-            {
-                // down or left
-                direction = "down";
-
-                gamePanel.checker.checkTileCollision(this);
-
-                if (collisionOn)
-                {
-                    direction = "right";
-                }
-            }
         }
     }
 
