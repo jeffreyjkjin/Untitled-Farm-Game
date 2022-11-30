@@ -172,70 +172,8 @@ public class Map {
                 row++;
             }
         }
-
-        if (showCoords) // To show tile coordinates
-        {
-            col = 0;
-            row = 0;
-
-            while (col < maxWorldCol && row < maxWorldRow)
-            {
-                int worldX = (col * gp.tileSize) + 8;
-                int worldY = (row * gp.tileSize) + 24;
-                int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                int screenY = worldY - gp.player.worldY + gp.player.screenY;
-                String toPrint = "(" + col + ", " + row + ")";
-
-                graphic2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                graphic2.drawString(toPrint, screenX, screenY);
-
-                col++;
-                if (col == maxWorldCol)
-                {
-                    col = 0;
-                    row++;
-                }
-            }
-        }
-
-        if (drawPath) // FOR TESTING PATHFINDING
-        {
-            graphic2.setColor(new Color(255,0,0,70));
-
-            
-            for (int i = 0; i < gp.pathFinder.pathList.size(); i++)
-            {
-                int worldX = gp.pathFinder.pathList.get(i).col * gp.tileSize;
-                int worldY = gp.pathFinder.pathList.get(i).row * gp.tileSize;
-                int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
-                graphic2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
-            }
-        }
-
-        if (hitboxTest) // VISUALIZE HITBOXES
-        {
-            graphic2.setColor(new Color(0,0,255,100));
-
-            for (int i = 0; i < farmers.length; i++)
-            {
-                if (farmers[i] != null)
-                {   
-                    int worldX = farmers[i].worldX + farmers[i].hitbox.x;
-                    int worldY = farmers[i].worldY + farmers[i].hitbox.y;
-                    int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                    int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
-                    graphic2.fillRect(screenX, screenY, farmers[i].hitbox.width, farmers[i].hitbox.height);
-                }
-
-                if (i == 0)
-                {
-                    graphic2.fillRect(gp.player.screenX + gp.player.hitbox.x, gp.player.screenY + gp.player.hitbox.y, gp.player.hitbox.width, gp.player.hitbox.height);
-                }
-            }
-        }
+        // Runs the developer tools set up if their boolean variables are true
+        useDeveloperTools(graphic2);
     }
     
     /**
@@ -356,6 +294,78 @@ public class Map {
             if (farmers[i] != null)
             {
                 farmers[i].draw(graphic2);
+            }
+        }
+    }
+
+    /**
+     * Runs developer tools if their associated boolean value is true
+     * 
+     * @param graphic2 main graphic used by gamePanel to draw the maps sprites and tiles
+     */
+    private void useDeveloperTools(Graphics2D graphic2)
+    {
+        if (showCoords) // To show tile coordinates
+        {
+            int col = 0;
+            int row = 0;
+
+            while (col < maxWorldCol && row < maxWorldRow)
+            {
+                int worldX = (col * gp.tileSize) + 8;
+                int worldY = (row * gp.tileSize) + 24;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+                String toPrint = "(" + col + ", " + row + ")";
+
+                graphic2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                graphic2.drawString(toPrint, screenX, screenY);
+
+                col++;
+                if (col == maxWorldCol)
+                {
+                    col = 0;
+                    row++;
+                }
+            }
+        }
+
+        if (drawPath) // FOR TESTING PATHFINDING
+        {
+            graphic2.setColor(new Color(255,0,0,70));
+
+            
+            for (int i = 0; i < gp.pathFinder.pathList.size(); i++)
+            {
+                int worldX = gp.pathFinder.pathList.get(i).col * gp.tileSize;
+                int worldY = gp.pathFinder.pathList.get(i).row * gp.tileSize;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                graphic2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
+            }
+        }
+
+        if (hitboxTest) // VISUALIZE HITBOXES
+        {
+            graphic2.setColor(new Color(0,0,255,100));
+
+            for (int i = 0; i < farmers.length; i++)
+            {
+                if (farmers[i] != null)
+                {   
+                    int worldX = farmers[i].worldX + farmers[i].hitbox.x;
+                    int worldY = farmers[i].worldY + farmers[i].hitbox.y;
+                    int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                    int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                    graphic2.fillRect(screenX, screenY, farmers[i].hitbox.width, farmers[i].hitbox.height);
+                }
+
+                if (i == 0)
+                {
+                    graphic2.fillRect(gp.player.screenX + gp.player.hitbox.x, gp.player.screenY + gp.player.hitbox.y, gp.player.hitbox.width, gp.player.hitbox.height);
+                }
             }
         }
     }
