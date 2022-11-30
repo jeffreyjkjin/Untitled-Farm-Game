@@ -5,6 +5,7 @@ import java.lang.Math;
 
 import app.GamePanel;
 import tile.TileManager;
+import entity.Entity;
 
 /** 
  * Creates and sets Nodes to represent the tiles of the map player and farmers are on
@@ -265,6 +266,104 @@ public class Pathfinding {
         {
             pathList.add(0, currentNode);
             currentNode = currentNode.parent;
+        }
+    }
+
+    /**
+     * Uses the pathfinding class to find the most efficient path to the player
+     * Once path is found, sets the appropriate direction farmer needs to go to avoid collisions based on next tile in path
+     * 
+     * @param goalCol goal column farmer attempts to reach. Currently the players current column
+     * @param goalRow goal row farmer attempts to reach. Currently the players current row
+     */
+    public void searchPath(int goalCol, int goalRow, Entity entity)
+    {
+        int currCol = (entity.worldX + entity.hitbox.x) / gp.tileSize;
+        int currRow = (entity.worldY + entity.hitbox.y) / gp.tileSize;
+        gp.pathFinder.setNodes(currCol, currRow, goalCol, goalRow);
+        boolean goalReached = gp.pathFinder.search();
+
+        if (goalReached)
+        {
+            // Next worldX and Y
+            int nextX = gp.pathFinder.pathList.get(0).col * gp.tileSize;
+            int nextY = gp.pathFinder.pathList.get(0).row * gp.tileSize;
+            // Entity's hitbox
+            int farmerLeftX = entity.worldX + entity.hitbox.x;
+            int farmerRightX = entity.worldX + entity.hitbox.x + entity.hitbox.width;
+            int farmerTopY = entity.worldY + entity.hitbox.y;
+            int farmerBotY = entity.worldY + entity.hitbox.y + entity.hitbox.height;
+            // Find which direction to go next
+            if (farmerTopY > nextY && farmerLeftX >= nextX && farmerRightX < nextX + gp.tileSize)
+            {
+                entity.direction = "up";
+            }
+            else if (farmerTopY < nextY && farmerLeftX >= nextX && farmerRightX < nextX + gp.tileSize)
+            {
+                entity.direction = "down";
+            }
+            else if (farmerTopY >= nextY && farmerBotY < nextY + gp.tileSize)
+            {
+                // Can go left or right so have to figure out which
+                if (farmerLeftX > nextX)
+                {
+                    entity.direction = "left";
+                }
+                if (farmerLeftX < nextX)
+                {
+                    entity.direction = "right";
+                }
+
+            }
+            else if (farmerTopY > nextY && farmerLeftX > nextX)
+            {
+                // Can go up or left, have to figoure out which
+                entity.direction = "up";
+
+                gp.checker.checkTileCollision(entity);
+
+                if (entity.collisionOn)
+                {
+                    entity.direction = "left";
+                }
+            }
+            else if(farmerTopY > nextY && farmerLeftX < nextX)
+            {
+                // Can go up or right
+                entity.direction = "up";
+
+                gp.checker.checkTileCollision(entity);
+
+                if (entity.collisionOn)
+                {
+                    entity.direction = "right";
+                }
+            }
+            else if (farmerTopY < nextY && farmerLeftX > nextX)
+            {
+                // down or left
+                entity.direction = "down";
+
+                gp.checker.checkTileCollision(entity);
+
+                if (entity.collisionOn)
+                {
+                    entity.direction = "left";
+                }
+
+            }
+            else if (farmerTopY < nextY && farmerLeftX < nextX)
+            {
+                // down or left
+                entity.direction = "down";
+
+                gp.checker.checkTileCollision(entity);
+
+                if (entity.collisionOn)
+                {
+                    entity.direction = "right";
+                }
+            }
         }
     }
 }
