@@ -117,10 +117,42 @@ public class Player extends Entity{
      * Also checks if player is colliding with an object or entity.
      */
     public void update() {
+        checkHealth();
+
+        checkFreezeCooldown();
+
+        if (input.up || input.left || input.down || input.right) {
+            updatePlayerDirection();
+        
+            collisionOn = false;
+            gamePanel.checker.checkTileCollision(this);
+            
+            int objIndex = gamePanel.checker.checkObjectCollision(this, true);
+            objectInteraction(objIndex);
+
+            updatePlayerPosition();
+
+            updatePlayerSprite();
+        }
+
+        checkPlayerCollisonWithEntity();
+    }
+
+    /**
+     * If player's health is 0 it changes the game state to lose.
+     * Else, it does nothing.
+     */
+    private void checkHealth() {
         if (health == 0) {
             gamePanel.stateM.setCurrentState(gameState.LOSE);
         }
+    }
 
+    /**
+     * If the player is in the play state and the player has a clucking cooldown, decrement the timer for the cooldown.
+     * Tell the player cool down is over when its over.
+     */
+    private void checkFreezeCooldown() {
         if (gamePanel.stateM.getCurrentState() == gameState.PLAY) {
             if (freezeCooldown > 0)
             {
@@ -132,73 +164,76 @@ public class Player extends Entity{
                 freezeCooldown--;
             }
         }
+    }
 
-        if (input.up || input.left || input.down || input.right) {
-            if (input.up) {
+    /**
+     * Updates the player's direction depending on what input is being pressed.
+     */
+    private void updatePlayerDirection() {
+        if (input.up) {
                 
-                direction = "up";
-            }
-            else if (input.left) {
-              
-                direction = "left";
-            }
-            else if (input.down) {
-                
-                direction = "down";
-            }
-            else if (input.right) {
-                
-                direction = "right";
-            }
-        
-            collisionOn = false;
-            gamePanel.checker.checkTileCollision(this);
+            direction = "up";
+        }
+        else if (input.left) {
+          
+            direction = "left";
+        }
+        else if (input.down) {
             
-            int objIndex = gamePanel.checker.checkObjectCollision(this, true);
-            objectInteraction(objIndex);
+            direction = "down";
+        }
+        else if (input.right) {
+            
+            direction = "right";
+        }
+    }
 
-            // Check for collision with enemy whie moving
-            if (gamePanel.stateM.getCurrentState() == gameState.PLAY) {
-                int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
-                farmerInteraction(farmerIndex);
+    /**
+     * Changes the player sprite.
+     */
+    private void updatePlayerSprite() {
+        spriteCounter++;
+
+        if (spriteCounter > 12) {
+            if (spriteNum == 1) {
+                spriteNum = 2;
             }
-
-            if(collisionOn == false) {
-                switch(direction){
-                    case"up":
-                        worldY -= speed;
-                        break;
-                    case"down":
-                        worldY += speed;
-                        break;
-                    case"left":
-                        worldX -= speed;
-                        break;
-                    case"right":
-                        worldX += speed;
-                        break;
-                }
+            else {
+                spriteNum = 1;
             }
+            spriteCounter = 0;
+        }
+    }
 
-            spriteCounter++;
-
-            if (spriteCounter > 12) {
-                if (spriteNum == 1) {
-                    spriteNum = 2;
-                }
-                else {
-                    spriteNum = 1;
-                }
-                spriteCounter = 0;
+    /**
+     * Changes the player's x and y coordinates on the map depending on what input is being pressed.
+     */
+    private void updatePlayerPosition() {
+        if(!collisionOn) {
+            switch(direction){
+                case"up":
+                    worldY -= speed;
+                    break;
+                case"down":
+                    worldY += speed;
+                    break;
+                case"left":
+                    worldX -= speed;
+                    break;
+                case"right":
+                    worldX += speed;
+                    break;
             }
         }
-        else
-        {
-            // Check for collision with enemy while standing still
-            if (gamePanel.stateM.getCurrentState() == gameState.PLAY) {
-                int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
-                farmerInteraction(farmerIndex);
-            }
+    }
+
+    /**
+     * If the player is in the play state, check if an entity has collided with the player.
+     */
+    private void checkPlayerCollisonWithEntity() {
+        if (gamePanel.stateM.getCurrentState() == gameState.PLAY) {
+            int farmerIndex = gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
+            farmerInteraction(farmerIndex);
         }
     }
 
