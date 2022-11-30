@@ -73,6 +73,14 @@ public class CollisionChecker {
 
     }
     
+    /**
+	 * If the farmer interacts with an object, do nothing.
+	 * If the player interacts with an object, find the index and return it so the proper interaction can happen
+	 * 
+     * @param entity The entity that will collide with the object
+     * @param player The player character
+     * @return returns the index of the object interacted with
+     */
     public int checkObjectCollision(Entity entity, boolean player) {
     	
     	int index = 999;
