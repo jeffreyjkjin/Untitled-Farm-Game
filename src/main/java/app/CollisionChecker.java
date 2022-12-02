@@ -73,6 +73,14 @@ public class CollisionChecker {
 
     }
     
+    /**
+	 * If the farmer interacts with an object, do nothing.
+	 * If the player interacts with an object, find the index and return it so the proper interaction can happen
+	 * 
+     * @param entity The entity that will collide with the object
+     * @param player The player character
+     * @return returns the index of the object interacted with
+     */
     public int checkObjectCollision(Entity entity, boolean player) {
     	
     	int index = 999;
@@ -87,23 +95,7 @@ public class CollisionChecker {
     			gp.mapM.getObject(i).hitbox.x = gp.mapM.getObject(i).worldX + gp.mapM.getObject(i).hitbox.y;
     			gp.mapM.getObject(i).hitbox.y = gp.mapM.getObject(i).worldY + gp.mapM.getObject(i).hitbox.y;
     			// Temporarily move hitbox to check collision
-    			switch(entity.direction) {
-    			case "up":
-    				entity.hitbox.y -= entity.speed;
-    				break;
-    				
-    			case "down":
-    				entity.hitbox.y += entity.speed;
-    				break;
-    				
-    			case "left":
-    				entity.hitbox.x -= entity.speed;
-    				break;
-    				
-    			case "right":
-    				entity.hitbox.x -= entity.speed;
-    				break;
-    			}
+    			setHitboxForCollisionChecking(entity);
 				// Check if player has collided with an object. If yes, turn collision on and return index if entity == player
 				if (entity.hitbox.intersects(gp.mapM.getObject(i).hitbox)) 
 				{
@@ -117,8 +109,7 @@ public class CollisionChecker {
 					}
 				}
 				// Reset all hitboxes back to their original locations
-    			entity.hitbox.x = entity.hitboxDefaultX;
-    			entity.hitbox.y = entity.hitboxDefaultY;
+    			resetHitbox(entity);
     			gp.mapM.getObject(i).hitbox.x = gp.mapM.getObject(i).hitboxDefaultX;
     			gp.mapM.getObject(i).hitbox.y = gp.mapM.getObject(i).hitboxDefaultY;
     		}
@@ -142,24 +133,7 @@ public class CollisionChecker {
 	{
 		int index = 999;
 		// Temporarily move the entitys hitbox to test collision
-		switch(entity.direction) 
-		{
-			case "up":
-				entity.hitbox.y -= entity.speed;
-				break;
-				
-			case "down":
-				entity.hitbox.y += entity.speed;
-				break;
-				
-			case "left":
-				entity.hitbox.x -= entity.speed;
-				break;
-				
-			case "right":
-				entity.hitbox.x -= entity.speed;
-				break;
-		}
+		setHitboxForCollisionChecking(entity);
 
 		for (int i = 0; i < farmers.length; i++)
 		{
@@ -182,16 +156,13 @@ public class CollisionChecker {
 					}
 				}
 				// Reset all hitboxes back to their original coordinates
-				entity.hitbox.x = entity.hitboxDefaultX;
-				entity.hitbox.y = entity.hitboxDefaultY;
-				farmers[i].hitbox.x = farmers[i].hitboxDefaultX;
-				farmers[i].hitbox.y = farmers[i].hitboxDefaultY;
+				resetHitbox(entity);
+				resetHitbox(farmers[i]);
 			}
 		}
 		
 		// Reset entities hitbox in case no farmers exist on the map
-		entity.hitbox.x = entity.hitboxDefaultX;
-		entity.hitbox.y = entity.hitboxDefaultY;
+		resetHitbox(entity);
 
 		return index;
 	}
@@ -213,6 +184,25 @@ public class CollisionChecker {
 		gp.player.hitbox.y = gp.player.worldY + gp.player.hitbox.y;
 
 		// Temporarily move the Entity's hitbox to test collision
+		setHitboxForCollisionChecking(entity);
+		// If there is collision, enable the variable and call the farmerInteraction function
+		if (entity.hitbox.intersects(gp.player.hitbox))
+		{
+			entity.collisionOn = true;
+			gp.player.farmerInteraction(0); // Index does not matter in this case
+		}
+		// Reset all hitboxes back to their original coordinates
+		resetHitbox(entity);
+		resetHitbox(gp.player);
+	}
+
+	/**
+	 * Checks the direction of the entity and moves their hitbox accordingly for checking collision
+	 * 
+	 * @param entity - The entity whose direction we want to determine
+	 */
+	private void setHitboxForCollisionChecking(Entity entity)
+	{
 		switch(entity.direction) 
 		{
 			case "up":
@@ -231,16 +221,16 @@ public class CollisionChecker {
 				entity.hitbox.x -= entity.speed;
 				break;
 		}
-		// If there is collision, enable the variable and call the farmerInteraction function
-		if (entity.hitbox.intersects(gp.player.hitbox))
-		{
-			entity.collisionOn = true;
-			gp.player.farmerInteraction(0); // Index does not matter in this case
-		}
-		// Reset all hitboxes back to their original coordinates
+	}
+
+	/**
+	 * Resets the entities hitbox back to its original location after testing
+	 * 
+	 * @param entity - Entity whose hitbox we want to modify
+	 */
+	private void resetHitbox(Entity entity)
+	{
 		entity.hitbox.x = entity.hitboxDefaultX;
 		entity.hitbox.y = entity.hitboxDefaultY;
-		gp.player.hitbox.x = gp.player.hitboxDefaultX;
-		gp.player.hitbox.y = gp.player.hitboxDefaultY;
 	}
 }

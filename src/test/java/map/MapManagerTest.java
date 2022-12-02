@@ -79,6 +79,8 @@ public class MapManagerTest {
             mapM.nextMap();
         }
 
+        score *= (double) 2 - ((double) gp.uiM.getPlayTime()/900);
+
         assertEquals(gameState.WIN, gp.stateM.getCurrentState());
         assertEquals(score, gp.player.score);
     }

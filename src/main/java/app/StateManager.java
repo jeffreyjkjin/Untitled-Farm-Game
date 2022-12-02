@@ -89,7 +89,14 @@ public class StateManager {
                 }
                 music.play(1);
                 bgMusic2 = true;
+
+                // Calculate score based on play time
+                int score = calculateScore();
+                
+                gp.player.score = score;
+                
             case LOSE:
+
                 boolean showHighScore;
                 if (gp.player.score > settings.getHighScore()) {
                     settings.setHighScore(gp.player.score);
@@ -200,5 +207,28 @@ public class StateManager {
             }
         }
 
+    }
+    
+    /**
+     * Calculate the current score depending on the playTime
+     * @return score
+     */
+    
+    public int calculateScore() {
+    	int score = gp.player.score;
+    	double scoreMultiplier;
+    	
+    	int playTime = gp.uiM.getPlayTime();
+
+        if (playTime <= 900) { // if play time is under 15 minutes, give score 
+            scoreMultiplier = (double) 2 - ((double) playTime/900);
+        }
+        else {
+            scoreMultiplier = 1;
+        }
+    	
+        score *= scoreMultiplier;
+        
+    	return score;
     }
 }

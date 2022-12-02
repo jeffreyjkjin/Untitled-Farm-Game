@@ -90,7 +90,7 @@ public class Farmer extends Entity {
         int goalCol = (gamePanel.player.worldX + gamePanel.player.hitbox.x) / gamePanel.tileSize;
         int goalRow = (gamePanel.player.worldY + gamePanel.player.hitbox.y) / gamePanel.tileSize;
             
-        searchPath(goalCol, goalRow);
+        gamePanel.pathFinder.searchPath(goalCol, goalRow, this);
     }
 
     /**
@@ -138,26 +138,9 @@ public class Farmer extends Entity {
                     break;
             }
         }
-
-        // Set up variables to determine the distance this farmer and the player are apart
-        // Using Pythagorean theorem
-        double midPX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
-        double midPY = gamePanel.player.worldY + gamePanel.player.hitbox.y + (gamePanel.player.hitbox.height / 2);
-        double midFX = this.worldX + this.hitbox.x + (this.hitbox.width / 2);
-        double midFY = this.worldY + this.hitbox.y + (this.hitbox.height / 2);
-
-        double ac = Math.abs(midPY - midFY);
-        double cb = Math.abs(midPX - midFX);
-
-        double distanceApart = Math.hypot(ac, cb);
-        // This is the only reliable fix I could come up with. Play around with this number to see what feels best
-        // Can realistically change this number to 32 and nobody but the developers would notice a bug
-        // It would just introduce a scenario where the farmers can not catch you if you stand still in a certain way
-        // 45 Feels a bit annoying tbh so probably 32 for the final game
-        if (distanceApart <= 45)
-        {
-            gamePanel.player.farmerInteraction(0);
-        }
+         
+        // interactPlayer if the distance between farmer & player becomes under 45
+        interactPlayer(45);
 
         gamePanel.checker.checkTileCollision(this);
         // gamePanel.checker.checkEntityCollision(this, gamePanel.mapM.getMap().farmers);
@@ -174,6 +157,26 @@ public class Farmer extends Entity {
                 spriteNum = 1;
             }
             spriteCounter = 0;
+        }
+    }
+    /**
+     * Check distance between player & farmer and make interaction if it's under the given value
+     */
+    public void interactPlayer(int hitDistance) {
+    	
+    	double playerMiddleX = gamePanel.player.worldX + gamePanel.player.hitbox.x + (gamePanel.player.hitbox.width / 2);
+        double playerMiddleY = gamePanel.player.worldY + gamePanel.player.hitbox.y + (gamePanel.player.hitbox.height / 2);
+        double farmerMiddleX = this.worldX + this.hitbox.x + (this.hitbox.width / 2);
+        double farmerMiddleY = this.worldY + this.hitbox.y + (this.hitbox.height / 2);
+
+        double edgeY = Math.abs(playerMiddleY - farmerMiddleY);
+        double edgeX = Math.abs(playerMiddleX - farmerMiddleX);
+
+        double distanceApart = Math.hypot(edgeY, edgeX);
+        
+        if (distanceApart <= hitDistance)
+        {
+            gamePanel.player.farmerInteraction(0);
         }
     }
 
@@ -249,110 +252,12 @@ public class Farmer extends Entity {
     }
 
     /**
-     * Uses the pathfinding class to find the most efficient path to the player
-     * Once path is found, sets the appropriate direction farmer needs to go to avoid collisions based on next tile in path
-     * 
-     * @param goalCol goal column farmer attempts to reach. Currently the players current column
-     * @param goalRow goal row farmer attempts to reach. Currently the players current row
-     */
-    private void searchPath(int goalCol, int goalRow)
-    {
-        int currCol = (worldX + hitbox.x) / gamePanel.tileSize;
-        int currRow = (worldY + hitbox.y) / gamePanel.tileSize;
-        gamePanel.pathFinder.setNodes(currCol, currRow, goalCol, goalRow);
-        boolean goalReached = gamePanel.pathFinder.search();
-
-        if (goalReached)
-        {
-            // Next worldX and Y
-            int nextX = gamePanel.pathFinder.pathList.get(0).col * gamePanel.tileSize;
-            int nextY = gamePanel.pathFinder.pathList.get(0).row * gamePanel.tileSize;
-            // Entity's hitbox
-            int farmerLeftX = worldX + hitbox.x;
-            int farmerRightX = worldX + hitbox.x + hitbox.width;
-            int farmerTopY = worldY + hitbox.y;
-            int farmerBotY = worldY + hitbox.y + hitbox.height;
-            // Find which direction to go next
-            if (farmerTopY > nextY && farmerLeftX >= nextX && farmerRightX < nextX + gamePanel.tileSize)
-            {
-                direction = "up";
-            }
-            else if (farmerTopY < nextY && farmerLeftX >= nextX && farmerRightX < nextX + gamePanel.tileSize)
-            {
-                direction = "down";
-            }
-            else if (farmerTopY >= nextY && farmerBotY < nextY + gamePanel.tileSize)
-            {
-                // Can go left or right so have to figure out which
-                if (farmerLeftX > nextX)
-                {
-                    direction = "left";
-                }
-                if (farmerLeftX < nextX)
-                {
-                    direction = "right";
-                }
-
-            }
-            else if (farmerTopY > nextY && farmerLeftX > nextX)
-            {
-                // Can go up or left, have to figoure out which
-                direction = "up";
-
-                gamePanel.checker.checkTileCollision(this);
-
-                if (collisionOn)
-                {
-                    direction = "left";
-                }
-            }
-            else if(farmerTopY > nextY && farmerLeftX < nextX)
-            {
-                // Can go up or right
-                direction = "up";
-
-                gamePanel.checker.checkTileCollision(this);
-
-                if (collisionOn)
-                {
-                    direction = "right";
-                }
-            }
-            else if (farmerTopY < nextY && farmerLeftX > nextX)
-            {
-                // down or left
-                direction = "down";
-
-                gamePanel.checker.checkTileCollision(this);
-
-                if (collisionOn)
-                {
-                    direction = "left";
-                }
-
-            }
-            else if (farmerTopY < nextY && farmerLeftX < nextX)
-            {
-                // down or left
-                direction = "down";
-
-                gamePanel.checker.checkTileCollision(this);
-
-                if (collisionOn)
-                {
-                    direction = "right";
-                }
-            }
-        }
-    }
-
-    /**
      * Resets all of the farmers to their starting locations and turns collision off
      * Called when player and farmers collide and everything needs to be reset
      * 
      * @param farmers array of farmers stored in map
      */
-    protected static void respawnFarmers(Farmer[] farmers)
+    public static void respawnFarmers(Farmer[] farmers)
     {
         for (int i = 0; i < farmers.length; i++)
         {
