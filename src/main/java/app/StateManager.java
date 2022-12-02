@@ -220,8 +220,8 @@ public class StateManager {
     	
     	int playTime = gp.uiM.getPlayTime();
 
-        if (playTime <= 600) { // if play time is under 10 minutes, give score 
-            scoreMultiplier = (double) 2 - ((double) playTime/600);
+        if (playTime <= 900) { // if play time is under 15 minutes, give score 
+            scoreMultiplier = (double) 2 - ((double) playTime/900);
         }
         else {
             scoreMultiplier = 1;
