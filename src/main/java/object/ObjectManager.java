@@ -29,17 +29,11 @@ public class ObjectManager {
             case 3:
                 newObj = new OBJ_Gate();
                 break;
-            case 4:
-                newObj = new OBJ_NonFuncGate();
-                break;
             case 5:
                 newObj = new OBJ_Trap();
                 break;
             case 6:
                 newObj = new OBJ_StoneGate();
-                break;
-            case 7:
-                newObj = new OBJ_NonFuncStoneGate();
                 break;
             default:
                 return null;
