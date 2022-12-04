@@ -61,6 +61,8 @@ public class Music extends Audio {
      * Stops the music file that is currently being played.
      */
     public void stop() {
-        clip.stop();
+        if (volumeScale != 0) {
+            clip.stop();
+        }
     }
 }
