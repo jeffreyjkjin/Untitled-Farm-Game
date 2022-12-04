@@ -32,6 +32,7 @@ public class CreditsInput extends InputHandler {
 
         switch(keyCode) {
             case KeyEvent.VK_ESCAPE:
+                sound.play(5);
                 gp.stateM.setCurrentState(gameState.TITLE);
                 break;
         }

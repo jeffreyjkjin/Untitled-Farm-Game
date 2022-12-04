@@ -34,7 +34,9 @@ public class SettingsInput extends InputHandler {
 
         switch(keyCode) {
             case KeyEvent.VK_ESCAPE:
+                sound.play(5);
                 gp.stateM.revertPreviousState();
+                break;
             case KeyEvent.VK_W:
             case KeyEvent.VK_UP:
                 if (!select) {
@@ -108,8 +110,8 @@ public class SettingsInput extends InputHandler {
                         settings.saveConfigFile();
                     }
                     else if (position == 4) { // Return
-                        gameState prevState = gp.stateM.getPreviousState();
-                        gp.stateM.setCurrentState(prevState);
+                        sound.play(5);
+                        gp.stateM.revertPreviousState();
                     }
                 }
                 enter = true;
