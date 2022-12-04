@@ -57,7 +57,9 @@ public class SoundEffects extends Audio {
      * @param index index of the file in URL array
      */
     public void play(int index){
-        setFile(index);
-        clip.start();
+        if (volumeScale != 0) {
+            setFile(index);
+            clip.start();
+        }
     }
 }
