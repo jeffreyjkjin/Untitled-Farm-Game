@@ -50,19 +50,15 @@ public class Music extends Audio {
      * @param index index of the file in URL array
      */
     public void play(int index) {
-        if (volumeScale != 0) {
             setFile(index);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
             clip.start();
-        }
     }
 
     /**
      * Stops the music file that is currently being played.
      */
     public void stop() {
-        if (volumeScale != 0) {
-            clip.stop();
-        }
+        clip.stop();
     }
 }
