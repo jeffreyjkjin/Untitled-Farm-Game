@@ -20,10 +20,8 @@ public class ObjectManagerTest {
         assertEquals("Egg", objects[1].name);
         assertEquals("Key", objects[2].name);
         assertEquals("Gate", objects[3].name);
-        assertEquals("NonFuncGate", objects[4].name);
         assertEquals("Trap", objects[5].name);
         assertEquals("Gate", objects[6].name);
-        assertEquals("NonFuncStoneGate", objects[7].name);
     }
 
 }
