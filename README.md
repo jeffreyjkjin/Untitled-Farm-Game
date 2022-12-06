@@ -1,6 +1,4 @@
 # Untitled Farm Game
-![image](icon.ICO)
-
 Untitled Farm Game is a 2d arcade-style maze game set in the distant, dystopian lands of Farming Town, USA. You play as a freedom-loving chicken seeking life, liberty, and the opportunity not to be turned into a four-piece combo by the Kentucky Colonel. However, ruthless farmers aim to hunt you down and sell your delicious carcass to big chicken. To escape, you must ransack human settlements on six playable levels, ranging from large-scale, commercial farms to the bustling, industrial suburbs of the chicken-eaters, to collect your keys to freedom. Avoid farmers and their well-placed traps; otherwise, you’ll see the inside of a fryer.
 
 ## Prerequisites 
