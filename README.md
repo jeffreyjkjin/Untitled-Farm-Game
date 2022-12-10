@@ -1,5 +1,9 @@
-# Untitled Farm Game
-Untitled Farm Game is a 2d arcade-style maze game set in the distant, dystopian lands of Farming Town, USA. You play as a freedom-loving chicken seeking life, liberty, and the opportunity not to be turned into a four-piece combo by the Kentucky Colonel. However, ruthless farmers aim to hunt you down and sell your delicious carcass to big chicken. To escape, you must ransack human settlements on six playable levels, ranging from large-scale, commercial farms to the bustling, industrial suburbs of the chicken-eaters, to collect your keys to freedom. Avoid farmers and their well-placed traps; otherwise, you’ll see the inside of a fryer.
+![Untitled Farm Game](https://img.itch.zone/aW1nLzEwNzIxNjU3LnBuZw==/original/WT0%2B5I.png)
+
+Untitled Farm Game is a 2D arcade-style maze game set in the distant, dystopian lands of Farming Town, USA. You play as a freedom-loving chicken seeking life, liberty, and the opportunity not to be turned into a four-piece combo. However, ruthless farmers aim to hunt you down and sell your delicious carcass to Big Chicken. To escape, you must ransack human settlements on six playable levels, ranging from large-scale, commercial farms to the bustling, industrial suburbs of the chicken-eaters, to collect your keys to freedom. Avoid farmers and their well-placed traps; otherwise, you’ll be seeing the inside of a fryer tonight.
+
+## Game Trailer
+The trailer for our game can be viewed [here](https://www.youtube.com/watch?v=4MRnaP6zbAo).
 
 ## Prerequisites 
 - [Java JDK](https://www.oracle.com/java/technologies/javase-downloads.html)
@@ -10,7 +14,7 @@ The game artifacts are located in `${basedir}/Artifacts/` directory.
 
 The jar can be run by using:
 ```
-java -jar Artifacts/UntitledFarmGame-1.0.jar
+java -jar Artifacts/UntitledFarmGame.jar
 ```
 
 (Windows Only) The executable file can be run by using:
@@ -41,7 +45,21 @@ mvn javadoc:javadoc
 The resulting Javadocs will be located in `${basedir}/target/site/apidocs`.
 
 ## Authors
+Developed with love by
 - Andrew Hein
 - Jeffrey Jin
 - Long Nguyen
 - Hwan Kim
+
+## Acknowledgements
+Special thanks to everyone who helped us during the development of this game.
+- [Dr. Saba Alimadadi](http://www.sfu.ca/~saba/) - taught us software engineering principles
+- [RyiSnow](https://www.youtube.com/@RyiSnow) - taught us how to develop a game in Java
+- [shubibubi](https://shubibubi.itch.io/) - sprites and tilesets
+- [Estúdio Vaca Roxa](https://bakudas.itch.io/) - sprites
+- [Kenney](https://kenney.nl/) - tilesets
+- [Swiss Arcade Game Entertainment](https://phoenix1291.itch.io/) - sound effects
+- [Rupert_Spore](https://rupert-spore.itch.io/) - sound effects
+- [freesound](https://freesound.org/) - sound effects
+- [8 Bit Universe](https://www.youtube.com/@8BitUniverse) - background music
+- [iPurVideo](https://www.youtube.com/@iPurVideo) - background music
