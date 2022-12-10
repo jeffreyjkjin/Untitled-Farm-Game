@@ -21,6 +21,7 @@ public class Settings {
 
     ObjectMapper mapper;
     ConfigFile file;
+    String directory;
 
     /**
      * Creates an ObjectMapper object which is used to read the settings.json configuration file.
@@ -31,8 +32,10 @@ public class Settings {
         mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 
+        findConfigDirectory();
+
         try {
-            file = mapper.readValue(new File("src/main/resources/settings.json"), ConfigFile.class);
+            file = mapper.readValue(new File(directory), ConfigFile.class);
         }
         catch (FileNotFoundException e) {
             createNewConfigFile();
@@ -70,7 +73,7 @@ public class Settings {
      */
     public void saveConfigFile() {
         try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/resources/settings.json"), file);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(directory), file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,5 +145,30 @@ public class Settings {
     public void setHighScore(int score) {
         file.setHighScore(score);
         saveConfigFile();
+    }
+
+    /**
+     * Checks what operating system the user is using and creates a game directory depending on their OS.
+     * If the directory already exists, nothing happens.
+     */
+    private void findConfigDirectory() {
+        String os = (System.getProperty("os.name")).toUpperCase();
+
+        if (os.contains("WIN")) {
+            directory = System.getenv("AppData") + "\\UntitledFarmGame";
+        }
+        else if (os.contains("MAC")) {
+            directory = System.getProperty("user.home") + "/Library/Application Support/UntitledFarmGame";
+        }
+        else if (os.contains("NUX")) {
+            directory = System.getProperty("user.home") + "/UntitledFarmGame";
+        }
+
+        File directoryCheck = new File(directory);
+        if (!directoryCheck.exists()) {
+            directoryCheck.mkdir();
+        }
+
+        directory += "/settings.json";
     }
 }
